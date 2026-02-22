@@ -298,15 +298,15 @@ body {
 }
 
 .squid-game-bg {
-    background: linear-gradient(45deg, #7f1d1d, #ef4444);
+    background-image: url('hero_squid_game.png');
 }
 
 .puzzle-bg {
-    background: linear-gradient(45deg, #064e3b, #10b981);
+    background-image: url('hero_puzzle.png');
 }
 
 .riding-bg {
-    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+    background-image: url('hero_riding.png');
 }
 
 .glass-card:hover .card-image {
@@ -410,9 +410,9 @@ footer {
 }
 
 .stepping-stone-bg {
-    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+    background-image: url('hero_glass_bridge.png');
 }
 
 .redlight-bg {
-    background: linear-gradient(45deg, #7f1d1d, #ef4444);
+    background-image: url('hero_red_light.png');
 }
