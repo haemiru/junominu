@@ -202,6 +202,7 @@ body {
 .gradient-text {
     background: linear-gradient(to right, #6d28d9, #f43f5e);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -296,16 +297,16 @@ body {
     transition: transform 0.5s ease;
 }
 
-.stepping-stone-bg {
-    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+.squid-game-bg {
+    background: linear-gradient(45deg, #7f1d1d, #ef4444);
 }
 
 .puzzle-bg {
     background: linear-gradient(45deg, #064e3b, #10b981);
 }
 
-.redlight-bg {
-    background: linear-gradient(45deg, #7f1d1d, #ef4444);
+.riding-bg {
+    background: linear-gradient(45deg, #1e3a8a, #3b82f6);
 }
 
 .glass-card:hover .card-image {
