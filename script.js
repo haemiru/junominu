@@ -50,4 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('squid-modal');
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 });
+
+// Modal functions
+function openSquidModal() {
+    document.getElementById('squid-modal').style.display = 'flex';
+}
+
+function closeSquidModal() {
+    document.getElementById('squid-modal').style.display = 'none';
+}
