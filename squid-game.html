@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squid Game | JunoMinu Universe</title>
+    <meta name="description"
+        content="Choose your Squid Game challenge. Will you test your luck on the Glass Bridge or your reactions in Red Light, Green Light?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="JunoMinu Logo" class="logo-img">
+            <span class="logo-text">JunoMinu<span class="dot">.</span></span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html#squid-game">Squid Game</a></li>
+            <li><a href="index.html#puzzle">Puzzle</a></li>
+            <li><a href="index.html#riding">Riding</a></li>
+            <li><a href="https://blog.junominu.com" target="_blank" class="nav-btn">Blog</a></li>
+        </ul>
+    </nav>
+
+    <main style="padding-top: 100px; flex: 1; display: flex; align-items: center;">
+        <section class="games-section" style="width: 100%; padding-top: 0; padding-bottom: 4rem;">
+            <h1 class="section-title">Select Squid Game</h1>
+            <p class="description" style="margin-bottom: 4rem;">Choose your challenge. Will you test your luck or your
+                reactions?</p>
+            <div class="cards-container" style="max-width: 800px; margin: 0 auto;">
+                <!-- Game 1: Glass Bridge -->
+                <a href="https://glass-bridge.junominu.com" class="glass-card game-card">
+                    <div class="card-image stepping-stone-bg">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="tag">Survival</span>
+                        <h3>Glass Bridge</h3>
+                        <p>Test your luck and memory. Can you cross the glass bridge without falling?</p>
+                        <div class="card-footer">
+                            <span class="play-text">Play Now →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Game 2: Red Light, Green Light -->
+                <a href="https://red-green-light.junominu.com" class="glass-card game-card">
+                    <div class="card-image redlight-bg">
+                        <div class="overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <span class="tag">Action</span>
+                        <h3>Red Light, Green Light</h3>
+                        <p>Move when the doll sings, freeze when she turns. Can you cross the finish line?</p>
+                        <div class="card-footer">
+                            <span class="play-text">Play Now →</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="JunoMinu Logo" class="logo-img">
+                <span class="logo-text">JunoMinu<span class="dot">.</span></span>
+            </a>
+            <p>&copy; 2026 JunoMinu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

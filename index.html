@@ -48,7 +48,7 @@
             <div class="cards-container">
 
                 <!-- Game 1: Squid Game -->
-                <div id="squid-game" class="glass-card game-card" onclick="openSquidModal()">
+                <a href="squid-game.html" id="squid-game" class="glass-card game-card">
                     <div class="card-image squid-game-bg">
                         <div class="overlay"></div>
                     </div>
@@ -60,7 +60,7 @@
                             <span class="play-text">Select Game →</span>
                         </div>
                     </div>
-                </div>
+                </a>
 
                 <!-- Game 2: Puzzle -->
                 <a href="https://puzzle.junominu.com" id="puzzle" class="glass-card game-card">
@@ -106,17 +106,6 @@
             <p>&copy; 2026 JunoMinu. All rights reserved.</p>
         </div>
     </footer>
-    <!-- Squid Game Modal -->
-    <div id="squid-modal" class="modal">
-        <div class="modal-content glass-card">
-            <span class="close-btn" onclick="closeSquidModal()">&times;</span>
-            <h2 class="section-title" style="margin-bottom: 2rem;">Select Game</h2>
-            <div class="modal-options">
-                <a href="https://glass-bridge.junominu.com" class="btn btn-primary">Glass Bridge</a>
-                <a href="https://red-green-light.junominu.com" class="btn btn-secondary">Red Light, Green Light</a>
-            </div>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>

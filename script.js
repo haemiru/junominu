@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 targetElement.scrollIntoView({
@@ -51,20 +51,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        const modal = document.getElementById('squid-modal');
-        if (e.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
 });
-
-// Modal functions
-function openSquidModal() {
-    document.getElementById('squid-modal').style.display = 'flex';
-}
-
-function closeSquidModal() {
-    document.getElementById('squid-modal').style.display = 'none';
-}
