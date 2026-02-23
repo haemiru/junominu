@@ -305,6 +305,14 @@ body {
     background-image: url('hero_puzzle.png');
 }
 
+.sliding-puzzle-bg {
+    background-image: url('hero_sliding_puzzle.png');
+}
+
+.sudoku-bg {
+    background-image: url('hero_sudoku.png');
+}
+
 .riding-bg {
     background-image: url('hero_riding.png');
 }
