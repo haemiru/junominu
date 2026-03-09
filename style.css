@@ -317,6 +317,10 @@ body {
     background-image: url('hero_riding.png');
 }
 
+.shooting-bg {
+    background-image: url('hero_shooting.png');
+}
+
 .glass-card:hover .card-image {
     transform: scale(1.05);
 }
