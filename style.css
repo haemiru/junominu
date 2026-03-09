@@ -321,6 +321,10 @@ body {
     background-image: url('hero_shooting.png');
 }
 
+.germ-buster-bg {
+    background-image: url('hero_germ_buster.png');
+}
+
 .glass-card:hover .card-image {
     transform: scale(1.05);
 }
