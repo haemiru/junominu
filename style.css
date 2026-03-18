@@ -450,6 +450,11 @@ footer {
     background-position: center;
 }
 
+.twenty48-bg {
+    background-image: url('hero_2048.png');
+    background-position: center;
+}
+
 /* --- Store Specific Styles --- */
 .store-main {
     padding-top: 120px;
