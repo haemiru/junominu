@@ -325,6 +325,11 @@ body {
     background-image: url('hero_germ_buster.png');
 }
 
+.beat-strike-bg {
+    background-image: url('hero_beat_strike.png');
+    background-position: center;
+}
+
 .glass-card:hover .card-image {
     transform: scale(1.05);
 }
