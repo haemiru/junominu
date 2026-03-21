@@ -297,6 +297,11 @@ body {
     transition: transform 0.5s ease;
 }
 
+.fun-fun-bg {
+    background-image: url('hero_fun_fun.png');
+    background-position: center;
+}
+
 .squid-game-bg {
     background-image: url('hero_squid_game.png');
 }
