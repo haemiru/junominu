@@ -1,0 +1,54 @@
+:root {
+  --lavender: #9B89B3;
+  --lavender-50: #F5F2FA;
+  --lavender-100: #E8E2F1;
+  --lavender-700: #6E5E89;
+  --teal: #0F766E;
+  --teal-50: #ECFDF5;
+  --teal-700: #0B5E58;
+
+  --text: #3F3A4A;
+  --text-h: #1F1B2E;
+  --text-muted: #7A7387;
+  --bg: #FBFAFD;
+  --surface: #FFFFFF;
+  --border: #E5E1EC;
+
+  --sans: "Pretendard", system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  font: 16px/1.6 var(--sans);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--teal-700);
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text-h);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
