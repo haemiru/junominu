@@ -9,7 +9,8 @@ const tools = [
     tagline: '아이의 후각·호흡 루틴을 함께하는 작은 친구',
     description:
       '향과 호흡을 활용해 아이가 스스로 진정하고 몰입할 수 있도록 돕는 보호자용 도구입니다.',
-    status: 'coming-soon',
+    status: 'live',
+    href: 'https://kungkung.junominu.com/?utm_source=junominu-hub&utm_medium=hub-card&utm_campaign=kungkung-mate-trial',
   },
 ]
 
@@ -47,16 +48,39 @@ function Hero() {
 
 function ToolCard({ tool }) {
   const isComingSoon = tool.status === 'coming-soon'
-  return (
-    <article className={`card${isComingSoon ? ' card--soon' : ''}`}>
+  const isLive = tool.status === 'live'
+
+  const cardClass = `card${isComingSoon ? ' card--soon' : ''}${
+    isLive ? ' card--live' : ''
+  }`
+
+  const content = (
+    <>
       <div className="card__head">
         <h2 className="card__title">{tool.name}</h2>
         {isComingSoon && <span className="chip">Coming Soon</span>}
+        {isLive && <span className="chip chip--new">NEW</span>}
       </div>
       <p className="card__tagline">{tool.tagline}</p>
       <p className="card__desc">{tool.description}</p>
-    </article>
+      {isLive && <span className="card__cta">바로 사용해보기 →</span>}
+    </>
   )
+
+  if (isLive && tool.href) {
+    return (
+      <a
+        className={cardClass}
+        href={tool.href}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return <article className={cardClass}>{content}</article>
 }
 
 function Tools() {
