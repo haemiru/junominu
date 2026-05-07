@@ -12,6 +12,15 @@ const tools = [
     status: 'live',
     href: 'https://kungkung.junominu.com/?utm_source=junominu-hub&utm_medium=hub-card&utm_campaign=kungkung-mate-trial',
   },
+  {
+    id: 'i-talk',
+    name: 'i-talk',
+    tagline: '우리 아이 행동을 짱샘이 직접 분석',
+    description:
+      '아이의 일상 영상을 올리면 25년차 소아물리치료사 짱샘이 PubMed 논문 근거와 함께 부모님께 보내는 편지 형태의 분석 리포트를 직접 작성해 드려요.',
+    status: 'live',
+    href: 'https://italk.junominu.com/?utm_source=junominu-hub&utm_medium=hub-card&utm_campaign=italk-launch',
+  },
 ]
 
 function Header() {
