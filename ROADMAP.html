@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JunoMinu 성장 로드맵</title>
+<style>
+  :root{
+    --bg:#0b0d12; --surface:rgba(255,255,255,.035); --surface2:rgba(255,255,255,.055);
+    --border:rgba(255,255,255,.09); --text:#e8eaf0; --soft:#9aa0ad; --faint:#6b7280;
+    --accent:#7c5cff; --accent2:#22d3ee; --live:#34d399; --building:#fbbf24; --idea:#94a3b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Pretendard Variable",Pretendard,system-ui,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    background:var(--bg); color:var(--text); line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:clamp(40px,7vw,90px) clamp(20px,5vw,40px) 100px;position:relative}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(60% 50% at 12% -5%,rgba(124,92,255,.18),transparent 60%),
+               radial-gradient(50% 45% at 105% 8%,rgba(34,211,238,.10),transparent 55%);}
+  .wrap>*{position:relative;z-index:1}
+  .grad{background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  header.top{margin-bottom:48px}
+  .kicker{font-size:12px;letter-spacing:.22em;font-weight:700;color:var(--accent2);margin-bottom:14px}
+  h1{font-size:clamp(32px,6vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+  .lede{color:var(--soft);margin-top:18px;font-size:17px;max-width:60ch}
+  .meta{margin-top:18px;font-size:13px;color:var(--faint)}
+
+  .direction{margin:34px 0;padding:22px 24px;border:1px solid var(--border);border-radius:16px;
+    background:var(--surface);font-size:16px}
+  .direction b{color:var(--text)}
+
+  h2{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);font-weight:700;
+    margin:54px 0 20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+
+  .phases{display:grid;gap:12px}
+  .phase{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border:1px solid var(--border);
+    border-radius:14px;background:var(--surface)}
+  .phase .n{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:800;
+    font-size:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d12}
+  .phase .b{font-weight:700}
+  .phase .d{color:var(--soft);font-size:14.5px;margin-top:2px}
+
+  .area{border:1px solid var(--border);border-radius:18px;background:var(--surface);padding:24px;margin-bottom:16px}
+  .area h3{font-size:20px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .area .why{color:var(--soft);font-size:14.5px;margin:8px 0 16px}
+  .badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;
+    border:1px solid rgba(124,92,255,.35);color:#c4b5ff;background:rgba(124,92,255,.10)}
+
+  ul.todo{list-style:none;display:grid;gap:9px}
+  ul.todo li{display:flex;gap:11px;align-items:flex-start;font-size:15px}
+  .box{flex:none;width:19px;height:19px;border-radius:6px;border:1.5px solid var(--border);margin-top:3px;
+    display:grid;place-items:center;font-size:12px;color:#0b0d12;font-weight:900}
+  .box.done{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent}
+  .box.wip{border-color:var(--building);color:var(--building);background:rgba(251,191,36,.12)}
+  li.done span{color:var(--faint);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.25)}
+  .tag{margin-left:6px;font-size:11.5px;color:var(--faint);border:1px solid var(--border);padding:1px 7px;border-radius:999px;white-space:nowrap}
+
+  .plan{display:grid;gap:14px}
+  .step{border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:20px 22px}
+  .step .h{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;margin-bottom:4px}
+  .step .goal{color:var(--accent2);font-size:13.5px;margin-bottom:14px}
+  .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--soft);border:1px solid var(--border)}
+
+  .log{border-left:2px solid var(--border);padding-left:18px;display:grid;gap:14px}
+  .log .item .date{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.04em}
+  .log .item .txt{color:var(--soft);font-size:14.5px;margin-top:2px}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--border);color:var(--faint);font-size:13px}
+  .note{margin-top:10px;color:var(--faint);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="kicker">JUNOMINU · GROWTH ROADMAP</p>
+    <h1>바이브 코딩 사이트로<br><span class="grad">키워가는 계획</span></h1>
+    <p class="lede">junominu.com을 "결과물로 보내주는 브릿지"에서, <b>혼자 AI로 어떻게 만들어 가는지(과정)를 보여주는 사이트</b>로 키우기 위한 작업 문서입니다.</p>
+    <p class="meta">마지막 업데이트: 2026-06-01 &nbsp;·&nbsp; 관리 기준: <code>ROADMAP.md</code> (이 화면은 보기용 <code>ROADMAP.html</code> — 항상 같은 내용)</p>
+  </header>
+
+  <div class="direction">
+    <b>한 줄 방향 &nbsp;→</b> 지금은 "이거 만들었어요(링크)"에서 끝납니다. 앞으로는 <b>"이렇게 만들었어요(과정·삽질·배운 점)"</b>를 보여주는 쪽으로 무게중심을 옮깁니다. 그게 바이브 코딩 사이트의 진짜 차별점이에요.
+  </div>
+
+  <h2>큰 그림 — 3단계 (쉬운 것부터)</h2>
+  <div class="phases">
+    <div class="phase"><div class="n">1</div><div><div class="b">지금 페이지 안에서 키우기</div><div class="d">코드 구조를 바꾸지 않고(라우터 없이) 한 페이지에 섹션만 추가 — About · 지표 · Now. 가장 빠르게 효과가 보입니다.</div></div></div>
+    <div class="phase"><div class="n">2</div><div><div class="b">프로젝트 상세 페이지 만들기</div><div class="d">페이지 이동(라우터)을 도입해, 카드를 누르면 "이 프로젝트를 이렇게 만들었다"는 상세 이야기가 나오게. 사이트의 핵심 콘텐츠입니다.</div></div></div>
+    <div class="phase"><div class="n">3</div><div><div class="b">블로그 시작</div><div class="d">글을 쓰면 검색으로 사람들이 들어오고, 신뢰가 쌓입니다. 글은 쌓일수록 복리로 작용해요.</div></div></div>
+  </div>
+
+  <h2>해야 할 일 — 콘텐츠 5영역</h2>
+
+  <div class="area">
+    <h3>1. 메이킹 스토리 / 빌드 로그 <span class="badge">가장 중요</span></h3>
+    <p class="why">카드는 "만들었어요"에서 끝납니다. 여기에 "이렇게 만들었어요(스택·기간·막혔던 점·핵심 프롬프트·회고)"를 더하면, 이 사이트만의 색이 생깁니다.</p>
+    <ul class="todo">
+      <li><span class="box"></span><span>프로젝트 데이터에 상세 필드 추가 (스크린샷·스택·기간·막힌 점·프롬프트·회고)</span></li>
+      <li><span class="box"></span><span>카드 클릭 → 외부로 바로 보내지 말고 <b>내부 상세 페이지</b> 경유 → 거기서 "사이트 열기"</span></li>
+      <li><span class="box"></span><span>"0 → 배포까지 N일" 타임라인 표기</span></li>
+      <li><span class="box"></span><span>상세 페이지 라우팅 <span class="tag">2단계</span></span></li>
+    </ul>
+  </div>
+
+  <div class="area">
+    <h3>2. Build in Public — 살아있는 사이트</h3>
+    <p class="why">"성장하는 작업실" 느낌을 주는 요소들. 지금 뭘 하는지, 얼마나 쌓였는지가 보이면 사이트가 살아있게 느껴집니다.</p>
+    <ul class="todo">
+      <li><span class="box"></span><span><b>Now 섹션</b> — "지금 만들고 있는 것" (주/월 단위로 갱신)</span></li>
+      <li><span class="box"></span><span><b>지표 카운터</b> — 만든 프로젝트 수 / 운영 중 수 / 누적 일수</span></li>
+      <li><span class="box"></span><span><b>타임라인</b> — 첫 프로젝트부터 시간순 기록(저니)</span></li>
+    </ul>
+  </div>
+
+  <div class="area">
+    <h3>3. 블로그</h3>
+    <p class="why">검색 유입과 신뢰의 핵심. "이 사람 진짜 한다"를 증명하고, 글 한 편이 계속 사람을 데려옵니다.</p>
+    <ul class="todo">
+      <li><span class="box"></span><span>마크다운 글 파이프라인 구성 (가볍게 시작)</span></li>
+      <li><span class="box"></span><span>글감: 바이브 코딩 워크플로우, 도구 리뷰(Claude Code·Cursor·Vercel·Supabase), 삽질기</span></li>
+      <li><span class="box"></span><span>글 목록 + 개별 글 페이지 <span class="tag">3단계</span></span></li>
+      <li><span class="box"></span><span>기본 SEO (메타·OG·사이트맵)</span></li>
+    </ul>
+  </div>
+
+  <div class="area">
+    <h3>4. About / 나</h3>
+    <p class="why">누구인지, <b>왜</b> 바이브 코딩을 하는지(비개발자 → 1인 메이커 서사). 이미 전자책까지 있으니 그 이야기와 강하게 연결됩니다.</p>
+    <ul class="todo">
+      <li><span class="box"></span><span>About 섹션 — 소개 + "왜 바이브 코딩을 하는가" 서사</span></li>
+      <li><span class="box"></span><span>연락처 / SNS / GitHub 링크</span></li>
+      <li><span class="box"></span><span>전자책 "바이브 코딩으로 1인 사업가 되기" 서사와 연결</span></li>
+    </ul>
+  </div>
+
+  <div class="area">
+    <h3>5. 부가 (여력 될 때)</h3>
+    <p class="why">팔로워를 모으고, 사람들이 다시 찾게 만드는 장치들.</p>
+    <ul class="todo">
+      <li><span class="box"></span><span><b>내 스택/도구함</b> — 실제로 쓰는 도구 모음 카드</span></li>
+      <li><span class="box"></span><span><b>템플릿·프롬프트 공유</b> — 재사용 보일러플레이트, 프롬프트 모음 (리드 마그넷)</span></li>
+      <li><span class="box"></span><span><b>뉴스레터 구독</b> 폼</span></li>
+    </ul>
+  </div>
+
+  <h2>상세 실행 계획 (단계별)</h2>
+  <div class="plan">
+
+    <div class="step">
+      <div class="h"><span class="pill">Phase 0</span> 준비 — 지금</div>
+      <div class="goal">계획을 세우고 데이터 구조를 정한다.</div>
+      <ul class="todo">
+        <li class="done"><span class="box done">✓</span><span>로드맵 문서(<code>ROADMAP.md</code> + <code>ROADMAP.html</code>) 생성</span></li>
+        <li><span class="box"></span><span>데이터 모델 설계 — <code>ME</code> 확장(소개·링크·지표), <code>PROJECTS</code> 상세 필드 스키마 확정</span></li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="h"><span class="pill">Phase 1</span> 한 페이지 안에서 키우기 (라우터 없음)</div>
+      <div class="goal">목표: 배포된 사이트가 "성장하는 작업실"처럼 보이게. 가장 빠른 임팩트.</div>
+      <ul class="todo">
+        <li><span class="box"></span><span><b>About 섹션</b> 추가 <span class="tag">4번</span></span></li>
+        <li><span class="box"></span><span><b>지표 카운터</b> 추가 — 데이터에서 자동 계산 <span class="tag">2번</span></span></li>
+        <li><span class="box"></span><span><b>Now 섹션</b> 추가 <span class="tag">2번</span></span></li>
+        <li><span class="box"></span><span><b>스택/도구함 섹션</b> 추가 <span class="tag">5번</span></span></li>
+        <li><span class="box"></span><span>섹션 앵커 내비게이션(About · Now · 프로젝트)</span></li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="h"><span class="pill">Phase 2</span> 프로젝트 상세 페이지 (react-router)</div>
+      <div class="goal">목표: 1번(메이킹 스토리)의 본체. 사이트의 핵심 콘텐츠.</div>
+      <ul class="todo">
+        <li><span class="box"></span><span><code>react-router-dom</code> 도입 — <code>/</code>(홈) + <code>/p/:slug</code>(상세)</span></li>
+        <li><span class="box"></span><span>상세 템플릿: 스크린샷 · 스택 · 타임라인 · 회고 · 핵심 프롬프트 · 외부 링크 버튼</span></li>
+        <li><span class="box"></span><span>상세 데이터 1개부터 채우기 (예: 중개프로 / 짱샘의 책방)</span></li>
+        <li><span class="box"></span><span>Vercel SPA fallback 확인 (이미 <code>vercel.json</code> rewrites 있음)</span></li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="h"><span class="pill">Phase 3</span> 블로그</div>
+      <div class="goal">목표: 검색 유입·신뢰. 글이 쌓일수록 복리.</div>
+      <ul class="todo">
+        <li><span class="box"></span><span>마크다운 로딩 방식 결정 (Vite <code>import.meta.glob</code> + 마크다운 파서)</span></li>
+        <li><span class="box"></span><span><code>/blog</code>(목록) + <code>/blog/:slug</code>(글) 라우트</span></li>
+        <li><span class="box"></span><span>첫 글 1편 — "이 사이트를 바이브 코딩으로 키운 과정" 추천</span></li>
+        <li><span class="box"></span><span>OG 이미지·메타·사이트맵</span></li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="h"><span class="pill">Phase 4</span> 성장 장치 (선택)</div>
+      <div class="goal">목표: 다시 찾게 만들고 팔로워를 모은다.</div>
+      <ul class="todo">
+        <li><span class="box"></span><span>템플릿/프롬프트 공유 페이지</span></li>
+        <li><span class="box"></span><span>뉴스레터 구독 연동</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <h2>아직 정할 것 (열린 질문)</h2>
+  <ul class="todo">
+    <li><span class="box"></span><span>블로그 글 톤/대상 (한국어, 5060 대상? 메이커 동료?)</span></li>
+    <li><span class="box"></span><span>상세 페이지를 어디까지 자동(데이터) vs 수기로 채울지</span></li>
+    <li><span class="box"></span><span>뉴스레터 도구 선택 (Buttondown / ConvertKit / 자체)</span></li>
+  </ul>
+
+  <h2>진행 현황 로그</h2>
+  <div class="log">
+    <div class="item">
+      <div class="date">2026-06-01</div>
+      <div class="txt">로드맵 문서(<code>ROADMAP.md</code> + <code>ROADMAP.html</code>) 생성. 콘텐츠 5영역 + Phase 0~4 정의. 다음: Phase 0 데이터 모델 설계 → Phase 1 착수.</div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 JunoMinu · 이 문서는 <code>ROADMAP.md</code>와 항상 같은 내용으로 동기화됩니다.
+    <div class="note">보는 법: 이 파일(<code>ROADMAP.html</code>)을 브라우저로 더블클릭해서 열면 됩니다.</div>
+  </footer>
+
+</div>
+</body>
+</html>
