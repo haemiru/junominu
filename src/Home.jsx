@@ -50,11 +50,11 @@ function ProjectCard({ p }) {
 }
 
 function Journey() {
-  // detail.started 가 있는 프로젝트를 시작일 오름차순으로
+  // detail.started 가 있는 프로젝트를 시작일 내림차순(최근이 위)으로
   const items = PROJECTS
     .filter((p) => p.detail?.started)
     .slice()
-    .sort((a, b) => (a.detail.started < b.detail.started ? -1 : 1))
+    .sort((a, b) => (a.detail.started < b.detail.started ? 1 : -1))
 
   if (items.length === 0) return null
 
