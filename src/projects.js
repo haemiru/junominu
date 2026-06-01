@@ -31,7 +31,7 @@ export const PROJECTS = [
     emoji: "🌿",
     description: "호흡·후각 자가훈련을 매일 기록하면 변화를 자동 리포트로 보여주는 앱.",
     url: "https://kungkung.jjangsaem.com",
-    status: "building",
+    status: "live",
     tags: ["SaaS", "헬스케어", "Vite"],
   },
   {
