@@ -600,6 +600,185 @@
   padding-left: 14px;
 }
 
+/* 스크린샷 (커버 + 갤러리) */
+.dshot {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 clamp(28px, 5vw, 44px);
+}
+
+.dshot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+}
+
+.dshot__cap {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.shots {
+  display: grid;
+  gap: 18px;
+}
+
+.shots .dshot {
+  margin-bottom: 0;
+}
+
+/* ── 블로그 목록 ────────────────────── */
+.postlist {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  display: grid;
+  gap: 14px;
+}
+
+.postcard {
+  display: block;
+  padding: 22px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.postcard:hover {
+  transform: translateY(-3px);
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+.postcard__date {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--accent-2);
+}
+
+.postcard__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+}
+
+.postcard__sum {
+  color: var(--text-soft);
+  font-size: 14.5px;
+  margin-top: 8px;
+}
+
+.postcard .card__tags {
+  margin-top: 14px;
+}
+
+/* ── 블로그 글 본문 ─────────────────── */
+.post__date {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--accent-2);
+}
+
+.post__title {
+  margin-top: 8px;
+}
+
+.prose {
+  position: relative;
+  z-index: 1;
+  max-width: 70ch;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.prose h2 {
+  margin-top: 40px;
+  margin-bottom: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.prose h3 {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.prose p {
+  margin-bottom: 18px;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 18px 1.1em;
+  display: grid;
+  gap: 8px;
+}
+
+.prose li {
+  padding-left: 4px;
+}
+
+.prose a {
+  color: var(--accent-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.prose blockquote {
+  margin: 0 0 18px;
+  padding: 4px 0 4px 16px;
+  border-left: 2px solid var(--border-hover);
+  color: var(--text-faint);
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.prose pre {
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  background: #0e1118;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-soft);
+}
+
 /* ── 맨 위로 버튼 ───────────────────── */
 .to-top {
   position: fixed;

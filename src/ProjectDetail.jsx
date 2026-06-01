@@ -11,6 +11,33 @@ function daysBetween(startIso, endIso) {
   return Math.max(1, Math.round((end - start) / 86400000))
 }
 
+// 스크린샷 한 장. 이미지가 없거나 깨지면 스스로 사라짐(graceful fallback).
+function Shot({ src, alt, caption }) {
+  return (
+    <figure className="dshot">
+      <img
+        className="dshot__img"
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onError={(e) => {
+          const fig = e.currentTarget.closest('.dshot')
+          if (fig) fig.style.display = 'none'
+        }}
+      />
+      {caption && <figcaption className="dshot__cap">{caption}</figcaption>}
+    </figure>
+  )
+}
+
+// shots 항목은 문자열("/shots/a.png") 또는 { src, caption } 둘 다 허용
+function shotSrc(s) {
+  return typeof s === 'string' ? s : s?.src
+}
+function shotCap(s) {
+  return typeof s === 'string' ? '' : s?.caption
+}
+
 export default function ProjectDetail() {
   const { slug } = useParams()
   const p = findProject(slug)
@@ -46,6 +73,9 @@ export default function ProjectDetail() {
         )}
       </header>
 
+      {/* 커버 이미지(있을 때만) — public/ 기준 경로. 없으면 위 이모지 히어로 유지 */}
+      {d.cover && <Shot src={d.cover} alt={`${p.name} 미리보기`} caption={d.coverCaption} />}
+
       {(days || d.started) && (
         <section className="dmeta">
           {days && (
@@ -78,6 +108,17 @@ export default function ProjectDetail() {
           <ul className="now">
             {d.features.map((f, i) => <li className="now__item" key={i}>{f}</li>)}
           </ul>
+        </section>
+      )}
+
+      {d.shots?.length > 0 && (
+        <section className="dsection">
+          <h2 className="section__label">화면</h2>
+          <div className="shots">
+            {d.shots.map((s, i) => (
+              <Shot key={i} src={shotSrc(s)} alt={`${p.name} 화면 ${i + 1}`} caption={shotCap(s)} />
+            ))}
+          </div>
         </section>
       )}
 

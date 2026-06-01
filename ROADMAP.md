@@ -29,7 +29,7 @@
 
 카드는 "만들었어요"에서 끝남 → "이렇게 만들었어요"를 보여준다.
 
-- [ ] 프로젝트 데이터(`projects.js`)에 상세 필드 추가: 스크린샷, 스택, 개발 기간, 막혔던 점, 핵심 프롬프트, 회고
+- [x] 프로젝트 데이터(`projects.js`)에 상세 필드 추가: 스택·개발 기간·막혔던 점·핵심 프롬프트·회고(Phase 2) + **스크린샷(cover/shots)**
 - [ ] 카드 클릭 시 외부로 바로 가지 말고 **내부 상세 페이지** 경유 → 거기서 "사이트 열기"
 - [ ] 프로젝트별 "0 → 배포까지 N일" 타임라인 표기
 - [ ] (2단계) 상세 페이지 라우팅 (`/p/:slug`)
@@ -42,10 +42,10 @@
 
 ### 3. 블로그 (검색 유입 + 신뢰)
 
-- [ ] 마크다운 글 파이프라인 구성 (가볍게 시작)
+- [x] 마크다운 글 파이프라인 구성 (가볍게 시작) — `blogData.js` + `marked`
 - [ ] 글감: 바이브 코딩 워크플로우, 도구 리뷰(Claude Code·Cursor·Vercel·Supabase), 삽질기
-- [ ] 글 목록 + 개별 글 페이지 (3단계)
-- [ ] 기본 SEO(메타·OG·사이트맵)
+- [x] 글 목록 + 개별 글 페이지 (3단계) — `/blog`·`/blog/:slug`
+- [x] 기본 SEO(메타·OG·사이트맵) — OG 전용 이미지만 남음
 
 ### 4. About / 나
 
@@ -103,10 +103,10 @@
 
 > 목표: 검색 유입·신뢰. 글이 쌓일수록 복리.
 
-- [ ] 마크다운 로딩 방식 결정(Vite `import.meta.glob` + 마크다운 파서)
-- [ ] `/blog`(목록) + `/blog/:slug`(글) 라우트
-- [ ] 첫 글 1편 작성("이 사이트를 바이브 코딩으로 키운 과정" 같은 메타 글 추천)
-- [ ] OG 이미지·메타·사이트맵
+- [x] 마크다운 로딩 방식 결정(Vite `import.meta.glob` + `marked` 파서, `blogData.js`에서 frontmatter 파싱)
+- [x] `/blog`(목록) + `/blog/:slug`(글) 라우트 — `Blog.jsx`·`Post.jsx`
+- [x] 첫 글 1편 작성 — "이 사이트를 바이브 코딩으로 키운 과정"(`posts/2026-06-01-built-this-site...md`)
+- [x] 메타·OG·사이트맵 — index.html OG/Twitter/canonical, `public/sitemap.xml`·`robots.txt` (단 **OG 전용 이미지(1200×630)는 아직** — 현재 summary 카드)
 
 ### Phase 4 — 성장 장치 (선택)
 
@@ -137,9 +137,14 @@
 - **2026-06-01** — **나머지 4개 프로젝트 detail 추가**(전부 상세 페이지 보유). 로컬 레포 git 이력에서 **실데이터** 추출: 킁킁메이트(첫 커밋 2026-04-19·53커밋·React/Vite/Supabase/Toss/PWA), i-talk(2026-04-21·81커밋·Claude API/Supabase/Toss/Solapi/Resend) — 요약·기능·스택·타임라인 실제 채움. 소리야 놀자!(git 없음·Next15/MediaPipe/Zustand 스택만 실데이터), 짱샘의 책방(이 시점엔 레포 못 찾아 초안). **막혔던 점·핵심 프롬프트·회고는 모두 `(초안)`** 표시 — 사용자가 직접 작성/확정 예정.
 - **2026-06-01** — **짱샘의 책방 detail 실데이터로 교체**. 레포 위치 확인(`ebook/jjangsaem-bookshop`): 첫 커밋 2026-03-02·**616커밋·3개월 풀스택**. 실제 스택(Next.js/Supabase(SSR)/Toss+PayPal/Claude API/next-intl/Recharts/react-pageflip/Resend) + 마일스톤 6개(랜딩→관리자+전자책DB→실물판매→통합장바구니→환불→i18n) 반영. 막혔던 점·프롬프트·회고는 `(초안)` 유지.
 - **2026-06-01 — ▶ 다음 재개 시작점(아래 '다음 후보' 중 택1)**
-  1. ~~**중개프로도 로컬 레포(`jungaepro`) git 이력으로 실데이터화**~~ — ✅ **완료**(아래 로그 참조).
-  2. **스크린샷 연결 구조 만들기** — 현재 상세는 이모지 히어로. `public/`에 캡처 넣고 `detail.screenshot`(또는 hero 이미지) 필드 + 렌더 추가.
-  3. **`(초안)` 내용 직접 확정** — 각 프로젝트의 막혔던 점·핵심 프롬프트·회고, `⚠️추정` 날짜(launched 등)를 실제 내용으로. `projects.js`에서 `(초안)` / `⚠️` 검색하면 한 번에 찾힘.
-  4. **Phase 3(블로그)** 착수 — 마크다운 파이프라인 + `/blog` 라우트.
+  1. ~~**중개프로 git 이력으로 실데이터화**~~ — ✅ **완료**.
+  2. ~~**스크린샷 연결 구조 만들기**~~ — ✅ **완료**(구조만; 실제 PNG는 사용자가 `public/shots/`에 투입).
+  3. **`(초안)` 내용 직접 확정** — 각 프로젝트의 막혔던 점·핵심 프롬프트·회고, `⚠️추정` 날짜(launched 등)를 실제 내용으로. **(사용자가 직접 작성 예정 — 데이터만 고치면 됨)** `projects.js`에서 `(초안)` / `⚠️` 검색.
+  4. ~~**Phase 3(블로그)** 착수~~ — ✅ **완료**(아래 로그).
 - **2026-06-01** — **중개프로 detail 실데이터로 교체**(후보 #1 완료). 로컬 레포 `jungaepro` git 이력 확인: 첫 커밋 **2026-02-18**·집중 개발 ~3월·5월 마무리·**총 181커밋**. 결정적 수정: 스택이 **Next.js가 아니라 Vite + React 19 + TypeScript**였음(+ Tailwind v4·Supabase·Zustand·react-router v6·Leaflet·Recharts·jsPDF/pdf-lib). `started` 2026-02-10→**02-18**. 요약·기능·스택·타임라인을 실제 커밋 기반으로 전면 교체(국토부 실거래가 시세·계약서/확인설명서/등기부 PDF·CRM 파이프라인·상담일지·멀티테넌트 서브도메인·구독 SaaS·2FA 반영). 손으로 쓴 challenges/prompts/retro는 **`(초안)`** 표시로 통일(다른 4개와 일관). 빌드 통과. **이로써 5개 프로젝트 detail의 요약·기능·스택·타임라인이 전부 실데이터.** **▶ 다음 재개 시작점: 후보 #2 스크린샷 구조 / #3 `(초안)` 확정 / #4 Phase 3 블로그 중 택1.**
+- **2026-06-01** — **후보 #2(스크린샷 구조) + #4(Phase 3 블로그) 일괄 구현.**
+  - **#2 스크린샷**: `ProjectDetail.jsx`에 `detail.cover`(히어로 배너) + `detail.shots`(갤러리, 문자열 또는 `{src,caption}`) 렌더 추가. 이미지 없거나 깨지면 `onError`로 자동 숨김(graceful) → 경로만 미리 적어둬도 안전. `public/shots/`(+ README) 신설, `projects.js` 중개프로에 사용 예시 주석. **구조만 완성 — 실제 PNG는 사용자가 투입.**
+  - **#4 블로그**: `marked` 도입. `src/posts/*.md`(frontmatter)를 `blogData.js`가 `import.meta.glob`로 로딩·파싱·정렬 → `Blog.jsx`(`/blog` 목록)·`Post.jsx`(`/blog/:slug`). 홈 내비에 **BLOG** 링크. 첫 글 "이 사이트를 바이브 코딩으로 키운 과정". 기본 SEO: index.html OG/Twitter/canonical(`www.junominu.com`) + `public/sitemap.xml`·`robots.txt`.
+  - ⚠️ **함정 메모**: Windows 대소문자 미구분 → 컴포넌트 `Blog.jsx`와 로더 `blog.js`가 충돌해 빌드 실패. 로더를 **`blogData.js`**로 개명해 해결.
+  - 빌드(35모듈)·lint 통과. **남은 것: OG 전용 이미지(1200×630), 실제 스크린샷 PNG, `(초안)` 내용 확정(#3, 사용자 몫).**
 - **2026-06-01** — **Phase 2 일괄 구현**: `react-router-dom` v7 도입. `App.jsx`를 라우터 셸로 전환(`/`,`/p/:slug`,`*`→홈, `ScrollToTop`). 홈을 `Home.jsx`로 분리, 상세 `ProjectDetail.jsx` 신설(detail 데이터로 **자동 렌더**). `projects.js`에 `slug`·`STATUS`·`findProject` + **중개프로 detail 초안**(summary/features/stack/timeline/challenges/prompts/retro). 카드: detail 있으면 `/p/:slug` 내부 이동. "0→베타 N일" 자동 계산. `vercel.json`(SPA fallback) 신규 생성. 빌드·lint 통과. **▶ 다음 재개 시작점: 배포 확인 후 중개프로 상세 내용 확정 → 나머지 프로젝트 detail 채우기, 또는 Phase 3(블로그).** (남은 것: 스크린샷 이미지 — 현재 상세는 이모지 히어로.)

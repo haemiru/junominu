@@ -195,6 +195,11 @@ export const PROJECTS = [
     // 상세(메이킹 스토리) — 이 필드가 있으면 카드 클릭 시 내부 상세 페이지로 이동
     // 요약·기능·스택·타임라인 = 로컬 레포(jungaepro) git 이력에서 추출한 실데이터
     detail: {
+      // 스크린샷(선택): public/shots/에 캡처를 넣고 아래 주석을 풀면 표시됨.
+      // 경로는 /shots/ 로 시작. 파일이 없으면 자동 숨김. (public/shots/README.md 참고)
+      // cover: "/shots/jungaepro-cover.png",
+      // shots: ["/shots/jungaepro-1.png", { src: "/shots/jungaepro-2.png", caption: "계약서 PDF" }],
+
       // 시작일 → "0 → 작업 N일" 자동 계산용 (베타 운영 중 → launched 생략)
       started: "2026-02-18",      // 첫 커밋(실데이터)
       summary: [

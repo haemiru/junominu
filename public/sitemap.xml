@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 프로젝트/글을 추가하면 이 파일에도 URL을 한 줄 추가하세요. (정적 관리) -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.junominu.com/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.junominu.com/blog</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://www.junominu.com/p/jjangsaem</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.junominu.com/p/kungkung</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.junominu.com/p/italk</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.junominu.com/p/jungaepro</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.junominu.com/p/soriya</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.junominu.com/blog/built-this-site</loc><lastmod>2026-06-01</lastmod><priority>0.6</priority></url>
+</urlset>

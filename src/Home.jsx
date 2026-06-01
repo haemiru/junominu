@@ -92,6 +92,7 @@ export default function Home() {
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
           <a href="#work">PROJECTS</a>
+          <Link to="/blog">BLOG</Link>
         </nav>
       </header>
 

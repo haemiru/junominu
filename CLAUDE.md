@@ -62,19 +62,59 @@ junominu/
 ├── vercel.json         # SPA fallback rewrites (/(.*) → /index.html, 상세 페이지 새로고침 404 방지)
 ├── src/
 │   ├── main.jsx        # 진입점
-│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug) + ScrollToTop + BackToTop
-│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·PROJECTS 그리드·풋터 + ProjectCard
-│   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug)
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug) + ScrollToTop + BackToTop
+│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·PROJECTS 그리드·풋터 + ProjectCard (내비에 BLOG 링크)
+│   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
+│   ├── Blog.jsx        # 블로그 목록 (/blog)
+│   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더
+│   ├── blogData.js     # src/posts/*.md 로딩 + frontmatter 파싱 → POSTS + findPost
+│   │                   #   ⚠️ 파일명 주의: 컴포넌트 Blog.jsx와 대소문자 충돌(Windows) 피하려 blogData.js
 │   ├── BackToTop.jsx   # 우측 하단 "맨 위로" 버튼
 │   ├── Logo.jsx        # 로고 마크
 │   ├── projects.js     # ME + PROJECTS + STATUS + findProject (데이터, 여기만 고치면 됨)
+│   ├── posts/          # 블로그 글 .md (frontmatter + 본문). 파일 추가하면 글이 자동 생김
 │   ├── index.css       # 다크 테마 토큰 + 리셋 + scroll-behavior
-│   └── App.css         # 레이아웃·카드·상태 pill·상세·내비·버튼 스타일
-├── public/             # (현재 비어 있음)
+│   └── App.css         # 레이아웃·카드·상태 pill·상세·블로그·내비·버튼 스타일
+├── public/
+│   ├── shots/          # 프로젝트 스크린샷(README.md에 사용법). 경로는 /shots/...
+│   ├── sitemap.xml     # 정적 사이트맵 (프로젝트/글 추가 시 같이 갱신)
+│   └── robots.txt
 └── vite.config.js
 ```
 
 라우팅은 **react-router-dom v7**. 카드 클릭 동작·상태 pill은 `STATUS`(projects.js export)를 홈/상세가 공용으로 쓴다.
+
+### 스크린샷 추가 (프로젝트 상세)
+
+`public/shots/`에 캡처를 넣고, `projects.js`의 해당 `detail`에 경로를 적으면 상세 페이지에 표시된다. 경로는 **`/shots/...`로 시작**(앞에 `public` 뺌). 파일이 없으면 자동 숨김(에러 안 남).
+
+```js
+detail: {
+  cover: "/shots/jungaepro-cover.png",   // 히어로 아래 큰 배너(선택)
+  coverCaption: "대시보드",               // (선택)
+  shots: [                                // "화면" 섹션(선택) — 문자열 또는 {src, caption}
+    "/shots/jungaepro-1.png",
+    { src: "/shots/jungaepro-2.png", caption: "계약서 PDF" },
+  ],
+}
+```
+
+### 블로그 글 추가 (Phase 3)
+
+`src/posts/`에 `.md` 파일 하나 추가하면 `/blog` 목록과 `/blog/:slug` 글이 자동 생성된다. 파일 맨 위 frontmatter:
+
+```markdown
+---
+title: 글 제목
+date: 2026-06-01
+summary: 목록에 보일 한 줄 요약
+tags: [바이브코딩, 회고]
+slug: my-post          # (선택) 없으면 파일명에서 자동(날짜 접두사 제거)
+---
+여기부터 본문 마크다운...
+```
+
+`blogData.js`가 `import.meta.glob`로 전부 읽어 frontmatter를 파싱하고 `marked`로 HTML 변환, 날짜 내림차순 정렬. 새 글·프로젝트를 추가하면 **`public/sitemap.xml`에도 URL 한 줄 추가**할 것.
 
 ## 디자인
 
