@@ -42,6 +42,14 @@ export const PROJECTS = [
     status: "live",
     tags: ["AI", "리포트", "Vite"],
   },
+  {
+    name: "중개프로",
+    emoji: "🏢",
+    description: "매물·계약·CRM·문의·AI 도구까지, 공인중개사 업무를 하나로 모은 올인원 플랫폼.",
+    url: "https://jungaepro.com",
+    status: "building",
+    tags: ["SaaS", "멀티테넌트", "React"],
+  },
   // 예시) 구상 단계 카드 — url 없이 추가:
   // {
   //   name: "다음 프로젝트",
