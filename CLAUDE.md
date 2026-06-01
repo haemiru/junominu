@@ -28,22 +28,53 @@
 }
 ```
 
-`ME` 객체(이름·태그라인·소개)도 같은 파일에서 수정.
+`ME` 객체(이름·태그라인·소개·about·now·links·stack·since)도 같은 파일에서 수정.
+
+### 프로젝트 상세 페이지(메이킹 스토리) — Phase 2
+
+프로젝트 객체에 `slug`와 `detail`을 넣으면, 그 카드는 외부 링크 대신 **내부 상세 페이지 `/p/:slug`**로 이동한다(상세에서 "사이트 열기" 버튼으로 외부 이동). `detail`이 없으면 기존처럼 카드 클릭 시 바로 외부 링크. 상세는 전부 **데이터 자동 렌더**(파일럿: 중개프로).
+
+```js
+{
+  name: "중개프로", slug: "jungaepro", emoji: "🏢",
+  description: "...", url: "https://...", status: "building", tags: [...],
+  detail: {
+    started: "2026-02-10",          // "0 → 베타/배포 N일" 자동 계산(launched 없으면 오늘까지)
+    launched: "2026-06-01",         // (선택) 배포일
+    summary:   ["왜 만들었나 문단", ...],
+    features:  ["핵심 기능", ...],
+    stack:     ["React", "Supabase", ...],
+    timeline:  [{ date: "2026-02-10", label: "첫 커밋" }, ...],
+    challenges:["막혔던 점", ...],
+    prompts:   [{ title: "...", text: "핵심 프롬프트" }, ...],
+    retro:     ["회고 문단", ...],
+  },
+}
+```
+
+상세 페이지는 `detail`에 있는 필드만 골라 렌더하므로, 채우고 싶은 것만 넣으면 된다.
 
 ## 구조
 
 ```
 junominu/
 ├── index.html          # 메타 + Pretendard CDN + 이모지 파비콘(⚡)
+├── vercel.json         # SPA fallback rewrites (/(.*) → /index.html, 상세 페이지 새로고침 404 방지)
 ├── src/
 │   ├── main.jsx        # 진입점
-│   ├── App.jsx         # Hero + 카드 그리드 + 풋터 렌더
-│   ├── projects.js     # ME + PROJECTS 데이터 (여기만 고치면 됨)
-│   ├── index.css       # 다크 테마 토큰 + 리셋
-│   └── App.css         # 레이아웃·카드·상태 pill 스타일
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug) + ScrollToTop + BackToTop
+│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·PROJECTS 그리드·풋터 + ProjectCard
+│   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug)
+│   ├── BackToTop.jsx   # 우측 하단 "맨 위로" 버튼
+│   ├── Logo.jsx        # 로고 마크
+│   ├── projects.js     # ME + PROJECTS + STATUS + findProject (데이터, 여기만 고치면 됨)
+│   ├── index.css       # 다크 테마 토큰 + 리셋 + scroll-behavior
+│   └── App.css         # 레이아웃·카드·상태 pill·상세·내비·버튼 스타일
 ├── public/             # (현재 비어 있음)
 └── vite.config.js
 ```
+
+라우팅은 **react-router-dom v7**. 카드 클릭 동작·상태 pill은 `STATUS`(projects.js export)를 홈/상세가 공용으로 쓴다.
 
 ## 디자인
 

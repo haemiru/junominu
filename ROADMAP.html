@@ -64,6 +64,16 @@
   .step .goal{color:var(--accent2);font-size:13.5px;margin-bottom:14px}
   .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--soft);border:1px solid var(--border)}
 
+  .ptable{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+  .ptable th,.ptable td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  .ptable thead th{font-size:12px;letter-spacing:.04em;color:var(--faint);text-transform:uppercase;font-weight:700}
+  .ptable td.c,.ptable th.c{text-align:center;white-space:nowrap}
+  .ptable .work{font-weight:700;color:var(--text)}
+  .ptable .desc{color:var(--soft);font-size:13.5px}
+  .lv{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--soft)}
+  .order{margin-top:14px;font-size:13.5px;color:var(--soft)}
+  .order b{color:var(--accent2)}
+
   .log{border-left:2px solid var(--border);padding-left:18px;display:grid;gap:14px}
   .log .item .date{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:.04em}
   .log .item .txt{color:var(--soft);font-size:14.5px;margin-top:2px}
@@ -175,12 +185,23 @@
     <div class="step">
       <div class="h"><span class="pill">Phase 2</span> 프로젝트 상세 페이지 (react-router)</div>
       <div class="goal">목표: 1번(메이킹 스토리)의 본체. 사이트의 핵심 콘텐츠.</div>
-      <ul class="todo">
-        <li><span class="box"></span><span><code>react-router-dom</code> 도입 — <code>/</code>(홈) + <code>/p/:slug</code>(상세)</span></li>
-        <li><span class="box"></span><span>상세 템플릿: 스크린샷 · 스택 · 타임라인 · 회고 · 핵심 프롬프트 · 외부 링크 버튼</span></li>
-        <li><span class="box"></span><span>상세 데이터 1개부터 채우기 (예: 중개프로 / 짱샘의 책방)</span></li>
-        <li><span class="box"></span><span>Vercel SPA fallback 확인 (이미 <code>vercel.json</code> rewrites 있음)</span></li>
-      </ul>
+      <p class="why" style="color:var(--soft);font-size:14px;margin-bottom:6px"><b style="color:var(--text)">결정</b> — 상세 내용은 <b style="color:var(--text)">데이터 자동</b>(<code>PROJECTS</code> 필드) 방식, 파일럿 = <b style="color:var(--text)">중개프로</b>.</p>
+      <table class="ptable">
+        <thead><tr><th class="c">#</th><th>작업</th><th>내용</th><th class="c">난이도</th><th class="c">상태</th></tr></thead>
+        <tbody>
+          <tr><td class="c">1</td><td class="work"><code>react-router-dom</code> 도입</td><td class="desc">라우터 설치(v7) + <code>App.jsx</code>를 <code>BrowserRouter</code> 셸로</td><td class="c"><span class="lv">하</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">2</td><td class="work">라우트 구성</td><td class="desc"><code>/</code>(홈) + <code>/p/:slug</code>(상세) + <code>*</code>→홈</td><td class="c"><span class="lv">하</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">3</td><td class="work">데이터에 <code>slug</code> 추가</td><td class="desc"><code>PROJECTS</code> 5개 모두 <code>slug</code> 부여</td><td class="c"><span class="lv">하</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">4</td><td class="work">상세 필드 설계</td><td class="desc"><code>detail{summary·features·stack·timeline·challenges·prompts·retro·started}</code></td><td class="c"><span class="lv">중</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">5</td><td class="work">상세 페이지 템플릿</td><td class="desc"><code>ProjectDetail.jsx</code> — detail 데이터로 자동 렌더(있는 필드만)</td><td class="c"><span class="lv">중</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">6</td><td class="work">카드 동작 변경</td><td class="desc">detail 있으면 <code>/p/:slug</code>, 없으면 외부, url 없으면 정적</td><td class="c"><span class="lv">중</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">7</td><td class="work">"0→배포 N일" 타임라인</td><td class="desc"><code>started</code>→오늘(또는 <code>launched</code>) 일수 + 마일스톤</td><td class="c"><span class="lv">중</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">8</td><td class="work">상세 데이터 채우기</td><td class="desc">파일럿 = <b style="color:var(--text)">중개프로</b> 내용(초안)</td><td class="c"><span class="lv">중</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">9</td><td class="work">Vercel SPA fallback</td><td class="desc"><code>vercel.json</code> rewrites 추가(신규 생성)</td><td class="c"><span class="lv">하</span></td><td class="c">✓</td></tr>
+          <tr><td class="c">10</td><td class="work">홈↔상세 내비</td><td class="desc">상·하단 "← 작업실로" + 라우트 변경 시 스크롤 리셋</td><td class="c"><span class="lv">하</span></td><td class="c">✓</td></tr>
+        </tbody>
+      </table>
+      <p class="order"><b>진행 순서</b> — 1차(뼈대) 1→2→3→9 · 2차(틀) 4→5→6→10 · 3차(채우기) 8→7 — <b style="color:var(--text)">모두 완료</b>(중개프로 상세 내용은 초안, 리뷰 대기)</p>
     </div>
 
     <div class="step">
@@ -240,7 +261,15 @@
     </div>
     <div class="item">
       <div class="date">2026-06-01</div>
-      <div class="txt">STACK 내용 확정(AI 코딩=Claude Code·Antigravity·Codex / 백엔드=Supabase·Firebase / 배포=Vercel). 앵커 내비를 <b>칩 스타일</b>로 강조하고 라벨을 <b>STACK·PROJECTS</b>로 통일. <b>Phase 1 완료. ▶ 다음 재개 시작점: Phase 2(상세 페이지).</b></div>
+      <div class="txt">STACK 내용 확정(AI 코딩=Claude Code·Antigravity·Codex / 백엔드=Supabase·Firebase / 배포=Vercel). 앵커 내비를 <b>칩 스타일</b>로 강조하고 라벨을 <b>STACK·PROJECTS</b>로 통일. <b>Phase 1 완료.</b></div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-01</div>
+      <div class="txt">맨 위로 가기 버튼 추가(<code>BackToTop</code>).</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-01</div>
+      <div class="txt"><b>Phase 2 일괄 구현</b> — <code>react-router-dom</code> v7 도입. <code>App.jsx</code>를 라우터 셸로(<code>/</code>,<code>/p/:slug</code>,<code>*</code>→홈, <code>ScrollToTop</code>). 홈을 <code>Home.jsx</code>로 분리, 상세 <code>ProjectDetail.jsx</code> 신설(detail 데이터로 <b>자동 렌더</b>). <code>projects.js</code>에 <code>slug</code>·<code>STATUS</code>·<code>findProject</code> + <b>중개프로 detail 초안</b>. 카드는 detail 있으면 <code>/p/:slug</code> 내부 이동, "0→베타 N일" 자동 계산. <code>vercel.json</code>(SPA fallback) 신규. 빌드·lint 통과. <b>▶ 다음 재개 시작점: 배포 확인 후 중개프로 상세 내용 확정 → 나머지 detail 채우기 or Phase 3(블로그).</b> (남은 것: 스크린샷 — 현재는 이모지 히어로.)</div>
     </div>
   </div>
 

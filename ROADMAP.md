@@ -82,11 +82,22 @@
 ### Phase 2 — 프로젝트 상세 페이지 (react-router)
 
 > 목표: 1번(메이킹 스토리)의 본체. 사이트의 핵심 콘텐츠.
+> **결정**: 상세 내용은 **데이터 자동**(`PROJECTS`의 필드) 방식. 파일럿 프로젝트 = **중개프로**.
 
-- [ ] `react-router-dom` 도입, `/`(홈) + `/p/:slug`(상세) 구성
-- [ ] 상세 페이지 템플릿: 히어로(스크린샷) · 스택 · 타임라인 · 회고 · 핵심 프롬프트 · 외부 링크 버튼
-- [ ] `PROJECTS`에 상세 데이터 1개부터 채워보기(예: 중개프로 or 짱샘의 책방)
-- [ ] Vercel SPA fallback 확인(이미 `vercel.json` rewrites 있음)
+| # | 작업 | 내용 | 난이도 | 상태 |
+|---|------|------|:---:|:---:|
+| 1 | `react-router-dom` 도입 | 라우터 설치(v7) + `App.jsx`를 `BrowserRouter` 셸로 | 하 | [x] |
+| 2 | 라우트 구성 | `/`(홈) + `/p/:slug`(상세) + `*`→홈 | 하 | [x] |
+| 3 | 데이터에 `slug` 추가 | `PROJECTS` 5개 모두 `slug` 부여 | 하 | [x] |
+| 4 | `PROJECTS` 상세 필드 설계 | `detail{summary·features·stack·timeline·challenges·prompts·retro·started}` | 중 | [x] |
+| 5 | 상세 페이지 템플릿 | `ProjectDetail.jsx` — detail 데이터로 자동 렌더(있는 필드만) | 중 | [x] |
+| 6 | 카드 동작 변경 | detail 있으면 `/p/:slug` 내부 이동, 없으면 외부, url 없으면 정적 | 중 | [x] |
+| 7 | "0→배포 N일" 타임라인 | `started`→오늘(또는 `launched`) 일수 + 마일스톤 타임라인 | 중 | [x] |
+| 8 | 상세 데이터 채우기 | 파일럿 = **중개프로** 내용 작성(초안) | 중 | [x] |
+| 9 | Vercel SPA fallback | `vercel.json` rewrites 추가(신규 생성) | 하 | [x] |
+| 10 | 홈↔상세 내비 | 상세 상·하단 "← 작업실로" 링크 + 라우트 변경 시 스크롤 리셋 | 하 | [x] |
+
+**진행 순서**: 1차(뼈대) 1→2→3→9 · 2차(틀) 4→5→6→10 · 3차(채우기) 8→7 — **모두 완료(중개프로 상세 내용은 초안, 리뷰 대기)**
 
 ### Phase 3 — 블로그
 
@@ -121,3 +132,5 @@
 - **2026-06-01** — 소리야 놀자! `building` 카드 추가. 카피 다듬기(Hero intro 한 줄, About 줄바꿈, NOW/PROJECTS 라벨 정리). **링크 줄 개편(방향 A)**: 성격 다른 "짱샘의 책방"(제품) 제거 → "나를 찾는 법"으로 통일, `FIND ME` 라벨 + GitHub·Email 아이콘 칩(hover lift). **Email은 `mailto` → Gmail 웹 작성창**으로 변경(PC 기본 메일앱 없을 때 먹통 방지). 검증은 dev 서버 대신 배포 환경에서 직접 확인.
 - **2026-06-01** — **Phase 1 마무리**: STACK(스택/도구함) 섹션 추가 — 그룹별 칩(AI 코딩/프런트엔드/스타일/백엔드·데이터/배포·호스팅), 내용은 초안. Hero에 **앵커 내비**(About·Now·스택·프로젝트) + `scroll-behavior:smooth` + 섹션 `scroll-margin`. **▶ 다음 재개 시작점: Phase 2 — `react-router-dom` 도입, `/p/:slug` 상세 페이지.** (남은 미세 작업: STACK 내용 확정.)
 - **2026-06-01** — STACK 내용 확정(AI 코딩=Claude Code·Antigravity·Codex / 백엔드=Supabase·Firebase / 배포=Vercel). 앵커 내비를 **칩 스타일**로 강조하고 라벨을 **STACK·PROJECTS**로 통일. **Phase 1 완료. ▶ 다음 재개 시작점: Phase 2(상세 페이지).**
+- **2026-06-01** — 맨 위로 가기 버튼 추가(`BackToTop`).
+- **2026-06-01** — **Phase 2 일괄 구현**: `react-router-dom` v7 도입. `App.jsx`를 라우터 셸로 전환(`/`,`/p/:slug`,`*`→홈, `ScrollToTop`). 홈을 `Home.jsx`로 분리, 상세 `ProjectDetail.jsx` 신설(detail 데이터로 **자동 렌더**). `projects.js`에 `slug`·`STATUS`·`findProject` + **중개프로 detail 초안**(summary/features/stack/timeline/challenges/prompts/retro). 카드: detail 있으면 `/p/:slug` 내부 이동. "0→베타 N일" 자동 계산. `vercel.json`(SPA fallback) 신규 생성. 빌드·lint 통과. **▶ 다음 재개 시작점: 배포 확인 후 중개프로 상세 내용 확정 → 나머지 프로젝트 detail 채우기, 또는 Phase 3(블로그).** (남은 것: 스크린샷 이미지 — 현재 상세는 이모지 히어로.)
