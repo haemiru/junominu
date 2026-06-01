@@ -76,7 +76,11 @@ export default function App() {
       <section id="about" className="section">
         <h2 className="section__label">ABOUT — 비개발자의 바이브 코딩</h2>
         {ME.about.map((para, i) => (
-          <p className="section__para" key={i}>{para}</p>
+          <p className="section__para" key={i}>
+            {para.split('\n').map((line, j) => (
+              <span key={j}>{j > 0 && <br />}{line}</span>
+            ))}
+          </p>
         ))}
         <ul className="links">
           {ME.links.map((l) => (
@@ -88,7 +92,7 @@ export default function App() {
       </section>
 
       <section id="now" className="section">
-        <h2 className="section__label">NOW — 지금 만드는 것</h2>
+        <h2 className="section__label">NOW — 지금 만들고 있는 것</h2>
         <ul className="now">
           {ME.now.map((item, i) => (
             <li className="now__item" key={i}>{item}</li>
@@ -97,7 +101,7 @@ export default function App() {
       </section>
 
       <section id="work">
-        <h2 className="section__label">PROJECTS — 만든 것들</h2>
+        <h2 className="section__label">PROJECTS</h2>
         <div className="grid">
           {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
         </div>
