@@ -1,4 +1,5 @@
 import './App.css'
+import Logo from './Logo'
 import { ME, PROJECTS } from './projects'
 
 const STATUS = {
@@ -34,7 +35,10 @@ export default function App() {
   return (
     <div className="page">
       <header className="hero">
-        <p className="hero__kicker">VIBE CODING WORKSHOP</p>
+        <div className="hero__brand">
+          <Logo size={56} />
+          <p className="hero__kicker">VIBE CODING WORKSHOP</p>
+        </div>
         <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
