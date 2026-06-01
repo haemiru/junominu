@@ -87,7 +87,7 @@ export default function App() {
           <a href="#about">About</a>
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
-          <a href="#work">PROJECT</a>
+          <a href="#work">PROJECTS</a>
         </nav>
       </header>
 

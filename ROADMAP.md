@@ -76,7 +76,7 @@
 - [x] **지표 카운터** 추가 (2번) — 데이터 자동 계산(프로젝트/운영 중/작업 중/개월째)
 - [x] **Now 섹션** 추가 (2번) — 초안
 - [x] **스택/도구함 섹션** 추가 (5번) — 그룹별 칩(AI 코딩·프런트·스타일·데이터·배포), 내용 확정
-- [x] Hero/내비게이션에 섹션 앵커 링크(About · Now · 스택 · 프로젝트) — 부드러운 스크롤 + 앵커 여백
+- [x] Hero/내비게이션에 섹션 앵커 링크(About · Now · STACK · PROJECTS) — 칩 스타일, 부드러운 스크롤 + 앵커 여백
 - [x] About/Now/지표 **내용 확정** — 사용자 리뷰 반영 완료(시작 2026-01, System Architect 서사, Now=중개프로+소리야놀자)
 
 ### Phase 2 — 프로젝트 상세 페이지 (react-router)
@@ -120,3 +120,4 @@
 - **2026-06-01** — About/Now 내용 확정 반영: `since` 2025-01→**2026-01**, About 서사 "기획·사업"→**"System Architect로 다니던 직장인"**, Now에서 킁킁메이트·이 사이트 제거하고 **소리야 놀자!(Speech-Therapy, 발달장애 아동 언어치료 게임)** 추가. **▶ 다음 재개 시작점: 스택/도구함 섹션 추가 + Hero/내비 앵커 링크.**
 - **2026-06-01** — 소리야 놀자! `building` 카드 추가. 카피 다듬기(Hero intro 한 줄, About 줄바꿈, NOW/PROJECTS 라벨 정리). **링크 줄 개편(방향 A)**: 성격 다른 "짱샘의 책방"(제품) 제거 → "나를 찾는 법"으로 통일, `FIND ME` 라벨 + GitHub·Email 아이콘 칩(hover lift). **Email은 `mailto` → Gmail 웹 작성창**으로 변경(PC 기본 메일앱 없을 때 먹통 방지). 검증은 dev 서버 대신 배포 환경에서 직접 확인.
 - **2026-06-01** — **Phase 1 마무리**: STACK(스택/도구함) 섹션 추가 — 그룹별 칩(AI 코딩/프런트엔드/스타일/백엔드·데이터/배포·호스팅), 내용은 초안. Hero에 **앵커 내비**(About·Now·스택·프로젝트) + `scroll-behavior:smooth` + 섹션 `scroll-margin`. **▶ 다음 재개 시작점: Phase 2 — `react-router-dom` 도입, `/p/:slug` 상세 페이지.** (남은 미세 작업: STACK 내용 확정.)
+- **2026-06-01** — STACK 내용 확정(AI 코딩=Claude Code·Antigravity·Codex / 백엔드=Supabase·Firebase / 배포=Vercel). 앵커 내비를 **칩 스타일**로 강조하고 라벨을 **STACK·PROJECTS**로 통일. **Phase 1 완료. ▶ 다음 재개 시작점: Phase 2(상세 페이지).**
