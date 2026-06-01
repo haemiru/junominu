@@ -1,54 +1,54 @@
 :root {
-  --lavender: #9B89B3;
-  --lavender-50: #F5F2FA;
-  --lavender-100: #E8E2F1;
-  --lavender-700: #6E5E89;
-  --teal: #0F766E;
-  --teal-50: #ECFDF5;
-  --teal-700: #0B5E58;
+  --bg: #0b0d12;
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
 
-  --text: #3F3A4A;
-  --text-h: #1F1B2E;
-  --text-muted: #7A7387;
-  --bg: #FBFAFD;
-  --surface: #FFFFFF;
-  --border: #E5E1EC;
+  --text: #e8eaf0;
+  --text-soft: #9aa0ad;
+  --text-faint: #6b7280;
 
-  --sans: "Pretendard", system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --accent: #7c5cff;
+  --accent-2: #22d3ee;
+  --live: #34d399;
+  --building: #fbbf24;
+  --idea: #94a3b8;
 
-  font: 16px/1.6 var(--sans);
-  color: var(--text);
-  background: var(--bg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  --radius: 18px;
+  --maxw: 1040px;
+
+  --sans: "Pretendard Variable", Pretendard, system-ui, -apple-system,
+    "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  color-scheme: dark;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  margin: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 a {
-  color: var(--teal);
+  color: inherit;
   text-decoration: none;
-}
-
-a:hover {
-  color: var(--teal-700);
-  text-decoration: underline;
-}
-
-h1,
-h2,
-h3 {
-  color: var(--text-h);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0;
 }

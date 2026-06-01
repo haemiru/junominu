@@ -1,170 +1,54 @@
 import './App.css'
+import { ME, PROJECTS } from './projects'
 
-const BOOKSTORE_URL = 'https://jjangsaem.com'
-
-const tools = [
-  {
-    id: 'kungkung-mate',
-    name: '킁킁메이트',
-    tagline: '아이의 후각·호흡 루틴을 함께하는 작은 친구',
-    description:
-      '향과 호흡을 활용해 아이가 스스로 진정하고 몰입할 수 있도록 돕는 보호자용 도구입니다.',
-    status: 'live',
-    href: 'https://kungkung.junominu.com/?utm_source=junominu-hub&utm_medium=hub-card&utm_campaign=kungkung-mate-trial',
-  },
-  {
-    id: 'i-talk',
-    name: 'i-talk',
-    tagline: '우리 아이 행동을 짱샘이 직접 분석',
-    description:
-      '아이의 일상 영상을 올리면 25년차 소아물리치료사 짱샘이 PubMed 논문 근거와 함께 부모님께 보내는 편지 형태의 분석 리포트를 직접 작성해 드려요.',
-    status: 'live',
-    href: 'https://italk.junominu.com/?utm_source=junominu-hub&utm_medium=hub-card&utm_campaign=italk-launch',
-  },
-]
-
-function Header() {
-  return (
-    <header className="site-header">
-      <div className="container site-header__inner">
-        <span className="badge">키즈피지오짱샘 공식 도구</span>
-        <a
-          className="site-header__link"
-          href={BOOKSTORE_URL}
-          target="_blank"
-          rel="noreferrer"
-        >
-          짱샘의 책방 →
-        </a>
-      </div>
-    </header>
-  )
+const STATUS = {
+  live:     { label: 'LIVE',   cls: 'status status--live' },
+  building: { label: '작업 중', cls: 'status status--building' },
+  idea:     { label: '구상',   cls: 'status status--idea' },
 }
 
-function Hero() {
+function ProjectCard({ p }) {
+  const status = STATUS[p.status] ?? STATUS.idea
+  const Tag = p.url ? 'a' : 'div'
+  const linkProps = p.url ? { href: p.url, target: '_blank', rel: 'noreferrer' } : {}
+
   return (
-    <section className="hero">
-      <div className="container">
-        <h1 className="hero__title">키즈피지오짱샘 도구 모음</h1>
-        <p className="hero__subtitle">
-          감각·호흡·놀이 기반으로 아이와 보호자의 하루를 돕는 작은 도구들을
-          모았습니다.
-        </p>
+    <Tag className={`card${p.url ? ' card--link' : ''}`} {...linkProps}>
+      <div className="card__top">
+        <span className="card__emoji" aria-hidden="true">{p.emoji}</span>
+        <span className={status.cls}>{status.label}</span>
       </div>
-    </section>
-  )
-}
-
-function ToolCard({ tool }) {
-  const isComingSoon = tool.status === 'coming-soon'
-  const isLive = tool.status === 'live'
-
-  const cardClass = `card${isComingSoon ? ' card--soon' : ''}${
-    isLive ? ' card--live' : ''
-  }`
-
-  const content = (
-    <>
-      <div className="card__head">
-        <h2 className="card__title">{tool.name}</h2>
-        {isComingSoon && <span className="chip">Coming Soon</span>}
-        {isLive && <span className="chip chip--new">NEW</span>}
-      </div>
-      <p className="card__tagline">{tool.tagline}</p>
-      <p className="card__desc">{tool.description}</p>
-      {isLive && <span className="card__cta">바로 사용해보기 →</span>}
-    </>
-  )
-
-  if (isLive && tool.href) {
-    return (
-      <a
-        className={cardClass}
-        href={tool.href}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {content}
-      </a>
-    )
-  }
-
-  return <article className={cardClass}>{content}</article>
-}
-
-function Tools() {
-  return (
-    <section className="tools">
-      <div className="container">
-        <div className="tools__grid">
-          {tools.map((tool) => (
-            <ToolCard key={tool.id} tool={tool} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="container site-footer__inner">
-        <div className="site-footer__brand">
-          <a
-            className="site-footer__bookstore"
-            href={BOOKSTORE_URL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            📖 짱샘의 책방 — 감각 치유 전문 전자책
-          </a>
-        </div>
-        <dl className="biz">
-          <div className="biz__row">
-            <dt>상호</dt>
-            <dd>강남상회</dd>
-            <dt>대표</dt>
-            <dd>하성재</dd>
-          </div>
-          <div className="biz__row">
-            <dt>사업자등록번호</dt>
-            <dd>893-19-02019</dd>
-            <dt>통신판매업</dt>
-            <dd>제2025-충북청주-1318호</dd>
-          </div>
-          <div className="biz__row">
-            <dt>주소</dt>
-            <dd>충청북도 청주시 흥덕구 진재로41, 3층 A220호</dd>
-          </div>
-          <div className="biz__row">
-            <dt>이메일</dt>
-            <dd>
-              <a href="mailto:junominu@gmail.com">junominu@gmail.com</a>
-            </dd>
-            <dt>전화</dt>
-            <dd>
-              <a href="tel:01057763325">010-5776-3325</a>
-            </dd>
-          </div>
-        </dl>
-        <p className="site-footer__copy">
-          © {new Date().getFullYear()} 강남상회. All rights reserved.
-        </p>
-      </div>
-    </footer>
+      <h2 className="card__title">{p.name}</h2>
+      <p className="card__desc">{p.description}</p>
+      {p.tags?.length > 0 && (
+        <ul className="card__tags">
+          {p.tags.map((t) => <li key={t}>{t}</li>)}
+        </ul>
+      )}
+      {p.url && <span className="card__cta">열기 →</span>}
+    </Tag>
   )
 }
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <Tools />
+    <div className="page">
+      <header className="hero">
+        <p className="hero__kicker">VIBE CODING WORKSHOP</p>
+        <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
+        <p className="hero__tagline">{ME.tagline}</p>
+        <p className="hero__intro">{ME.intro}</p>
+      </header>
+
+      <main className="grid">
+        {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
       </main>
-      <Footer />
-    </>
+
+      <footer className="foot">
+        <span>© {new Date().getFullYear()} {ME.name}</span>
+        <span className="foot__sep">·</span>
+        <span>made with vibe coding</span>
+      </footer>
+    </div>
   )
 }
