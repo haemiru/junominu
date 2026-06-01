@@ -49,6 +49,47 @@ function ProjectCard({ p }) {
   return <div className="card">{inner}</div>
 }
 
+function Journey() {
+  // detail.started 가 있는 프로젝트를 시작일 오름차순으로
+  const items = PROJECTS
+    .filter((p) => p.detail?.started)
+    .slice()
+    .sort((a, b) => (a.detail.started < b.detail.started ? -1 : 1))
+
+  if (items.length === 0) return null
+
+  return (
+    <section id="journey" className="section">
+      <h2 className="section__label">JOURNEY — 시간순 기록</h2>
+      <ol className="tl tl--journey">
+        {items.map((p) => {
+          const status = STATUS[p.status] ?? STATUS.idea
+          const body = (
+            <>
+              <span className="tl__date">{p.detail.started.replaceAll('-', '.')}</span>
+              <span className="jrow">
+                <span className="jrow__emoji" aria-hidden="true">{p.emoji}</span>
+                <span className="jrow__name">{p.name}</span>
+                <span className={status.cls}>{status.label}</span>
+              </span>
+              <span className="tl__label">{p.description}</span>
+            </>
+          )
+          return (
+            <li className="tl__item" key={p.name}>
+              {p.slug ? (
+                <Link className="jlink" to={`/p/${p.slug}`}>{body}</Link>
+              ) : (
+                body
+              )}
+            </li>
+          )
+        })}
+      </ol>
+    </section>
+  )
+}
+
 function monthsSince(ym) {
   const [y, m] = ym.split('-').map(Number)
   const now = new Date()
@@ -91,6 +132,7 @@ export default function Home() {
           <a href="#about">About</a>
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
+          <a href="#journey">JOURNEY</a>
           <a href="#work">PROJECTS</a>
           <Link to="/blog">BLOG</Link>
         </nav>
@@ -144,6 +186,8 @@ export default function Home() {
         </div>
       </section>
 
+      <Journey />
+
       <section id="work">
         <h2 className="section__label">PROJECTS</h2>
         <div className="grid">
@@ -153,6 +197,10 @@ export default function Home() {
 
       <footer className="foot">
         <span>© {new Date().getFullYear()} {ME.name}</span>
+        <span className="foot__sep">·</span>
+        <Link to="/prompts" className="foot__link">프롬프트 노트</Link>
+        <span className="foot__sep">·</span>
+        <Link to="/blog" className="foot__link">블로그</Link>
         <span className="foot__sep">·</span>
         <span>made with vibe coding</span>
       </footer>

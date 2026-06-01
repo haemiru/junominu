@@ -416,6 +416,51 @@
   opacity: 0.5;
 }
 
+.foot__link {
+  color: var(--text-soft);
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.foot__link:hover {
+  color: var(--accent-2);
+}
+
+/* 프롬프트 노트 페이지 */
+.promptgroup__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.promptgroup__name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.promptgroup__more {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-2);
+}
+
+.prompt__draft {
+  margin-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  color: var(--building);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 999px;
+  padding: 2px 7px;
+}
+
 /* ── 프로젝트 상세 페이지 ───────────── */
 .back {
   position: relative;
@@ -569,6 +614,49 @@
   margin-top: 2px;
   color: var(--text-soft);
   font-size: 14.5px;
+}
+
+/* JOURNEY (홈 시간순) — 타임라인 위에 카드형 행 */
+.tl--journey .tl__item {
+  padding-bottom: 26px;
+}
+
+.jlink {
+  display: block;
+  border-radius: 12px;
+  padding: 2px 0;
+  transition: transform 0.15s ease;
+}
+
+.jlink:hover {
+  transform: translateX(2px);
+}
+
+.jrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.jrow__emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.jrow__name {
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.jlink:hover .jrow__name {
+  color: #fff;
+}
+
+.tl--journey .tl__label {
+  margin-top: 4px;
 }
 
 /* 핵심 프롬프트 */
@@ -819,6 +907,7 @@
 #about,
 #now,
 #stack,
+#journey,
 #work {
   scroll-margin-top: 28px;
 }

@@ -3,7 +3,7 @@
 > **junominu.com을 "결과물 브릿지"에서 "바이브 코딩 과정을 보여주는 사이트"로 키우는 작업 문서.**
 > 이 `.md`가 관리 기준이며, 동일한 내용을 `ROADMAP.html`로도 **항상 동기화**한다.
 
-**마지막 업데이트:** 2026-06-01
+**마지막 업데이트:** 2026-06-02
 
 ---
 
@@ -38,26 +38,26 @@
 
 - [x] **Now 섹션**: "지금 만들고 있는 것" (주/월 단위 갱신) — 초안 반영
 - [x] **지표 카운터**: 만든 프로젝트 수 / 운영 중 / 작업 중 / 개월째 — 데이터 자동 계산
-- [ ] **타임라인**: 첫 프로젝트부터 시간순 기록(저니)
+- [x] **타임라인**: 첫 프로젝트부터 시간순 기록(저니) — 홈 JOURNEY 섹션(`detail.started` 자동 정렬)
 
 ### 3. 블로그 (검색 유입 + 신뢰)
 
 - [x] 마크다운 글 파이프라인 구성 (가볍게 시작) — `blogData.js` + `marked`
 - [ ] 글감: 바이브 코딩 워크플로우, 도구 리뷰(Claude Code·Cursor·Vercel·Supabase), 삽질기
 - [x] 글 목록 + 개별 글 페이지 (3단계) — `/blog`·`/blog/:slug`
-- [x] 기본 SEO(메타·OG·사이트맵) — OG 전용 이미지만 남음
+- [x] 기본 SEO(메타·OG·사이트맵) — OG 전용 이미지(`public/og.png`, 1200×630) 포함 **완료**
 
 ### 4. About / 나
 
 - [x] About 섹션: 누구인지 + **왜** 바이브 코딩을 하는지(비개발자 → 1인 메이커 서사) — 초안 반영
 - [x] 연락처 / SNS / GitHub 링크 — GitHub·짱샘의 책방·Email
-- [ ] 전자책 "바이브 코딩으로 1인 사업가 되기" 서사와 연결
+- [x] 전자책 "바이브 코딩으로 1인 사업가 되기" 서사와 연결 — About에 서사 문장 추가(공개 URL 나오면 링크 연결)
 
 ### 5. 부가 (여력 될 때)
 
-- [ ] **내 스택/도구함**: 실제로 쓰는 도구 모음 카드
-- [ ] **템플릿·프롬프트 공유**: 재사용 보일러플레이트, 프롬프트 모음 (리드 마그넷)
-- [ ] **뉴스레터 구독** 폼 (팔로워 모으기)
+- [x] **내 스택/도구함**: 실제로 쓰는 도구 모음 (홈 STACK 섹션)
+- [x] **프롬프트 공유**: `/prompts` 프롬프트 노트 — 전 프로젝트 `detail.prompts` 자동 집계(초안 배지). 단 재사용 보일러플레이트/템플릿은 아직
+- [ ] **뉴스레터 구독** 폼 — ⛔ 도구 선택(Buttondown/ConvertKit/자체) + 외부 계정 필요 → 사용자 결정 대기
 
 ---
 
@@ -106,12 +106,12 @@
 - [x] 마크다운 로딩 방식 결정(Vite `import.meta.glob` + `marked` 파서, `blogData.js`에서 frontmatter 파싱)
 - [x] `/blog`(목록) + `/blog/:slug`(글) 라우트 — `Blog.jsx`·`Post.jsx`
 - [x] 첫 글 1편 작성 — "이 사이트를 바이브 코딩으로 키운 과정"(`posts/2026-06-01-built-this-site...md`)
-- [x] 메타·OG·사이트맵 — index.html OG/Twitter/canonical, `public/sitemap.xml`·`robots.txt` (단 **OG 전용 이미지(1200×630)는 아직** — 현재 summary 카드)
+- [x] 메타·OG·사이트맵 — index.html OG/Twitter/canonical, `public/sitemap.xml`·`robots.txt`, **OG 전용 이미지 `public/og.png`(1200×630, twitter:summary_large_image)** 완료
 
 ### Phase 4 — 성장 장치 (선택)
 
-- [ ] 템플릿/프롬프트 공유 페이지
-- [ ] 뉴스레터 구독 연동
+- [x] 프롬프트 공유 페이지 — `/prompts`(전 프로젝트 `detail.prompts` 자동 집계). 보일러플레이트/템플릿 공유는 아직
+- [ ] 뉴스레터 구독 연동 — ⛔ 도구 선택(Buttondown/ConvertKit/자체) 필요 → 사용자 결정 대기
 
 ---
 
@@ -148,3 +148,11 @@
   - ⚠️ **함정 메모**: Windows 대소문자 미구분 → 컴포넌트 `Blog.jsx`와 로더 `blog.js`가 충돌해 빌드 실패. 로더를 **`blogData.js`**로 개명해 해결.
   - 빌드(35모듈)·lint 통과. **남은 것: OG 전용 이미지(1200×630), 실제 스크린샷 PNG, `(초안)` 내용 확정(#3, 사용자 몫).**
 - **2026-06-01** — **Phase 2 일괄 구현**: `react-router-dom` v7 도입. `App.jsx`를 라우터 셸로 전환(`/`,`/p/:slug`,`*`→홈, `ScrollToTop`). 홈을 `Home.jsx`로 분리, 상세 `ProjectDetail.jsx` 신설(detail 데이터로 **자동 렌더**). `projects.js`에 `slug`·`STATUS`·`findProject` + **중개프로 detail 초안**(summary/features/stack/timeline/challenges/prompts/retro). 카드: detail 있으면 `/p/:slug` 내부 이동. "0→베타 N일" 자동 계산. `vercel.json`(SPA fallback) 신규 생성. 빌드·lint 통과. **▶ 다음 재개 시작점: 배포 확인 후 중개프로 상세 내용 확정 → 나머지 프로젝트 detail 채우기, 또는 Phase 3(블로그).** (남은 것: 스크린샷 이미지 — 현재 상세는 이모지 히어로.)
+- **2026-06-02** — **자동 가능한 잔여 작업 일괄 처리(사이트 비공개 상태에서)**. 사용자 지시: "내가 할 수 있는 작업 다 끝내줘".
+  - **OG 이미지**: 사이트 디자인 그대로 카드 HTML(Pretendard) 작성 → **Chrome 헤드리스로 `public/og.png`(1200×630) 렌더**. index.html에 og:image·twitter:summary_large_image 연결. (임시 `.og-build/`는 삭제)
+  - **JOURNEY 섹션**(To-Do 2번): 홈에 `detail.started` 자동 정렬 타임라인. 내비에 JOURNEY 추가. 순서 검증 = 중개프로(02-18)→짱샘(03-02)→킁킁(04-19)→i-talk(04-21)→소리야(05-15).
+  - **About↔전자책**(To-Do 4번): About에 『바이브 코딩으로 1인 사업가 되기』 연결 문장(공개 URL 나오면 링크).
+  - **프롬프트 노트 `/prompts`**(Phase 4): 전 프로젝트 `detail.prompts` 자동 집계, `(초안)`엔 노란 배지. 홈 풋터에 프롬프트 노트·블로그 링크.
+  - **블로그 2번째 글(초안)**: "데이터 한 곳만 고치면 화면이 따라온다". 본문에 초안 표시 — 사용자가 자기 표현으로 다듬을 것.
+  - 빌드(37모듈)·lint 통과. Chrome 헤드리스로 홈/프롬프트/글 페이지 스크린샷 시각 검증 OK.
+  - **▶ 다음 재개 시작점(남은 것):** ① **#3 `(초안)` 확정**(사용자 몫 — 막힌 점·프롬프트·회고·`⚠️`날짜, 2번째 글 다듬기) ② **실제 스크린샷 PNG** `public/shots/` 투입 ③ **뉴스레터**(도구 선택 후) ④ 보일러플레이트/템플릿 공유.

@@ -62,11 +62,12 @@ junominu/
 ├── vercel.json         # SPA fallback rewrites (/(.*) → /index.html, 상세 페이지 새로고침 404 방지)
 ├── src/
 │   ├── main.jsx        # 진입점
-│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug) + ScrollToTop + BackToTop
-│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·PROJECTS 그리드·풋터 + ProjectCard (내비에 BLOG 링크)
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts) + ScrollToTop + BackToTop
+│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·풋터 + ProjectCard (내비 BLOG, 풋터 프롬프트노트·블로그 링크)
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
 │   ├── Blog.jsx        # 블로그 목록 (/blog)
 │   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더
+│   ├── Prompts.jsx     # 프롬프트 노트 (/prompts) — 전 프로젝트 detail.prompts 자동 집계
 │   ├── blogData.js     # src/posts/*.md 로딩 + frontmatter 파싱 → POSTS + findPost
 │   │                   #   ⚠️ 파일명 주의: 컴포넌트 Blog.jsx와 대소문자 충돌(Windows) 피하려 blogData.js
 │   ├── BackToTop.jsx   # 우측 하단 "맨 위로" 버튼
@@ -74,9 +75,10 @@ junominu/
 │   ├── projects.js     # ME + PROJECTS + STATUS + findProject (데이터, 여기만 고치면 됨)
 │   ├── posts/          # 블로그 글 .md (frontmatter + 본문). 파일 추가하면 글이 자동 생김
 │   ├── index.css       # 다크 테마 토큰 + 리셋 + scroll-behavior
-│   └── App.css         # 레이아웃·카드·상태 pill·상세·블로그·내비·버튼 스타일
+│   └── App.css         # 레이아웃·카드·상태 pill·상세·블로그·JOURNEY·프롬프트·내비·버튼 스타일
 ├── public/
 │   ├── shots/          # 프로젝트 스크린샷(README.md에 사용법). 경로는 /shots/...
+│   ├── og.png          # OG/SNS 미리보기 이미지 1200×630 (index.html og:image). 재생성법은 아래
 │   ├── sitemap.xml     # 정적 사이트맵 (프로젝트/글 추가 시 같이 갱신)
 │   └── robots.txt
 └── vite.config.js
@@ -115,6 +117,18 @@ slug: my-post          # (선택) 없으면 파일명에서 자동(날짜 접두
 ```
 
 `blogData.js`가 `import.meta.glob`로 전부 읽어 frontmatter를 파싱하고 `marked`로 HTML 변환, 날짜 내림차순 정렬. 새 글·프로젝트를 추가하면 **`public/sitemap.xml`에도 URL 한 줄 추가**할 것.
+
+### OG 이미지 재생성
+
+`public/og.png`(1200×630)는 빌드 산출물이 아니라 별도로 만든 정적 이미지다. 디자인을 바꾸려면 사이트 톤에 맞춘 카드 HTML(1200×630, Pretendard CDN)을 임시로 만들고 **Chrome 헤드리스로 스크린샷**을 떠서 `public/og.png`를 덮어쓰면 된다:
+
+```powershell
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless --disable-gpu `
+  --force-device-scale-factor=1 --window-size=1200,630 `
+  --screenshot="public/og.png" "file:///<카드 html 절대경로>"
+```
+
+(폰트가 CDN이라 렌더 후 잠깐 대기. 작업용 임시 HTML 폴더는 커밋하지 말 것.)
 
 ## 디자인
 

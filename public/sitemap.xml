@@ -13,10 +13,17 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.junominu.com/prompts</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <url><loc>https://www.junominu.com/p/jjangsaem</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.junominu.com/p/kungkung</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.junominu.com/p/italk</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.junominu.com/p/jungaepro</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.junominu.com/p/soriya</loc><lastmod>2026-06-01</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.junominu.com/blog/built-this-site</loc><lastmod>2026-06-01</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.junominu.com/blog/data-first</loc><lastmod>2026-06-02</lastmod><priority>0.6</priority></url>
 </urlset>
