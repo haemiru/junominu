@@ -71,6 +71,110 @@
   margin-top: 10px;
 }
 
+/* ── Stats ──────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: clamp(40px, 7vw, 72px);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.stat__n {
+  font-size: clamp(26px, 5vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat__label {
+  font-size: 12.5px;
+  color: var(--text-soft);
+}
+
+/* ── Section (About / Now / Projects) ── */
+.section {
+  margin-bottom: clamp(44px, 8vw, 80px);
+}
+
+.section__label {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section__para {
+  color: var(--text-soft);
+  max-width: 68ch;
+  margin-bottom: 14px;
+  font-size: 15.5px;
+}
+
+.section__para:last-of-type {
+  margin-bottom: 0;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  list-style: none;
+  margin-top: 22px;
+}
+
+.links a {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-2);
+  transition: opacity 0.15s ease;
+}
+
+.links a:hover {
+  opacity: 0.7;
+}
+
+.now {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.now__item {
+  position: relative;
+  padding-left: 22px;
+  color: var(--text-soft);
+  font-size: 15.5px;
+}
+
+.now__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
 /* ── Grid ───────────────────────────── */
 .grid {
   display: grid;
@@ -209,5 +313,8 @@
 @media (max-width: 520px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

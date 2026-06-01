@@ -110,8 +110,8 @@
     <h3>2. Build in Public — 살아있는 사이트</h3>
     <p class="why">"성장하는 작업실" 느낌을 주는 요소들. 지금 뭘 하는지, 얼마나 쌓였는지가 보이면 사이트가 살아있게 느껴집니다.</p>
     <ul class="todo">
-      <li><span class="box"></span><span><b>Now 섹션</b> — "지금 만들고 있는 것" (주/월 단위로 갱신)</span></li>
-      <li><span class="box"></span><span><b>지표 카운터</b> — 만든 프로젝트 수 / 운영 중 수 / 누적 일수</span></li>
+      <li class="done"><span class="box done">✓</span><span><b>Now 섹션</b> — "지금 만들고 있는 것" (주/월 단위로 갱신)</span></li>
+      <li class="done"><span class="box done">✓</span><span><b>지표 카운터</b> — 프로젝트 수 / 운영 중 / 작업 중 / 개월째 (자동 계산)</span></li>
       <li><span class="box"></span><span><b>타임라인</b> — 첫 프로젝트부터 시간순 기록(저니)</span></li>
     </ul>
   </div>
@@ -131,8 +131,8 @@
     <h3>4. About / 나</h3>
     <p class="why">누구인지, <b>왜</b> 바이브 코딩을 하는지(비개발자 → 1인 메이커 서사). 이미 전자책까지 있으니 그 이야기와 강하게 연결됩니다.</p>
     <ul class="todo">
-      <li><span class="box"></span><span>About 섹션 — 소개 + "왜 바이브 코딩을 하는가" 서사</span></li>
-      <li><span class="box"></span><span>연락처 / SNS / GitHub 링크</span></li>
+      <li class="done"><span class="box done">✓</span><span>About 섹션 — 소개 + "왜 바이브 코딩을 하는가" 서사 (초안)</span></li>
+      <li class="done"><span class="box done">✓</span><span>연락처 / SNS / GitHub 링크 — GitHub · 짱샘의 책방 · Email</span></li>
       <li><span class="box"></span><span>전자책 "바이브 코딩으로 1인 사업가 되기" 서사와 연결</span></li>
     </ul>
   </div>
@@ -155,7 +155,7 @@
       <div class="goal">계획을 세우고 데이터 구조를 정한다.</div>
       <ul class="todo">
         <li class="done"><span class="box done">✓</span><span>로드맵 문서(<code>ROADMAP.md</code> + <code>ROADMAP.html</code>) 생성</span></li>
-        <li><span class="box"></span><span>데이터 모델 설계 — <code>ME</code> 확장(소개·링크·지표), <code>PROJECTS</code> 상세 필드 스키마 확정</span></li>
+        <li class="done"><span class="box done">✓</span><span>데이터 모델 설계 — <code>ME</code> 확장(about·now·links·since) 완료 / <code>PROJECTS</code> 상세 필드는 Phase 2</span></li>
       </ul>
     </div>
 
@@ -163,11 +163,12 @@
       <div class="h"><span class="pill">Phase 1</span> 한 페이지 안에서 키우기 (라우터 없음)</div>
       <div class="goal">목표: 배포된 사이트가 "성장하는 작업실"처럼 보이게. 가장 빠른 임팩트.</div>
       <ul class="todo">
-        <li><span class="box"></span><span><b>About 섹션</b> 추가 <span class="tag">4번</span></span></li>
-        <li><span class="box"></span><span><b>지표 카운터</b> 추가 — 데이터에서 자동 계산 <span class="tag">2번</span></span></li>
-        <li><span class="box"></span><span><b>Now 섹션</b> 추가 <span class="tag">2번</span></span></li>
+        <li class="done"><span class="box done">✓</span><span><b>About 섹션</b> 추가 <span class="tag">4번</span></span></li>
+        <li class="done"><span class="box done">✓</span><span><b>지표 카운터</b> 추가 — 데이터 자동 계산 <span class="tag">2번</span></span></li>
+        <li class="done"><span class="box done">✓</span><span><b>Now 섹션</b> 추가 <span class="tag">2번</span></span></li>
         <li><span class="box"></span><span><b>스택/도구함 섹션</b> 추가 <span class="tag">5번</span></span></li>
         <li><span class="box"></span><span>섹션 앵커 내비게이션(About · Now · 프로젝트)</span></li>
+        <li><span class="box wip">~</span><span>About/Now/지표 <b>내용 확정</b> — 현재 임의 초안, 사용자 리뷰 대기</span></li>
       </ul>
     </div>
 
@@ -215,7 +216,11 @@
   <div class="log">
     <div class="item">
       <div class="date">2026-06-01</div>
-      <div class="txt">로드맵 문서(<code>ROADMAP.md</code> + <code>ROADMAP.html</code>) 생성. 콘텐츠 5영역 + Phase 0~4 정의. 다음: Phase 0 데이터 모델 설계 → Phase 1 착수.</div>
+      <div class="txt">로드맵 문서(<code>ROADMAP.md</code> + <code>ROADMAP.html</code>) 생성. 콘텐츠 5영역 + Phase 0~4 정의.</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-01</div>
+      <div class="txt">Phase 0 데이터 모델(<code>ME</code> about·now·links·since) + Phase 1 착수 — About·Now·지표 카운터 섹션을 한 페이지에 추가. 바이브 코딩 검색 키워드를 녹인 <b>임의 초안</b> 작성(리뷰 대기). meta description도 키워드 보강. 남은 것: 스택/도구함 섹션, 앵커 내비, 내용 확정.</div>
     </div>
   </div>
 
