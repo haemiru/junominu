@@ -38,6 +38,15 @@ export const ME = {
     // PC에서 mailto는 기본 메일 앱이 없으면 먹통 → Gmail 웹 작성창으로 바로 열기(모바일도 정상)
     { label: "Email", url: "https://mail.google.com/mail/?view=cm&fs=1&to=junominu@gmail.com", icon: "email", hint: "연락" },
   ],
+
+  // 스택/도구함 — 실제로 쓰는 것들 (그룹별)
+  stack: [
+    { group: "AI 코딩", items: ["Claude Code", "Cursor", "Gemini API"] },
+    { group: "프런트엔드", items: ["React", "Next.js", "Vite"] },
+    { group: "스타일", items: ["Tailwind CSS"] },
+    { group: "백엔드·데이터", items: ["Supabase"] },
+    { group: "배포·호스팅", items: ["Vercel", "Netlify"] },
+  ],
 };
 
 export const PROJECTS = [

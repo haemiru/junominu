@@ -71,6 +71,41 @@
   margin-top: 10px;
 }
 
+.hero__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.hero__nav a {
+  position: relative;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-soft);
+  transition: color 0.15s ease;
+}
+
+.hero__nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.18s ease;
+}
+
+.hero__nav a:hover {
+  color: var(--text);
+}
+
+.hero__nav a:hover::after {
+  width: 100%;
+}
+
 /* ── Stats ──────────────────────────── */
 .stats {
   display: grid;
@@ -212,6 +247,49 @@
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
 }
 
+/* ── Stack / 도구함 ─────────────────── */
+.stack {
+  display: grid;
+  gap: 16px;
+}
+
+.stack__group {
+  display: grid;
+  grid-template-columns: 124px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.stack__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+  padding-top: 6px;
+}
+
+.stack__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.stack__items li {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 999px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.stack__items li:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
 /* ── Grid ───────────────────────────── */
 .grid {
   display: grid;
@@ -347,11 +425,26 @@
   opacity: 0.5;
 }
 
+/* 앵커 내비로 점프할 때 섹션 상단 여백 */
+#about,
+#now,
+#stack,
+#work {
+  scroll-margin-top: 28px;
+}
+
 @media (max-width: 520px) {
   .grid {
     grid-template-columns: 1fr;
   }
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .stack__group {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .stack__label {
+    padding-top: 0;
   }
 }

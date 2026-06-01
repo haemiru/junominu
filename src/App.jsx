@@ -83,6 +83,12 @@ export default function App() {
         <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
+        <nav className="hero__nav" aria-label="섹션 바로가기">
+          <a href="#about">About</a>
+          <a href="#now">Now</a>
+          <a href="#stack">스택</a>
+          <a href="#work">프로젝트</a>
+        </nav>
       </header>
 
       <Stats />
@@ -117,6 +123,20 @@ export default function App() {
             <li className="now__item" key={i}>{item}</li>
           ))}
         </ul>
+      </section>
+
+      <section id="stack" className="section">
+        <h2 className="section__label">STACK — 내가 쓰는 도구</h2>
+        <div className="stack">
+          {ME.stack.map((g) => (
+            <div className="stack__group" key={g.group}>
+              <span className="stack__label">{g.group}</span>
+              <ul className="stack__items">
+                {g.items.map((it) => <li key={it}>{it}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="work">
