@@ -32,11 +32,11 @@ export const ME = {
     "소리야 놀자! — 발달장애 아동 언어치료 게임(얼굴 인식 기반)을 만드는 중",
   ],
 
-  // 외부 링크 / 연락처
+  // 나를 찾는 법 (연락/채널) — 제품/가게는 PROJECTS 카드가 담당
   links: [
-    { label: "GitHub", url: "https://github.com/haemiru" },
-    { label: "짱샘의 책방", url: "https://jjangsaem.com" },
-    { label: "Email", url: "mailto:junominu@gmail.com" },
+    { label: "GitHub", url: "https://github.com/haemiru", icon: "github", hint: "코드" },
+    // PC에서 mailto는 기본 메일 앱이 없으면 먹통 → Gmail 웹 작성창으로 바로 열기(모바일도 정상)
+    { label: "Email", url: "https://mail.google.com/mail/?view=cm&fs=1&to=junominu@gmail.com", icon: "email", hint: "연락" },
   ],
 };
 
