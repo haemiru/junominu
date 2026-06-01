@@ -97,7 +97,11 @@ export default function ProjectDetail() {
         <section className="dsection">
           <h2 className="section__label">왜 만들었나</h2>
           {d.summary.map((para, i) => (
-            <p className="section__para" key={i}>{para}</p>
+            <p className="section__para" key={i}>
+              {para.split('\n').map((line, j) => (
+                <span key={j}>{j > 0 && <br />}{line}</span>
+              ))}
+            </p>
           ))}
         </section>
       )}
@@ -133,9 +137,9 @@ export default function ProjectDetail() {
 
       {d.timeline?.length > 0 && (
         <section className="dsection">
-          <h2 className="section__label">0 → 배포 타임라인</h2>
+          <h2 className="section__label">타임라인 (최근순)</h2>
           <ol className="tl">
-            {d.timeline.map((t, i) => (
+            {[...d.timeline].reverse().map((t, i) => (
               <li className="tl__item" key={i}>
                 <span className="tl__date">{fmtDate(t.date)}</span>
                 <span className="tl__label">{t.label}</span>
