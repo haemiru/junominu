@@ -86,8 +86,8 @@ export default function App() {
         <nav className="hero__nav" aria-label="섹션 바로가기">
           <a href="#about">About</a>
           <a href="#now">Now</a>
-          <a href="#stack">스택</a>
-          <a href="#work">프로젝트</a>
+          <a href="#stack">STACK</a>
+          <a href="#work">PROJECT</a>
         </nav>
       </header>
 

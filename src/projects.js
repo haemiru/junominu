@@ -41,11 +41,11 @@ export const ME = {
 
   // 스택/도구함 — 실제로 쓰는 것들 (그룹별)
   stack: [
-    { group: "AI 코딩", items: ["Claude Code", "Cursor", "Gemini API"] },
+    { group: "AI 코딩 도구", items: ["Claude Code", "Antigravity", "Codex"] },
     { group: "프런트엔드", items: ["React", "Next.js", "Vite"] },
     { group: "스타일", items: ["Tailwind CSS"] },
-    { group: "백엔드·데이터", items: ["Supabase"] },
-    { group: "배포·호스팅", items: ["Vercel", "Netlify"] },
+    { group: "백엔드·데이터", items: ["Supabase", "Firebase"] },
+    { group: "배포", items: ["Vercel"] },
   ],
 };
 
