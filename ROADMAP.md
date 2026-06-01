@@ -134,5 +134,11 @@
 - **2026-06-01** — STACK 내용 확정(AI 코딩=Claude Code·Antigravity·Codex / 백엔드=Supabase·Firebase / 배포=Vercel). 앵커 내비를 **칩 스타일**로 강조하고 라벨을 **STACK·PROJECTS**로 통일. **Phase 1 완료. ▶ 다음 재개 시작점: Phase 2(상세 페이지).**
 - **2026-06-01** — 맨 위로 가기 버튼 추가(`BackToTop`).
 - **2026-06-01** — 중개프로 외부 링크를 `smart-sjhome.vercel.app`으로 변경.
-- **2026-06-01** — **나머지 4개 프로젝트 detail 추가**(전부 상세 페이지 보유). 로컬 레포 git 이력에서 **실데이터** 추출: 킁킁메이트(첫 커밋 2026-04-19·53커밋·React/Vite/Supabase/Toss/PWA), i-talk(2026-04-21·81커밋·Claude API/Supabase/Toss/Solapi/Resend) — 요약·기능·스택·타임라인 실제 채움. 소리야 놀자!(git 없음·Next15/MediaPipe/Zustand 스택만 실데이터), 짱샘의 책방(로컬 레포 없음·대부분 초안). **막혔던 점·핵심 프롬프트·회고는 모두 `(초안)`** 표시 — 사용자가 직접 작성/확정 예정. **▶ 다음 재개 시작점: 각 detail의 `(초안)`·`⚠️추정` 부분을 실제 내용으로 확정.** (남은 것: 스크린샷, 짱샘의 책방 실데이터.)
+- **2026-06-01** — **나머지 4개 프로젝트 detail 추가**(전부 상세 페이지 보유). 로컬 레포 git 이력에서 **실데이터** 추출: 킁킁메이트(첫 커밋 2026-04-19·53커밋·React/Vite/Supabase/Toss/PWA), i-talk(2026-04-21·81커밋·Claude API/Supabase/Toss/Solapi/Resend) — 요약·기능·스택·타임라인 실제 채움. 소리야 놀자!(git 없음·Next15/MediaPipe/Zustand 스택만 실데이터), 짱샘의 책방(이 시점엔 레포 못 찾아 초안). **막혔던 점·핵심 프롬프트·회고는 모두 `(초안)`** 표시 — 사용자가 직접 작성/확정 예정.
+- **2026-06-01** — **짱샘의 책방 detail 실데이터로 교체**. 레포 위치 확인(`ebook/jjangsaem-bookshop`): 첫 커밋 2026-03-02·**616커밋·3개월 풀스택**. 실제 스택(Next.js/Supabase(SSR)/Toss+PayPal/Claude API/next-intl/Recharts/react-pageflip/Resend) + 마일스톤 6개(랜딩→관리자+전자책DB→실물판매→통합장바구니→환불→i18n) 반영. 막혔던 점·프롬프트·회고는 `(초안)` 유지.
+- **2026-06-01 — ▶ 다음 재개 시작점(아래 '다음 후보' 중 택1)**
+  1. **중개프로도 로컬 레포(`jungaepro`) git 이력으로 실데이터화** — 현재 중개프로 detail은 처음부터 손으로 쓴 초안. 다른 4개와 일관성 맞추기 위해 권장. (요약·기능·스택·타임라인을 실제 커밋에서 추출)
+  2. **스크린샷 연결 구조 만들기** — 현재 상세는 이모지 히어로. `public/`에 캡처 넣고 `detail.screenshot`(또는 hero 이미지) 필드 + 렌더 추가.
+  3. **`(초안)` 내용 직접 확정** — 각 프로젝트의 막혔던 점·핵심 프롬프트·회고, `⚠️추정` 날짜(launched 등)를 실제 내용으로. `projects.js`에서 `(초안)` / `⚠️` 검색하면 한 번에 찾힘.
+  4. **Phase 3(블로그)** 착수 — 마크다운 파이프라인 + `/blog` 라우트.
 - **2026-06-01** — **Phase 2 일괄 구현**: `react-router-dom` v7 도입. `App.jsx`를 라우터 셸로 전환(`/`,`/p/:slug`,`*`→홈, `ScrollToTop`). 홈을 `Home.jsx`로 분리, 상세 `ProjectDetail.jsx` 신설(detail 데이터로 **자동 렌더**). `projects.js`에 `slug`·`STATUS`·`findProject` + **중개프로 detail 초안**(summary/features/stack/timeline/challenges/prompts/retro). 카드: detail 있으면 `/p/:slug` 내부 이동. "0→베타 N일" 자동 계산. `vercel.json`(SPA fallback) 신규 생성. 빌드·lint 통과. **▶ 다음 재개 시작점: 배포 확인 후 중개프로 상세 내용 확정 → 나머지 프로젝트 detail 채우기, 또는 Phase 3(블로그).** (남은 것: 스크린샷 이미지 — 현재 상세는 이모지 히어로.)
