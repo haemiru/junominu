@@ -82,7 +82,7 @@ export const PROJECTS = [
     slug: "jungaepro",
     emoji: "🏢",
     description: "매물·계약·CRM·문의·AI 도구까지, 공인중개사 업무를 하나로 모은 올인원 플랫폼.",
-    url: "https://jungaepro.com",
+    url: "https://smart-sjhome.vercel.app/",
     status: "building",
     tags: ["SaaS", "멀티테넌트", "React"],
 
