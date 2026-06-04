@@ -31,7 +31,7 @@
 
 돌아오면 여기부터. 전부 **사용자 결정/내용**이 필요한 것들 — 코드 구조는 준비됨.
 
-1. **🔴 소리야 스택 정정(권장 1순위)** — 현재 데이터 "Next.js 15"인데 레포(`haemiru/SpeechTherapy`) 커밋엔 **Vite·Gemini API·Web Speech API** 흔적. 중개프로 전례처럼 실제는 Vite일 가능성 큼. `package.json` 위치 확인 후 `projects.js` 소리야 `stack`/summary 정정. *(요약도 jawOpen/입벌림만 강조 → 4개 게임 반영 검토)*
+1. **✅ 소리야 스택 검증 완료(2026-06-04)** — `package.json`(`haemiru/SpeechTherapy/Speech-Therapy/`) 확인 결과 **실제 Next.js 15**(`next ^15.1.0`)가 맞음. "Vite일 것"이라는 의심은 오판. stack 데이터(Next.js 15·React 19·@mediapipe/tasks-vision·Zustand·Tailwind v4·Vercel)도 이미 정확. summary/features는 입 벌리기 하나 강조 → **4가지 놀이(입 벌리기·혀 운동·소리 열기구·따라 말하기)로 확장 완료.** *(남은 건 아래 ②~)*
 2. **📝 블로그 3편 초안 안내문 제거** — 각 글 상단 `> 이 글은 초안입니다…` 문장. 본문을 사용자 말투로 확정하면 그 줄만 빼면 됨. (현재 화면에 노출 중)
 3. **⚠️ 추정 날짜 확정** — 짱샘·킁킁·i-talk의 `launched`(현재 추정). 실제 공개일 알면 교체.
 4. **⚠️ 소리야 URL 임시** — `speech-therapy-nine.vercel.app/home`. 정식 URL 나오면 `projects.js` `url` 교체(+ 재캡처).
@@ -226,3 +226,5 @@
   - **결정적 수정**: `started` 2026-05-15(추정)→**2026-03-04**(실제 첫 커밋). 첫 커밋은 줄다리기 게임에서 출발→3/5 4개 게임+AI 보고서(Gemini)→5/30 게임 개편(혀운동·소리열기구·따라말하기)→6/1 따라말하기 TTS·인식 개선→6/4 안정화. `commits: 36` 추가(누적 커밋 931→967, JOURNEY 막대·정렬 반영).
   - ⚠️ **스택 의심**: 현재 데이터는 "Next.js 15"인데 커밋에 **Vite**(`move vite to dependencies for Vercel build`)·**Gemini API**(보고서)·**Web Speech API**(따라말하기 TTS/인식) 흔적. 중개프로처럼 실제는 Vite일 가능성 — package.json 위치 확인 후 별도 정정 필요(이번엔 미변경).
   - 남은 user-facing 초안: **블로그 3편 상단 "이 글은 초안입니다" 안내문**(본문 확정 시 제거).
+- **2026-06-04** — **✅ 소리야 스택 의심 해소 + 4게임 반영.** `haemiru/SpeechTherapy/Speech-Therapy/package.json` 확인 → **실제로 Next.js 15**(`next ^15.1.0`)가 맞음. 위 "Vite 의심"은 오판(`move vite…` 커밋은 전환기 잔재로 보이며, 최종 권위 파일은 package.json). `stack` 데이터(Next.js 15·React 19·@mediapipe/tasks-vision·Zustand·Tailwind v4·Vercel)도 이미 정확했고, Gemini는 AI 보고서용 REST 호출(SDK 없음), Web Speech API는 npm 의존성 아닌 브라우저 내장(따라말하기 TTS/인식)이라 스택 표기와 무관.
+  - **4게임 반영**: 라우트 폴더(`mouth-opening·tongue-exercises·sound-balloon·follow-speech`)로 4가지 놀이 확인 → `projects.js` 소리야 `summary`/`features`를 입 벌리기 하나 강조 → **4가지 놀이(입 벌리기·혀 운동·소리 열기구·따라 말하기)로 확장.** 빌드 검증 예정.

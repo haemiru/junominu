@@ -302,12 +302,12 @@ export const PROJECTS = [
       coverCaption: "소리야 놀자! — 홈(6가지 놀이 메뉴)",
       summary: [
         "발달장애 아동(3~10세)에게 '입을 크게 벌려 소리 내기'는 중요한 언어치료 과제지만, 반복 훈련은 쉽게 지루해집니다. 그래서 카메라로 입 모양을 인식해, 아이가 따라 하면 게임처럼 반응하도록 만들고 있습니다.",
-        "MediaPipe Face Landmarker의 jawOpen(입 벌림) 값을 읽어, 아이가 입을 벌리면 강아지 캐릭터가 반응하고 별과 보상이 쌓이는 놀이형 훈련입니다.",
+        "처음엔 MediaPipe Face Landmarker의 jawOpen(입 벌림) 값을 읽는 '입 벌리기' 놀이로 시작해, 지금은 혀 운동·소리 열기구·따라 말하기까지 4가지 놀이로 넓혔습니다. 아이가 과제를 해내면 강아지 캐릭터가 반응하고 별과 보상이 쌓입니다.",
       ],
       features: [
-        "카메라 입 모양 인식 게임 — 입을 벌리면 게이지가 차오름",
+        "4가지 놀이 — ① 입 벌리기(MediaPipe로 입 모양 인식) ② 혀 운동 ③ 소리 열기구(마이크 음량으로 풍선 띄우기) ④ 따라 말하기(발음 유사도 측정)",
         "강아지 캐릭터 성장 + 별 보상으로 동기 부여",
-        "결과·보상 화면, 진행 기록(로컬 저장)",
+        "결과·보상 화면, 진행 기록 저장, AI 훈련 보고서 생성",
       ],
       stack: ["Next.js 15", "React", "@mediapipe/tasks-vision(Face Landmarker)", "Zustand", "Tailwind CSS", "Vercel"],
       // 타임라인 (실데이터: github.com/haemiru/SpeechTherapy 커밋)
