@@ -294,8 +294,8 @@ export const PROJECTS = [
     status: "building",
     tags: ["언어치료", "얼굴인식", "Next.js"],
     detail: {
-      started: "2026-05-15",      // ⚠️ git 미초기화 → 추정. 실제 시작일 확정 필요
-      // commits: git 미초기화 → 미상(지표/막대에서 자동 제외)
+      started: "2026-03-04",      // 첫 커밋(실데이터 — github.com/haemiru/SpeechTherapy)
+      commits: 36,                // git 이력(실데이터)
       tint: "#22d3ee",            // 카드 미디어 밴드 색조
       thumb: "/shots/soriya-cover.png",   // 실제 홈 화면(놀이 메뉴) — 카드 밴드용
       cover: "/shots/soriya-cover.png",
@@ -310,10 +310,13 @@ export const PROJECTS = [
         "결과·보상 화면, 진행 기록(로컬 저장)",
       ],
       stack: ["Next.js 15", "React", "@mediapipe/tasks-vision(Face Landmarker)", "Zustand", "Tailwind CSS", "Vercel"],
-      // 초안 — git 이력이 없어 타임라인은 직접 채우기
+      // 타임라인 (실데이터: github.com/haemiru/SpeechTherapy 커밋)
       timeline: [
-        { date: "2026-05-15", label: "(초안) 첫 프로토타입 — 카메라 권한 + 입 벌림 인식" },
-        { date: "2026-05-20", label: "(초안) 입 벌리기 게임 + 보상 화면" },
+        { date: "2026-03-04", label: "첫 커밋 — 프로젝트 초기화(기획·설계·디자인 문서)" },
+        { date: "2026-03-05", label: "4개 게임 전체 구현 + AI 보고서 생성(Gemini) + Vercel 배포" },
+        { date: "2026-05-30", label: "게임 개편 — 혀 운동·소리 열기구·따라 말하기 + 빌드 인프라 정비" },
+        { date: "2026-06-01", label: "따라 말하기 개선 — TTS 음성 품질·인식 정확도 + AI 보고서 영속화" },
+        { date: "2026-06-04", label: "라운드 타이머·보고서 API 검증·강아지 보상 안정화" },
       ],
       challenges: [
         "MediaPipe 기술을 처음 적용하면서 카메라와 마이크가 제대로 인식하지 못해, 여러 번 수정을 반복하면서 결국 해내게 됐어요.",

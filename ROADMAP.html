@@ -99,21 +99,29 @@
   <h2>현재 상태 (한눈에)</h2>
   <ul class="todo">
     <li class="done"><span class="box done">✓</span><span><b>Phase 1·2·3 완료.</b> Phase 4는 일부(프롬프트 노트 <code>/prompts</code>)만 — 남은 건 뉴스레터(도구 선택 대기).</span></li>
-    <li class="done"><span class="box done">✓</span><span><b>콘텐츠/구조 자동 작업은 모두 소진.</b> 5개 프로젝트 상세, 홈(About·지표·Now·STACK·JOURNEY 최신순·PROJECTS), 블로그(글 2편), OG 이미지, sitemap·robots.</span></li>
-    <li class="done"><span class="box done">✓</span><span><b>요약·기능·스택·타임라인·프롬프트 = 5개 프로젝트 전부 실데이터.</b> 상세 타임라인은 최근순 표시.</span></li>
+    <li class="done"><span class="box done">✓</span><span><b>5개 프로젝트 상세 모두 실데이터 + 실제 스크린샷 보유.</b> 홈: About·지표(누적 커밋 <b>967</b> 포함)·Now·STACK·JOURNEY(최신순·커밋 막대)·PROJECTS(색조 밴드+스샷). 블로그 <b>글 3편</b>, 프롬프트 노트, OG 이미지, sitemap·robots.</span></li>
+    <li class="done"><span class="box done">✓</span><span><b>요약·기능·스택·타임라인·프롬프트·막힌점·회고 = 5개 전부 실데이터.</b> <code>(초안)</code> 데이터 0개. 타임라인 최근순 표시.</span></li>
+    <li class="done"><span class="box done">✓</span><span><b>스크린샷</b>(<code>public/shots/</code>): 짱샘·중개프로(랜딩 cover+thumb) / 킁킁(5장)·i-talk(2장) 갤러리 / 소리야(홈).</span></li>
   </ul>
-  <p class="why" style="margin-top:14px"><b style="color:var(--text)">#3 <code>(초안)</code> 확정 현황</b> (막혔던 점·회고)</p>
+  <p class="why" style="margin-top:14px"><b style="color:var(--text)">#3 확정 현황</b> (프롬프트·막힌점·회고)</p>
   <table class="ptable">
     <thead><tr><th>프로젝트</th><th class="c">프롬프트</th><th class="c">막힌점·회고</th><th>⚠️ 추정 날짜</th></tr></thead>
     <tbody>
       <tr><td class="work">짱샘의 책방</td><td class="c">✅</td><td class="c">✅</td><td class="desc"><code>launched</code> 추정</td></tr>
       <tr><td class="work">킁킁메이트</td><td class="c">✅</td><td class="c">✅</td><td class="desc"><code>launched</code> 추정</td></tr>
-      <tr><td class="work">중개프로</td><td class="c">✅</td><td class="c">⬜ 초안</td><td class="desc">(없음, 베타)</td></tr>
-      <tr><td class="work">i-talk</td><td class="c">✅</td><td class="c">⬜ 초안</td><td class="desc"><code>launched</code> 추정</td></tr>
-      <tr><td class="work">소리야 놀자</td><td class="c">✅</td><td class="c">⬜ 초안</td><td class="desc"><code>started</code>·<code>launched</code> 추정</td></tr>
+      <tr><td class="work">중개프로</td><td class="c">✅</td><td class="c">✅</td><td class="desc">(없음, 베타)</td></tr>
+      <tr><td class="work">i-talk</td><td class="c">✅</td><td class="c">✅</td><td class="desc"><code>launched</code> 추정</td></tr>
+      <tr><td class="work">소리야 놀자</td><td class="c">✅</td><td class="c">✅</td><td class="desc">— (실데이터)</td></tr>
     </tbody>
   </table>
-  <p class="why" style="margin-top:12px"><b style="color:var(--text)">공개 전 남은 일:</b> ① ⬜ 3개(중개프로·i-talk·소리야) 막힌점·회고 확정 ② <code>⚠️</code> 추정 날짜 확정 ③ 실제 스크린샷 PNG(<code>public/shots/</code>) ④ (선택) 뉴스레터 도구 선택 ⑤ (선택) 블로그 2번째 글 다듬기.</p>
+  <p class="why" style="margin-top:12px"><b style="color:var(--text)">→ #3 전 프로젝트 초안 0.</b> 소리야도 GitHub 레포로 started·타임라인·커밋(36) 실데이터 확정. 남은 <code>⚠️</code>는 <b>launched 추정일(짱샘·킁킁·i-talk)뿐.</b></p>
+  <p class="why" style="margin-top:14px"><b style="color:var(--accent)">▶ 다음 재개 시작점(우선순위):</b>
+    ① <b>🔴 소리야 스택 정정</b> — 데이터는 "Next.js 15"인데 레포 커밋엔 <b>Vite·Gemini API·Web Speech API</b> 흔적(중개프로 전례=Vite). <code>package.json</code> 확인 후 <code>stack</code>/summary 정정.
+    ② <b>📝 블로그 3편 초안 안내문 제거</b>(상단 "이 글은 초안입니다…" — 본문 확정 시).
+    ③ <code>⚠️</code> launched 추정일(짱샘·킁킁·i-talk) 확정.
+    ④ 소리야 임시 URL(<code>speech-therapy-nine.vercel.app/home</code>) 정식 나오면 교체.
+    ⑤ (선택) 뉴스레터 도구 선택 · 짱샘·중개프로 내부 스샷 추가.</p>
+  <p class="note" style="margin-top:10px">빠른 작업: <code>src/projects.js</code>의 <code>PROJECTS</code>만 고치면 카드·상세·JOURNEY·프롬프트노트·지표 전부 자동 반영. 스샷은 <code>public/shots/</code>에 PNG + <code>detail.thumb/cover/shots</code> 경로. 변경 후 <code>npm run build</code>, 배포는 <code>main</code> push → Vercel 자동.</p>
 
   <h2>큰 그림 — 3단계 (쉬운 것부터)</h2>
   <div class="phases">
@@ -390,6 +398,13 @@
         <b>중개프로</b> challenges 3건(부동산 타입별 매물·리포트 차이 사전조사 / 계약서·확인설명서 폼 맞추느라 여러 커밋 / 정부기관 API 연결·승인의 물리적 시간), retro 1건("비싼 홈페이지 불필요 — 누구나 저렴하게, 뿌듯^^").<br/>
         <b>i-talk</b> challenges 3건(짱샘 직접 피드백+로딩 최소화 고민 / 검증 자료 위해 NotebookLM·Claude Opus 4.7 활용 / 동영상 자동 썸네일 에러로 씨름), retro 1건(원거리·시간부족 보호자 위해 i-talk 탄생).<br/>
         중개프로 prompts 주석의 stale "(초안)" TODO 정리. 빌드 통과.</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-04</div>
+      <div class="txt"><b>소리야 놀자! 타임라인 실데이터화</b>(GitHub <code>haemiru/SpeechTherapy</code> 커밋 참조). 추정 초안 2줄 제거.<br/>
+        <b>결정적 수정</b>: <code>started</code> 2026-05-15(추정)→<b>2026-03-04</b>(첫 커밋). 줄다리기 출발→3/5 4개 게임+AI 보고서(Gemini)→5/30 게임 개편(혀운동·소리열기구·따라말하기)→6/1 따라말하기 TTS·인식 개선→6/4 안정화. <code>commits: 36</code> 추가(누적 931→967, JOURNEY 막대·정렬 반영).<br/>
+        ⚠️ <b>스택 의심</b>: 현재 "Next.js 15"인데 커밋엔 <b>Vite·Gemini API·Web Speech API</b> 흔적 — 중개프로처럼 실제 Vite일 가능성, 추후 정정 필요(이번 미변경).<br/>
+        남은 user-facing 초안: <b>블로그 3편 상단 "이 글은 초안입니다" 안내문.</b></div>
     </div>
   </div>
 
