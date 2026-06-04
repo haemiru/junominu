@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
-import { ME, PROJECTS, STATUS } from './projects'
+import { ME, PROJECTS, STATUS, totalCommits, maxCommits } from './projects'
 
 const LINK_ICONS = {
   github: (
@@ -16,15 +16,43 @@ const LINK_ICONS = {
   ),
 }
 
+// 카드 상단 미디어 밴드. 썸네일 이미지가 있으면 깔고, 없으면 tint 그라데이션 +
+// 큰 이모지로 대체. 이미지가 깨지면 onError로 숨겨 그라데이션 배경만 남김(graceful).
+function CardMedia({ p }) {
+  const tint = p.detail?.tint ?? 'var(--accent)'
+  const img = p.detail?.thumb ?? p.detail?.cover
+  return (
+    <div
+      className="card__media"
+      style={{ '--tint': tint }}
+      aria-hidden="true"
+    >
+      <span className="card__media-emoji">{p.emoji}</span>
+      {img && (
+        <img
+          className="card__media-img"
+          src={img}
+          alt=""
+          loading="lazy"
+          onError={(e) => { e.currentTarget.style.display = 'none' }}
+        />
+      )}
+    </div>
+  )
+}
+
 function ProjectCard({ p }) {
   const status = STATUS[p.status] ?? STATUS.idea
   const hasDetail = Boolean(p.detail && p.slug)
 
   const inner = (
     <>
+      <CardMedia p={p} />
       <div className="card__top">
-        <span className="card__emoji" aria-hidden="true">{p.emoji}</span>
         <span className={status.cls}>{status.label}</span>
+        {p.detail?.commits && (
+          <span className="card__commits">{p.detail.commits} commits</span>
+        )}
       </div>
       <h2 className="card__title">{p.name}</h2>
       <p className="card__desc">{p.description}</p>
@@ -58,12 +86,16 @@ function Journey() {
 
   if (items.length === 0) return null
 
+  const max = maxCommits()
+
   return (
     <section id="journey" className="section">
       <h2 className="section__label">JOURNEY — 시간순 기록</h2>
       <ol className="tl tl--journey">
         {items.map((p) => {
           const status = STATUS[p.status] ?? STATUS.idea
+          const tint = p.detail.tint ?? 'var(--accent)'
+          const commits = p.detail.commits
           const body = (
             <>
               <span className="tl__date">{p.detail.started.replaceAll('-', '.')}</span>
@@ -73,6 +105,15 @@ function Journey() {
                 <span className={status.cls}>{status.label}</span>
               </span>
               <span className="tl__label">{p.description}</span>
+              {commits && (
+                <span className="jbar" title={`${commits} commits`}>
+                  <span
+                    className="jbar__fill"
+                    style={{ width: `${Math.round((commits / max) * 100)}%`, '--tint': tint }}
+                  />
+                  <span className="jbar__n">{commits} commits</span>
+                </span>
+              )}
             </>
           )
           return (
@@ -101,6 +142,7 @@ function Stats() {
   const building = PROJECTS.filter((p) => p.status === 'building').length
   const stats = [
     { n: PROJECTS.length, label: '프로젝트' },
+    { n: totalCommits().toLocaleString(), label: '누적 커밋' },
     { n: live, label: '운영 중' },
     { n: building, label: '작업 중' },
     { n: monthsSince(ME.since), label: '개월째 빌딩' },

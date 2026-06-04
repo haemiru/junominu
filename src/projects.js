@@ -9,6 +9,14 @@
 //            'idea'     — 구상 단계 (url 없어도 됨)
 //
 //    url 이 없으면 클릭 안 되는 "구상 카드"로 표시됩니다.
+//
+//  [카드 미디어 — 선택]
+//    detail.thumb : 홈 카드 상단에 깔리는 썸네일 이미지 경로("/shots/xxx.png").
+//                   없으면 detail.cover 를 대신 쓰고, 그것도 없으면
+//                   detail.tint 색조 그라데이션 + 큰 이모지로 자동 대체.
+//    detail.tint  : 카드 미디어 밴드/JOURNEY 점 색조(없으면 보라 기본).
+//    detail.commits : git 누적 커밋 수(실데이터). 홈 "누적 커밋" 지표와
+//                     JOURNEY 막대 폭에 쓰임. 없으면 자동 제외.
 // ────────────────────────────────────────────────────────────────
 
 export const ME = {
@@ -63,6 +71,11 @@ export const PROJECTS = [
     detail: {
       started: "2026-03-02",      // 첫 커밋(실데이터)
       launched: "2026-03-16",     // ⚠️ 추정 — 관리자+전자책 DB로 첫 판매 가능 버전. 실제 공개일 확정 필요
+      commits: 616,               // git 이력(실데이터)
+      tint: "#f59e0b",            // 카드 미디어 밴드 색조
+      cover: "/shots/jjangsaem-cover.png",
+      coverCaption: "짱샘의 책방 — 랜딩",
+      thumb: "/shots/jjangsaem-cover.png",
       summary: [
         "발달·재활이 필요한 아이를 키우는 부모에게, 흩어진 정보 대신 '바로 쓰는 자료'를 건네고 싶었습니다.\n25년차 소아 재활치료사로 일하면서 느낀 점과 경험을 바탕으로 기록한 내용을, 최신 논문자료에 기반해 전자책으로 정리하였습니다.",
         "단순 판매 페이지가 아니라, 전자책 뷰어·통합 장바구니·환불·매출 분석 대시보드·다국어까지 갖춘 풀스택 커머스를 혼자 만들고 운영하고 있습니다.",
@@ -108,6 +121,16 @@ export const PROJECTS = [
     detail: {
       started: "2026-04-19",      // 첫 커밋(실데이터)
       launched: "2026-04-21",     // ⚠️ 추정 — 실제 공개일 확정 필요
+      commits: 53,                // git 이력(실데이터)
+      tint: "#34d399",            // 카드 미디어 밴드 색조
+      thumb: "/shots/kungkung-home.png",   // 실제 제품 화면(홈) — 카드 밴드용
+      shots: [
+        { src: "/shots/kungkung-home.png",   caption: "홈 — 오늘의 호흡·후각 훈련" },
+        { src: "/shots/kungkung-breath.png", caption: "호흡 훈련 — 6가지 호흡법" },
+        { src: "/shots/kungkung-timer.png",  caption: "호흡 타이머 — 하버드 호흡 진행" },
+        { src: "/shots/kungkung-scent.png",  caption: "후각 훈련 — 6가지 향 세트" },
+        { src: "/shots/kungkung-record.png", caption: "훈련 기록 — 주간 리포트·PDF 저장" },
+      ],
       summary: [
         "후각·호흡 훈련은 '매일 조금씩'이 핵심인데, 종이 기록은 금세 흐지부지됩니다. 그래서 훈련을 앱에서 바로 기록하고, 쌓인 데이터로 변화를 자동 비교해 보여주자는 생각에서 시작했습니다.",
         "주관적인 '오늘 어땠나' 슬라이더를 걷어내고, 누적된 실제 기록만으로 시작/종결을 자동 비교하도록 설계한 게 핵심입니다.",
@@ -151,6 +174,13 @@ export const PROJECTS = [
     detail: {
       started: "2026-04-21",      // 첫 커밋(실데이터)
       launched: "2026-04-22",     // ⚠️ 추정 — 초기 동작 버전. 실제 공개일 확정 필요
+      commits: 81,                // git 이력(실데이터)
+      tint: "#f472b6",            // 카드 미디어 밴드 색조
+      thumb: "/shots/italk-report.png",   // 실제 제품 화면(짱샘 리포트) — 카드 밴드용
+      shots: [
+        { src: "/shots/italk-upload.png", caption: "영상 업로드 — 1분 미만 5~6개" },
+        { src: "/shots/italk-report.png", caption: "짱샘의 편지 — 관찰 리포트·근거 자료" },
+      ],
       summary: [
         "발달이 걱정되는 부모는 '우리 아이 지금 어떤 상태인가'를 가장 알고 싶어 합니다. i-talk은 아이의 일상 영상을 올리면 25년차 치료사가 직접 보고, 논문 근거를 곁들인 분석 편지를 써 보내는 서비스입니다.",
         "사람(치료사)의 판단을 중심에 두고, Claude API는 근거 정리와 초안 작성을 돕는 보조로 썼습니다. '자동 진단'이 아니라 '전문가의 편지'가 결과물입니다.",
@@ -196,13 +226,16 @@ export const PROJECTS = [
     // 상세(메이킹 스토리) — 이 필드가 있으면 카드 클릭 시 내부 상세 페이지로 이동
     // 요약·기능·스택·타임라인 = 로컬 레포(jungaepro) git 이력에서 추출한 실데이터
     detail: {
-      // 스크린샷(선택): public/shots/에 캡처를 넣고 아래 주석을 풀면 표시됨.
-      // 경로는 /shots/ 로 시작. 파일이 없으면 자동 숨김. (public/shots/README.md 참고)
-      // cover: "/shots/jungaepro-cover.png",
+      // 스크린샷: 실제 랜딩 화면 캡처(public/shots/). 파일 없으면 자동 숨김.
+      cover: "/shots/jungaepro-cover.png",
+      coverCaption: "중개프로 — 랜딩(지역 지도 검색)",
+      thumb: "/shots/jungaepro-cover.png",
       // shots: ["/shots/jungaepro-1.png", { src: "/shots/jungaepro-2.png", caption: "계약서 PDF" }],
 
       // 시작일 → "0 → 작업 N일" 자동 계산용 (베타 운영 중 → launched 생략)
       started: "2026-02-18",      // 첫 커밋(실데이터)
+      commits: 181,               // git 이력(실데이터)
+      tint: "#7c5cff",            // 카드 미디어 밴드 색조
       summary: [
         "공인중개사 한 명이 매물 등록부터 손님 응대, 계약, 광고까지 전부 손으로 처리하는 걸 옆에서 봤습니다. 엑셀과 메신저, 부동산 포털을 오가며 같은 정보를 몇 번씩 옮겨 적고 있었어요.",
         "그 반복을 한 화면에서 끝내자는 게 중개프로의 시작입니다. 매물·계약서·CRM·실거래가 시세 조회를 하나로 묶고, 중개사무소마다 자기 서브도메인으로 독립된 공간을 갖는 멀티테넌트 SaaS로 만들고 있습니다. 첫 커밋부터 약 3개월 동안 180커밋이 넘게 쌓인 베타입니다.",
@@ -261,11 +294,16 @@ export const PROJECTS = [
     slug: "soriya",
     emoji: "🗣️",
     description: "얼굴 인식으로 입 모양을 따라 하며 노는, 발달장애 아동을 위한 언어치료 앱.",
-    url: "https://speech-therapy-ten-theta.vercel.app",
+    url: "https://speech-therapy-nine.vercel.app/home",  // ⚠️ 임시 URL(추후 변경 예정)
     status: "building",
     tags: ["언어치료", "얼굴인식", "Next.js"],
     detail: {
       started: "2026-05-15",      // ⚠️ git 미초기화 → 추정. 실제 시작일 확정 필요
+      // commits: git 미초기화 → 미상(지표/막대에서 자동 제외)
+      tint: "#22d3ee",            // 카드 미디어 밴드 색조
+      thumb: "/shots/soriya-cover.png",   // 실제 홈 화면(놀이 메뉴) — 카드 밴드용
+      cover: "/shots/soriya-cover.png",
+      coverCaption: "소리야 놀자! — 홈(6가지 놀이 메뉴)",
       summary: [
         "발달장애 아동(3~10세)에게 '입을 크게 벌려 소리 내기'는 중요한 언어치료 과제지만, 반복 훈련은 쉽게 지루해집니다. 그래서 카메라로 입 모양을 인식해, 아이가 따라 하면 게임처럼 반응하도록 만들고 있습니다.",
         "MediaPipe Face Landmarker의 jawOpen(입 벌림) 값을 읽어, 아이가 입을 벌리면 강아지 캐릭터가 반응하고 별과 보상이 쌓이는 놀이형 훈련입니다.",
@@ -314,4 +352,14 @@ export const STATUS = {
 // slug로 프로젝트 찾기 (상세 페이지에서 사용)
 export function findProject(slug) {
   return PROJECTS.find((p) => p.slug === slug);
+}
+
+// 전 프로젝트 누적 커밋 합계 (detail.commits 있는 것만 — 지표·막대 공용)
+export function totalCommits() {
+  return PROJECTS.reduce((sum, p) => sum + (p.detail?.commits || 0), 0);
+}
+
+// 가장 커밋 많은 프로젝트의 커밋 수 (JOURNEY 막대 상대 폭 기준)
+export function maxCommits() {
+  return Math.max(1, ...PROJECTS.map((p) => p.detail?.commits || 0));
 }

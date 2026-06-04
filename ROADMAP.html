@@ -89,7 +89,7 @@
     <p class="kicker">JUNOMINU · GROWTH ROADMAP</p>
     <h1>바이브 코딩 사이트로<br><span class="grad">키워가는 계획</span></h1>
     <p class="lede">junominu.com을 "결과물로 보내주는 브릿지"에서, <b>혼자 AI로 어떻게 만들어 가는지(과정)를 보여주는 사이트</b>로 키우기 위한 작업 문서입니다.</p>
-    <p class="meta">마지막 업데이트: 2026-06-02 &nbsp;·&nbsp; 관리 기준: <code>ROADMAP.md</code> (이 화면은 보기용 <code>ROADMAP.html</code> — 항상 같은 내용)</p>
+    <p class="meta">마지막 업데이트: 2026-06-04 &nbsp;·&nbsp; 관리 기준: <code>ROADMAP.md</code> (이 화면은 보기용 <code>ROADMAP.html</code> — 항상 같은 내용)</p>
   </header>
 
   <div class="direction">
@@ -349,6 +349,36 @@
     <div class="item">
       <div class="date">2026-06-02</div>
       <div class="txt"><b>킁킁메이트 #3 실데이터 확정</b>(사용자 제공). challenges 3건(구글 로그인 인앱 브라우저 거부→PWA 설치 / 호흡법 논문 수집·적용 / 후각원 선별·인헤일러 가이드), retro 1건(구독→짱샘 책방 연계 부가서비스 전환·결제 코드 제거·책방 구매자 계정 연동). → <b>짱샘·킁킁 초안 0.</b> 남은 초안: 중개프로·소리야·i-talk challenges/retro + <code>⚠️</code>날짜.</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-04</div>
+      <div class="txt"><b>사이트 "풍성하게" — 시각·지표 보강(코드).</b> 사용자 요청으로 4방향 중 코드 가능분 처리.<br/>
+        <b>① 카드 미디어 밴드</b>: 홈 프로젝트 카드 상단에 프로젝트별 <code>detail.tint</code> 색조 그라데이션 + 큰 이모지. <code>detail.thumb</code>(없으면 <code>cover</code>) 이미지 넣으면 자동 교체, 깨지면 <code>onError</code>로 숨김(graceful) → 실제 스크린샷 PNG 투입 시 바로 반영.<br/>
+        <b>② 누적 커밋 지표</b>: <code>detail.commits</code> 실데이터(짱샘 616·중개프로 181·i-talk 81·킁킁 53, 소리야 git없음 제외) → 홈 지표에 <b>"누적 커밋 931"</b> 추가(<code>totalCommits()</code>), 카드 우상단 <code>NN commits</code> 배지.<br/>
+        <b>③ JOURNEY 막대</b>: 각 저니 행에 프로젝트별 상대 커밋 볼륨 막대(<code>maxCommits()</code> 기준 폭, tint 색) + 숫자.<br/>
+        <b>④ 블로그 3번째 글(초안)</b>: "파일 이름 하나 때문에 빌드가 깨졌다 — 윈도우 대소문자 삽질기"(<code>Blog.jsx</code>/<code>blog.js</code> 충돌 실화). sitemap 추가.<br/>
+        빌드(37모듈) 통과 · 헤드리스 스크린샷 검증 OK.</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-04</div>
+      <div class="txt"><b>실제 스크린샷 캡처·연결.</b> 5개 배포 사이트를 헤드리스 Chrome으로 직접 캡처 → <code>public/shots/{slug}-cover.png</code>.<br/>
+        <b>짱샘·중개프로</b>: 공개 랜딩 → <code>detail.cover</code>(상세 배너) + <code>detail.thumb</code>(카드 밴드).<br/>
+        <b>킁킁·i-talk</b>: 제품 내부 로그인 필요 → 브랜딩 로그인 화면을 콘텐츠 폭으로 재캡처해 <b><code>detail.thumb</code>만</b>(카드 밴드 상단=브랜딩 헤더). <b>추후 로그인 후 내부 화면으로 교체 권장.</b><br/>
+        카드 밴드 이미지 <code>object-position: center top</code>.<br/>
+        <b>🔴 소리야 놀자!</b>: <code>speech-therapy-ten-theta.vercel.app</code>가 <b>404(DEPLOYMENT_NOT_FOUND)</b> — 캡처 불가·미연결. <b>카드 외부 링크도 깨짐 → 새 URL 확인해 <code>projects.js</code> <code>url</code> 교체 필요.</b><br/>
+        빌드 통과 · 카드 그리드 시각 검증 OK.</div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-04</div>
+      <div class="txt"><b>킁킁·i-talk 실제 제품 화면으로 교체</b>(사용자 직접 캡처 제공). 로그인 화면 스샷(<code>*-cover.png</code>) 폐기.<br/>
+        <b>킁킁메이트</b> 5장: 홈·호흡훈련(6호흡법)·호흡타이머(하버드)·후각훈련(6향)·훈련기록(주간·PDF). <code>thumb</code>=홈, <code>shots</code>=5장 갤러리.<br/>
+        <b>i-talk</b> 2장: 영상 업로드·짱샘의 편지(관찰 리포트·근거 자료). <code>thumb</code>=리포트, <code>shots</code>=2장.<br/>
+        <b>CSS <code>.shots</code></b>: 모바일 세로 스샷 폰 크기 다단 그리드(<code>auto-fill minmax(190px)</code>)+폰 그림자. 카드 밴드 <code>object-position top</code>으로 폰 상단 헤더 노출.<br/>
+        빌드 통과 · 홈 카드 + 킁킁 상세 갤러리 시각 검증 OK. <b>남은 스샷: 소리야(URL 복구 후) + (선택) 짱샘·중개프로 내부.</b></div>
+    </div>
+    <div class="item">
+      <div class="date">2026-06-04</div>
+      <div class="txt"><b>소리야 놀자! URL 복구 + 스샷 연결</b>(사용자 제공). <code>url</code>을 <code>speech-therapy-nine.vercel.app/home</code>으로 교체(임시 — 추후 변경 예정). 캡처 = 실제 홈("소리야 놀자!" + 뭉치 캐릭터 + 6가지 놀이 메뉴: 입운동·혀운동·소리열기구·따라말하기·나의기록·보고서). <code>thumb</code>+<code>cover</code>+caption 연결. 빌드 통과. <b>→ 5개 프로젝트 전부 실제 스크린샷 보유.</b></div>
     </div>
   </div>
 
