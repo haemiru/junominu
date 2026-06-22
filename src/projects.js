@@ -224,6 +224,51 @@ export const PROJECTS = [
     },
   },
   {
+    name: "소리야 놀자!",
+    slug: "soriya",
+    emoji: "🗣️",
+    description: "얼굴 인식으로 입 모양을 따라 하며 노는, 발달장애 아동을 위한 언어치료 앱.",
+    url: "https://speech-therapy-nine.vercel.app/home",  // ⚠️ 임시 URL(추후 변경 예정)
+    status: "building",
+    tags: ["언어치료", "얼굴인식", "Next.js"],
+    detail: {
+      started: "2026-03-04",      // 첫 커밋(실데이터 — github.com/haemiru/SpeechTherapy)
+      commits: 36,                // git 이력(실데이터)
+      tint: "#22d3ee",            // 카드 미디어 밴드 색조
+      thumb: "/shots/soriya-cover.png",   // 실제 홈 화면(놀이 메뉴) — 카드 밴드용
+      cover: "/shots/soriya-cover.png",
+      coverCaption: "소리야 놀자! — 홈(6가지 놀이 메뉴)",
+      summary: [
+        "발달장애 아동(3~10세)에게 '입을 크게 벌려 소리 내기'는 중요한 언어치료 과제지만, 반복 훈련은 쉽게 지루해집니다. 그래서 카메라로 입 모양을 인식해, 아이가 따라 하면 게임처럼 반응하도록 만들고 있습니다.",
+        "처음엔 MediaPipe Face Landmarker의 jawOpen(입 벌림) 값을 읽는 '입 벌리기' 놀이로 시작해, 지금은 혀 운동·소리 열기구·따라 말하기까지 4가지 놀이로 넓혔습니다. 아이가 과제를 해내면 강아지 캐릭터가 반응하고 별과 보상이 쌓입니다.",
+      ],
+      features: [
+        "4가지 놀이 — ① 입 벌리기(MediaPipe로 입 모양 인식) ② 혀 운동 ③ 소리 열기구(마이크 음량으로 풍선 띄우기) ④ 따라 말하기(발음 유사도 측정)",
+        "강아지 캐릭터 성장 + 별 보상으로 동기 부여",
+        "결과·보상 화면, 진행 기록 저장, AI 훈련 보고서 생성",
+      ],
+      stack: ["Next.js 15", "React", "@mediapipe/tasks-vision(Face Landmarker)", "Zustand", "Tailwind CSS", "Vercel"],
+      // 타임라인 (실데이터: github.com/haemiru/SpeechTherapy 커밋)
+      timeline: [
+        { date: "2026-03-04", label: "첫 커밋 — 프로젝트 초기화(기획·설계·디자인 문서)" },
+        { date: "2026-03-05", label: "4개 게임 전체 구현 + AI 보고서 생성(Gemini) + Vercel 배포" },
+        { date: "2026-05-30", label: "게임 개편 — 혀 운동·소리 열기구·따라 말하기 + 빌드 인프라 정비" },
+        { date: "2026-06-01", label: "따라 말하기 개선 — TTS 음성 품질·인식 정확도 + AI 보고서 영속화" },
+        { date: "2026-06-04", label: "라운드 타이머·보고서 API 검증·강아지 보상 안정화" },
+      ],
+      challenges: [
+        "MediaPipe 기술을 처음 적용하면서 카메라와 마이크가 제대로 인식하지 못해, 여러 번 수정을 반복하면서 결국 해내게 됐어요.",
+        "따라 말하기를 하는데 영어식 발음과 한국어 발음의 차이, 마이크가 활성화되는 데 걸리는 시간 차이 등에서 잘 맞지 않아 어려움이 있었네요.",
+      ],
+      prompts: [
+        { title: "입 모양 인식 (MediaPipe)", text: "실제 언어치료에서 이용하는 방법을 검색하고 검증한 다음에 입 벌리기에 대한 기능을 추가하고, mediapipe 기술을 이용해서 입 모양을 정확하게 파악할 수 있도록 구현해줘." },
+      ],
+      retro: [
+        "에이전트 팀을 구성해서 개발한 프로젝트라 뭔가 다른 느낌이 있습니다. 우리 김언어 언어치료사님이 꼼꼼히 검수를 해주시고…",
+      ],
+    },
+  },
+  {
     name: "중개프로",
     slug: "jungaepro",
     emoji: "🏢",
@@ -292,51 +337,6 @@ export const PROJECTS = [
       ],
       retro: [
         "공인중개사들이 비싼 돈을 주고 홈페이지를 제작하고 있는데, 전혀 그렇게 비싼 돈을 주고 만들 필요가 없습니다. 누구나 저렴한 비용으로 나만의 홈페이지를 만들 수 있게 할 수 있어서 뿌듯^^",
-      ],
-    },
-  },
-  {
-    name: "소리야 놀자!",
-    slug: "soriya",
-    emoji: "🗣️",
-    description: "얼굴 인식으로 입 모양을 따라 하며 노는, 발달장애 아동을 위한 언어치료 앱.",
-    url: "https://speech-therapy-nine.vercel.app/home",  // ⚠️ 임시 URL(추후 변경 예정)
-    status: "building",
-    tags: ["언어치료", "얼굴인식", "Next.js"],
-    detail: {
-      started: "2026-03-04",      // 첫 커밋(실데이터 — github.com/haemiru/SpeechTherapy)
-      commits: 36,                // git 이력(실데이터)
-      tint: "#22d3ee",            // 카드 미디어 밴드 색조
-      thumb: "/shots/soriya-cover.png",   // 실제 홈 화면(놀이 메뉴) — 카드 밴드용
-      cover: "/shots/soriya-cover.png",
-      coverCaption: "소리야 놀자! — 홈(6가지 놀이 메뉴)",
-      summary: [
-        "발달장애 아동(3~10세)에게 '입을 크게 벌려 소리 내기'는 중요한 언어치료 과제지만, 반복 훈련은 쉽게 지루해집니다. 그래서 카메라로 입 모양을 인식해, 아이가 따라 하면 게임처럼 반응하도록 만들고 있습니다.",
-        "처음엔 MediaPipe Face Landmarker의 jawOpen(입 벌림) 값을 읽는 '입 벌리기' 놀이로 시작해, 지금은 혀 운동·소리 열기구·따라 말하기까지 4가지 놀이로 넓혔습니다. 아이가 과제를 해내면 강아지 캐릭터가 반응하고 별과 보상이 쌓입니다.",
-      ],
-      features: [
-        "4가지 놀이 — ① 입 벌리기(MediaPipe로 입 모양 인식) ② 혀 운동 ③ 소리 열기구(마이크 음량으로 풍선 띄우기) ④ 따라 말하기(발음 유사도 측정)",
-        "강아지 캐릭터 성장 + 별 보상으로 동기 부여",
-        "결과·보상 화면, 진행 기록 저장, AI 훈련 보고서 생성",
-      ],
-      stack: ["Next.js 15", "React", "@mediapipe/tasks-vision(Face Landmarker)", "Zustand", "Tailwind CSS", "Vercel"],
-      // 타임라인 (실데이터: github.com/haemiru/SpeechTherapy 커밋)
-      timeline: [
-        { date: "2026-03-04", label: "첫 커밋 — 프로젝트 초기화(기획·설계·디자인 문서)" },
-        { date: "2026-03-05", label: "4개 게임 전체 구현 + AI 보고서 생성(Gemini) + Vercel 배포" },
-        { date: "2026-05-30", label: "게임 개편 — 혀 운동·소리 열기구·따라 말하기 + 빌드 인프라 정비" },
-        { date: "2026-06-01", label: "따라 말하기 개선 — TTS 음성 품질·인식 정확도 + AI 보고서 영속화" },
-        { date: "2026-06-04", label: "라운드 타이머·보고서 API 검증·강아지 보상 안정화" },
-      ],
-      challenges: [
-        "MediaPipe 기술을 처음 적용하면서 카메라와 마이크가 제대로 인식하지 못해, 여러 번 수정을 반복하면서 결국 해내게 됐어요.",
-        "따라 말하기를 하는데 영어식 발음과 한국어 발음의 차이, 마이크가 활성화되는 데 걸리는 시간 차이 등에서 잘 맞지 않아 어려움이 있었네요.",
-      ],
-      prompts: [
-        { title: "입 모양 인식 (MediaPipe)", text: "실제 언어치료에서 이용하는 방법을 검색하고 검증한 다음에 입 벌리기에 대한 기능을 추가하고, mediapipe 기술을 이용해서 입 모양을 정확하게 파악할 수 있도록 구현해줘." },
-      ],
-      retro: [
-        "에이전트 팀을 구성해서 개발한 프로젝트라 뭔가 다른 느낌이 있습니다. 우리 김언어 언어치료사님이 꼼꼼히 검수를 해주시고…",
       ],
     },
   },

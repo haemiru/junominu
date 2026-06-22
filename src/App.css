@@ -284,8 +284,8 @@
 /* ── Grid ───────────────────────────── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
 /* ── Card ───────────────────────────── */
@@ -295,8 +295,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
-  min-height: 200px;
+  padding: 18px;
+  min-height: 168px;
   overflow: hidden;
   transition:
     transform 0.18s ease,
@@ -307,8 +307,8 @@
 /* 카드 상단 미디어 밴드 — 풀블리드(패딩 무시) */
 .card__media {
   position: relative;
-  margin: -24px -24px 18px;
-  height: 116px;
+  margin: -18px -18px 14px;
+  height: 96px;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -319,7 +319,7 @@
 }
 
 .card__media-emoji {
-  font-size: 46px;
+  font-size: 38px;
   line-height: 1;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
   opacity: 0.95;
@@ -1038,6 +1038,12 @@
 #journey,
 #work {
   scroll-margin-top: 28px;
+}
+
+@media (max-width: 880px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 520px) {
