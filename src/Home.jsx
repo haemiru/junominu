@@ -194,17 +194,24 @@ export default function Home() {
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
         <nav className="hero__nav" aria-label="섹션 바로가기">
+          <a href="#work">PROJECTS</a>
           <a href="#about">About</a>
           <a href="#resume">RÉSUMÉ</a>
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
           <a href="#journey">JOURNEY</a>
-          <a href="#work">PROJECTS</a>
           <Link to="/blog">BLOG</Link>
         </nav>
       </header>
 
       <Stats />
+
+      <section id="work">
+        <h2 className="section__label">PROJECTS — 바이브 코딩으로 만든 것들</h2>
+        <div className="grid">
+          {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
+        </div>
+      </section>
 
       <section id="about" className="section">
         <h2 className="section__label">ABOUT — 비개발자의 바이브 코딩</h2>
@@ -255,13 +262,6 @@ export default function Home() {
       </section>
 
       <Journey />
-
-      <section id="work">
-        <h2 className="section__label">PROJECTS</h2>
-        <div className="grid">
-          {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
-        </div>
-      </section>
 
       <footer className="foot">
         <span>© {new Date().getFullYear()} {ME.name}</span>
