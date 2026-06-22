@@ -36,6 +36,16 @@ export const ME = {
     // 전자책이 공개되면 위 문장에 링크를 걸거나 ME.links에 항목 추가
   ],
 
+  // 이력 — 학력·경력 (홈 RÉSUMÉ 세로 연표). 최근이 위로 오도록 적는다.
+  //   kind: 'career'(경력) | 'edu'(학력)
+  resume: [
+    { kind: "career", period: "2026.01 –",         label: "1인 메이커 / 바이브 코딩" },
+    { kind: "career", period: "2023.06 – 2025.12", label: "공인중개사 / 1인 셀러" },
+    { kind: "career", period: "2011.01 – 2022.10", label: "교보라이프플래닛생명 · 보안기획" },
+    { kind: "career", period: "1999.12 – 2010.06", label: "LG CNS · System Architect" },
+    { kind: "edu",    period: "2000.02",           label: "서강대학교 컴퓨터공학과 졸업" },
+  ],
+
   // Now — 지금 집중하는 일
   now: [
     "중개프로 — 공인중개사 올인원 SaaS의 멀티테넌트 구조를 다듬는 중",

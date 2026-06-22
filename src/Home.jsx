@@ -131,6 +131,29 @@ function Journey() {
   )
 }
 
+// RÉSUMÉ — 학력·경력 세로 연표. JOURNEY와 같은 .tl 타임라인 톤을 재사용.
+function Resume() {
+  if (!ME.resume?.length) return null
+  return (
+    <section id="resume" className="section">
+      <h2 className="section__label">RÉSUMÉ — 걸어온 길</h2>
+      <ol className="tl tl--resume">
+        {ME.resume.map((r, i) => (
+          <li className="tl__item" key={i}>
+            <span className="tl__date">{r.period}</span>
+            <span className="rrow">
+              <span className={`rtag rtag--${r.kind}`}>
+                {r.kind === 'edu' ? '학력' : '경력'}
+              </span>
+              <span className="tl__label rrow__label">{r.label}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  )
+}
+
 function monthsSince(ym) {
   const [y, m] = ym.split('-').map(Number)
   const now = new Date()
@@ -172,6 +195,7 @@ export default function Home() {
         <p className="hero__intro">{ME.intro}</p>
         <nav className="hero__nav" aria-label="섹션 바로가기">
           <a href="#about">About</a>
+          <a href="#resume">RÉSUMÉ</a>
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
           <a href="#journey">JOURNEY</a>
@@ -204,6 +228,8 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      <Resume />
 
       <section id="now" className="section">
         <h2 className="section__label">NOW — 지금 만들고 있는 것</h2>

@@ -704,6 +704,46 @@
   margin-top: 4px;
 }
 
+/* RÉSUMÉ (학력·경력) — 날짜 아래 칩 + 내용 한 줄 */
+.rrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.rrow__label {
+  margin-top: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.rtag {
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rtag--career {
+  color: var(--accent-2);
+  border-color: color-mix(in srgb, var(--accent-2) 45%, transparent);
+  background: color-mix(in srgb, var(--accent-2) 12%, transparent);
+}
+
+.rtag--edu {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
 /* JOURNEY 커밋 막대 — 프로젝트별 상대 커밋 볼륨 시각화 */
 .jbar {
   position: relative;
