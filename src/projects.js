@@ -350,7 +350,7 @@ export const PROJECTS = [
     slug: "bokjimoa",
     emoji: "🤲",
     description: "발달장애 아이를 키우는 부모가 흩어진 지원사업·치료실을 한곳에서 찾고, 맞춤 추천·알림까지 받는 서비스.",
-    url: "https://bokjimoa.vercel.app",
+    url: "https://bokjimoa.jjangsaem.com",
     status: "building",
     tags: ["복지", "지원사업", "Next.js"],
 
@@ -359,6 +359,9 @@ export const PROJECTS = [
       started: "2026-07-04",      // 첫 커밋(실데이터)
       commits: 102,               // git 이력(실데이터)
       tint: "#38bdf8",            // 카드 미디어 밴드 색조
+      cover: "/shots/bokjimoa-cover.png",   // 아이콘+브랜드 카드(앱 OG 이미지)
+      coverCaption: "아이복지모아 — 발달장애 아이 지원사업을 한곳에서",
+      thumb: "/shots/bokjimoa-cover.png",    // 홈 카드 밴드(아이콘 노출)
       summary: [
         "발달장애·발달지연 아이를 키우는 부모는 '어떤 지원사업이 있는지', '우리 아이가 받을 수 있는지'조차 알기 어렵습니다. 공공기관·지자체·복지관·민간재단에 흩어진 공고를 일일이 찾아다녀야 했어요.",
         "아이복지모아는 그 흩어진 지원사업을 한곳에 모아, 아이 조건(지역·나이·장애등록·관심분야)에 맞는 사업을 '신청 가능성'과 근거 문장까지 붙여 추천합니다. 전국 소아재활·바우처 치료실 2,270곳을 지도로 찾고, 마감 임박·신규 맞춤 사업은 카카오 알림톡으로 받도록 만드는 중입니다. 짱샘의 책방과 이어지는 자매 서비스예요.",
