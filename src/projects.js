@@ -351,7 +351,7 @@ export const PROJECTS = [
     emoji: "🤲",
     description: "발달장애 아이를 키우는 부모가 흩어진 지원사업·치료실을 한곳에서 찾고, 맞춤 추천·알림까지 받는 서비스.",
     url: "https://bokjimoa.jjangsaem.com",
-    status: "building",
+    status: "live",
     tags: ["복지", "지원사업", "Next.js"],
 
     // 상세(메이킹 스토리) — 실데이터: 로컬 레포(BokJiMOA) git 이력·README·WORK-LOG에서 추출
@@ -399,8 +399,8 @@ export const PROJECTS = [
     slug: "transcripto",
     emoji: "🎙️",
     description: "녹음·영상 파일을 100% 오프라인으로 전사하고 로컬 AI로 회의록까지 만들어 주는 설치형 데스크톱 프로그램.",
-    // 크몽 일회 라이선스 판매(제출 전) — 자체 도메인/라이브 URL 없음. 출시되면 url 추가.
-    status: "building",
+    // 크몽 일회 라이선스로 판매 중(출시). 자체 도메인 없음 — 크몽 gig URL 확보되면 url 추가.
+    status: "live",
     tags: ["데스크톱 앱", "로컬 LLM", "음성 전사"],
 
     // 상세(메이킹 스토리) — 실데이터: 로컬 레포(LLM-Service-Transcripto) git 이력·WORK-LOG·크몽 상세페이지에서 추출
