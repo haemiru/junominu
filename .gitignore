@@ -25,3 +25,6 @@ dist-ssr
 
 # bkit 플러그인 로컬 런타임 산출물 (audit/runtime/state)
 .bkit/
+
+# 인스타 캐러셀 샘플 작업 폴더 (홍보용 이미지 — 사이트 배포물 아님)
+carousel-sample/
