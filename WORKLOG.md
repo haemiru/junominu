@@ -6,7 +6,7 @@
 
 ---
 
-## ▶ 지금 할 차례 (2026-07-22 기준)
+## ▶ 지금 할 차례 (2026-07-23 기준)
 
 > **"이제 뭐 해야 해?" → 사이트 개선 4순위 「블로그 콘텐츠」부터.**
 
@@ -20,10 +20,16 @@
 - 🚨 **재발 방지 — Windows Chrome은 `--window-size` 폭에 하한(약 500px)이 있다.** `--window-size=430`을 줘도 **512px 뷰포트로 렌더한 뒤 PNG만 430으로 크롭**한다 → 오른쪽이 잘린 것처럼 보여 "넘침"으로 오진하기 쉽다.
   → **모바일 확인은 `--window-size`로 하지 말 것.** CDP Emulation을 쓰거나(스크립트 예: 이 세션의 `overflow-probe.mjs`), 최소 500px 이상 폭에서만 판단할 것.
 
+### ✅ Tally 숨김필드 — **생성 완료** (2026-07-23, 폼 정의에서 실측 확인)
+- 폼 `b5EKOL` 정의에 `hiddenFields: [{name:"type"}]` + `[{name:"src"}]` **둘 다 존재**. `Contact.jsx`가 보내는 키와 이름 일치 → 이제 문의 응답에 **문의유형 + 유입경로**가 함께 기록된다.
+- `src` 값: `threads/<캠페인>`(UTM) → 없으면 `l.threads.com`(referrer) → 없으면 `direct`. **first-touch**라 사이트 안을 돌아다녀도 최초 유입이 유지된다.
+- ⚠️ 다만 **UTM을 붙여 올린 글이 있어야** `threads/<캠페인>` 단위 귀속이 생긴다(아래 참조).
+
 ### ⏸️ 사이트 밖(사용자 직접 해야 하는 일)
-- **Tally 폼에 숨김필드 `src` 생성** — 코드는 이미 보내고 있다. 필드가 없으면 조용히 버려진다. (전략 §7)
 - **동료 링 20~30계정 리스트업** — 스레드 전략 §5, 1~2주 과제 중 유일하게 남음.
 - 스레드 글 링크에 **UTM** 붙이기: `?utm_source=threads&utm_campaign=<글슬러그>`
+  - 예: `https://www.junominu.com/p/petphoto?utm_source=threads&utm_campaign=petphoto-anchor`
+  - 이걸 해야 Tally `src`와 Vercel Analytics **UTM Parameters** 탭이 글 단위로 쪼개진다. 안 붙이면 전부 `l.threads.com` 한 덩어리.
 
 ---
 

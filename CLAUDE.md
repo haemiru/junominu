@@ -115,7 +115,7 @@ detail: {
 - **유입 경로 추적(숨김필드 `src`)**: `src/attribution.js`가 **첫 진입 때** utm/referrer를 붙잡아 `sessionStorage`에 저장하고(`main.jsx`에서 렌더 전 1회 호출), /contact가 그 값을 Tally 숨김필드 **`src`**로 함께 보낸다 → "어느 스레드 글이 문의를 만들었나"가 응답에 기록된다.
   - 값 형식: `threads/bokjimoa-anchor`(utm_source/utm_campaign) → 없으면 `l.threads.com`(referrer 호스트) → 없으면 `direct`.
   - **first-touch**(최초 유입 유지, 덮어쓰지 않음). SPA 라우팅으로 쿼리가 사라지기 전에 잡아야 해서 `main.jsx`에서 호출한다.
-  - ⚠️ Tally 폼에 **숨김필드 `src`가 실제로 있어야** 기록된다(없으면 조용히 무시). `type`과 같은 방식.
+  - ✅ **폼 `b5EKOL`에 숨김필드 `src`·`type` 둘 다 생성 완료**(2026-07-23, 폼 정의에서 확인). 폼을 새로 만들거나 바꾸면 이 두 필드를 다시 만들어야 한다 — 없으면 값이 조용히 버려진다.
   - ⚠️ 폼이 없어 Gmail 폴백으로 갈 때는 `src`가 전달되지 않는다(제목만 채움).
 - **폴백**: `formUrl`·`formId`가 비어 있으면 버튼이 `subject`가 채워진 Gmail 작성창(`ME.contact.email`)으로 열린다 → 폼이 없어도 죽은 링크가 안 생김.
 - 홈 진입점: 히어로 CTA 버튼 + 내비 "함께하기" + 하단 `ContactCTA` 밴드(`#contact`) + 풋터 "코칭·외주". 문안(오퍼·소개)은 전부 `ME.contact`에서 수정.
