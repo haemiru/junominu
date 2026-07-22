@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { ME, PROJECTS, totalCommits } from './projects'
+import { getAttribution } from './attribution'
 
 // 폼 URL 이 없을 때의 폴백 — 성함/문의유형이 subject 로 채워진 Gmail 작성창을 연다.
 // (PC에 기본 메일 앱이 없어도 열리도록 mailto 대신 Gmail 웹 작성창 사용 — ME.links 와 동일 패턴)
@@ -15,20 +16,24 @@ function monthsSince(ym) {
 }
 
 // 버튼 URL: 개별 폼(offer.formUrl) → 공용 폼(contact.formUrl) → 이메일 폴백.
-// 폼으로 갈 땐 typeValue 를 Tally 숨김필드 'type' 파라미터로 붙여, 버튼에 따라
-// 코칭/외주가 자동 기록되게 한다(폼에서 '문의 유형'을 다시 안 물어봐도 됨).
-function buildFormUrl(o, c) {
+// 폼으로 갈 땐 Tally 숨김필드 2개를 쿼리로 붙인다:
+//   type — 버튼별 문의유형(코칭/외주). 폼에서 다시 안 물어봐도 된다.
+//   src  — 유입 경로(어느 스레드 글에서 왔나). attribution.js 가 첫 진입 때 잡아둔 값.
+function buildFormUrl(o, c, src) {
   const base = o.formUrl || c.formUrl
   if (!base) return gmailCompose(c.email, o.subject)
-  if (!o.typeValue) return base
-  const sep = base.includes('?') ? '&' : '?'
-  return `${base}${sep}type=${encodeURIComponent(o.typeValue)}`
+  const q = new URLSearchParams()
+  if (o.typeValue) q.set('type', o.typeValue)
+  if (src) q.set('src', src)
+  if (![...q].length) return base
+  return `${base}${base.includes('?') ? '&' : '?'}${q}`
 }
 
 function OfferCard({ o, contact }) {
-  const url = buildFormUrl(o, contact)
+  const src = getAttribution()
+  const url = buildFormUrl(o, contact, src)
 
-  // 버튼 클릭 → Tally 팝업을 사이트 안에서 연다(type 은 숨김필드로 전달).
+  // 버튼 클릭 → Tally 팝업을 사이트 안에서 연다(type·src 는 숨김필드로 전달).
   // Tally 스크립트가 아직 안 떴으면 preventDefault 를 안 해서 기본 동작(새 탭)으로 폴백.
   const openForm = (e) => {
     if (typeof window !== 'undefined' && window.Tally && contact.formId) {
@@ -36,7 +41,7 @@ function OfferCard({ o, contact }) {
       window.Tally.openPopup(contact.formId, {
         layout: 'modal',
         width: 720,
-        hiddenFields: { type: o.typeValue },
+        hiddenFields: { type: o.typeValue, src },
         autoClose: 3000,
       })
     }

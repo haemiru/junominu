@@ -41,9 +41,17 @@
 ### 현재 상태 ✅
 - 문서 3종 정합성 확인(낡은 수치 잔존 없음). **Analytics 가동·검증 완료** — 스레드→사이트 구간 측정됨.
 
+**F. 유입 경로 → 문의 연결 (숨김필드 `src`)**
+- 문제: `/p/bokjimoa?utm_source=threads&...`로 들어와도 **SPA 라우팅으로 /contact 가는 순간 쿼리가 사라진다.**
+- 해결: `src/attribution.js` 신설 — `main.jsx`에서 **렌더 전 1회** `captureAttribution()` 호출해 utm/referrer를 `sessionStorage`에 **first-touch**로 저장. `/contact`가 그 값을 Tally 숨김필드 **`src`**로 전달(팝업=hiddenFields, 새 탭 폴백=`?src=`).
+- 값: `threads/bokjimoa-anchor` → 없으면 `l.threads.com`(referrer) → 없으면 `direct`.
+- 검증: 분기 로직 **8/8 통과**(UTM 전체/일부·referrer·내부이동 무시·깨진 referrer·직접진입·first-touch 유지·sessionStorage 차단 시 무예외). 빌드·린트 통과.
+- ⚠️ **Tally 폼에 숨김필드 `src`를 만들어야 실제로 기록된다**(없으면 조용히 무시됨).
+
 ### 다음에 할 일 (TODO)
 - [x] **Vercel Analytics 설치 + Enable + 수신 검증** (2026-07-22 완료).
-- [ ] **문의까지 연결** — Tally에 유입 경로 숨김필드(예: `src`) 추가 + `Contact.jsx`에서 `utm_source`를 넘겨주기. 이게 있어야 "어느 글이 문의를 만들었나"가 잡힌다.
+- [x] **문의까지 연결** — `src` 숨김필드 전달 구현 완료(2026-07-22). → **Tally 쪽에 `src` 필드 생성 필요**.
+- [ ] **스레드 글 링크에 UTM 붙이기** — `?utm_source=threads&utm_campaign=<글슬러그>`. 이번 앵커 글은 UTM 없이 나가 referrer로만 잡힘.
 - [ ] 프로필 3층 정비(전략 §3) — 현 bio "1:1 코칭·외주 문의 ↓"는 초기 단계 전환이 약함. 먼저 궁금증을 만드는 문구로.
 - [ ] 동료 링 20~30계정 리스트업(전략 §5)
 - [ ] 앵커 2개 추가(중개프로·짱샘의 책방)
