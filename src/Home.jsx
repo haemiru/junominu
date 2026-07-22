@@ -182,6 +182,27 @@ function Stats() {
   )
 }
 
+// PROJECTS 바로 아래 프로모 밴드 — 카드를 다 본 방문자를 프롬프트 노트(/prompts)로.
+// 개수는 projects.js의 detail.prompts에서 자동 계산되므로 프롬프트를 추가하면 알아서 늘어난다.
+function PromptsBand() {
+  const withPrompts = PROJECTS.filter((p) => p.detail?.prompts?.length > 0)
+  const count = withPrompts.reduce((n, p) => n + p.detail.prompts.length, 0)
+  if (!count) return null
+  return (
+    <section className="band">
+      <div className="band__text">
+        <p className="hero__kicker band__kicker">PROMPT NOTE</p>
+        <h2 className="band__title">이 프로젝트들을 만든 실제 프롬프트</h2>
+        <p className="band__lead">
+          위 {withPrompts.length}개 프로젝트를 만들며 실제로 썼던 핵심 프롬프트 {count}개를
+          다듬지 않고 그대로 모아 뒀습니다. 바이브 코딩의 재료입니다.
+        </p>
+      </div>
+      <Link className="btn btn--ghost band__btn" to="/prompts">프롬프트 노트 보기 →</Link>
+    </section>
+  )
+}
+
 // 홈 하단 CTA 밴드 — 포트폴리오를 다 본 방문자를 코칭·외주로 전환. ME.contact 자동 렌더.
 function ContactCTA() {
   const c = ME.contact
@@ -218,8 +239,10 @@ export default function Home() {
         <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
+        {/* 첫 버튼은 "둘러보기"(낮은 문턱). 문의는 보조 버튼 + 하단 ContactCTA 밴드가 받는다. */}
         <div className="hero__actions">
-          <Link className="btn btn--primary" to="/contact">1:1 코칭 · 외주 문의 →</Link>
+          <a className="btn btn--primary" href="#work">프로젝트 둘러보기 ↓</a>
+          <Link className="btn btn--ghost" to="/contact">1:1 코칭 · 외주 문의</Link>
         </div>
         <nav className="hero__nav" aria-label="섹션 바로가기">
           <a href="#work">PROJECTS</a>
@@ -228,6 +251,7 @@ export default function Home() {
           <a href="#now">Now</a>
           <a href="#stack">STACK</a>
           <a href="#journey">JOURNEY</a>
+          <Link to="/prompts">프롬프트</Link>
           <Link to="/blog">BLOG</Link>
           <Link to="/contact">함께하기</Link>
         </nav>
@@ -241,6 +265,8 @@ export default function Home() {
           {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
         </div>
       </section>
+
+      <PromptsBand />
 
       <section id="about" className="section">
         <h2 className="section__label">ABOUT — 비개발자의 바이브 코딩</h2>
