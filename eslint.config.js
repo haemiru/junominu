@@ -18,4 +18,9 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // 빌드 스크립트는 브라우저가 아니라 Node 에서 돈다 (process, console 등)
+    files: ['scripts/**/*.js'],
+    languageOptions: { globals: globals.node },
+  },
 ])
