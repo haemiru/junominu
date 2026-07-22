@@ -108,7 +108,8 @@ detail: {
 
 - 데이터는 `projects.js`의 `ME.contact` 하나에 모여 있고, `Contact.jsx`가 자동 렌더한다(오퍼 카드 = `ME.contact.offers[]`).
 - **폼 연결**: 구글폼/Tally로 폼을 만든 뒤 `ME.contact.formUrl`에 링크만 붙이면 모든 "신청/문의" 버튼이 그 폼으로 연결된다. 코칭·외주를 다른 폼으로 받으려면 각 `offers[].formUrl`로 개별 지정.
-- **폴백**: `formUrl`이 비어 있으면 버튼이 `subject`가 채워진 Gmail 작성창(`ME.contact.email`)으로 열린다 → 폼이 없어도 죽은 링크가 안 생김.
+- **Tally 팝업 임베드**: `ME.contact.formId`(예: `b5EKOL`)가 있으면 /contact 오퍼 버튼이 새 탭 대신 **Tally 팝업**으로 사이트 안에서 폼을 연다(`embed.js` 로드 → `Tally.openPopup`). 코칭/외주 구분은 `offers[].typeValue`를 Tally **숨김필드 `type`**로 전달(팝업=hiddenFields, 새 탭 폴백=`?type=`). Tally 스크립트 미로딩 시 새 탭으로 폴백.
+- **폴백**: `formUrl`·`formId`가 비어 있으면 버튼이 `subject`가 채워진 Gmail 작성창(`ME.contact.email`)으로 열린다 → 폼이 없어도 죽은 링크가 안 생김.
 - 홈 진입점: 히어로 CTA 버튼 + 내비 "함께하기" + 하단 `ContactCTA` 밴드(`#contact`) + 풋터 "코칭·외주". 문안(오퍼·소개)은 전부 `ME.contact`에서 수정.
 
 ### 블로그 글 추가 (Phase 3)

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { ME, PROJECTS, totalCommits } from './projects'
 
@@ -26,6 +27,21 @@ function buildFormUrl(o, c) {
 
 function OfferCard({ o, contact }) {
   const url = buildFormUrl(o, contact)
+
+  // 버튼 클릭 → Tally 팝업을 사이트 안에서 연다(type 은 숨김필드로 전달).
+  // Tally 스크립트가 아직 안 떴으면 preventDefault 를 안 해서 기본 동작(새 탭)으로 폴백.
+  const openForm = (e) => {
+    if (typeof window !== 'undefined' && window.Tally && contact.formId) {
+      e.preventDefault()
+      window.Tally.openPopup(contact.formId, {
+        layout: 'modal',
+        width: 720,
+        hiddenFields: { type: o.typeValue },
+        autoClose: 3000,
+      })
+    }
+  }
+
   return (
     <article className="offer">
       <div className="offer__head">
@@ -40,7 +56,7 @@ function OfferCard({ o, contact }) {
         </ul>
         {o.note && <p className="offer__note">{o.note}</p>}
       </div>
-      <a className="btn btn--primary offer__cta" href={url} target="_blank" rel="noreferrer">
+      <a className="btn btn--primary offer__cta" href={url} target="_blank" rel="noreferrer" onClick={openForm}>
         {o.cta} →
       </a>
     </article>
@@ -49,6 +65,18 @@ function OfferCard({ o, contact }) {
 
 export default function Contact() {
   const c = ME.contact
+
+  // Tally 팝업 임베드 스크립트 로드(/contact 진입 시 1회). 오퍼 버튼이 이걸로 팝업을 띄운다.
+  useEffect(() => {
+    const id = 'tally-embed-script'
+    if (document.getElementById(id)) return
+    const s = document.createElement('script')
+    s.id = id
+    s.src = 'https://tally.so/widgets/embed.js'
+    s.async = true
+    document.body.appendChild(s)
+  }, [])
+
   if (!c) return <Navigate to="/" replace />
 
   const live = PROJECTS.filter((p) => p.status === 'live').length
