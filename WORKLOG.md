@@ -31,6 +31,35 @@
 
 ---
 
+## 2026-07-22 (4) — 펫포토 AI 카드 추가 (9번째 프로젝트)
+
+### 무엇을 했나
+
+`D:\Claude-prj\PetPhotoAI` 완료 → `src/projects.js` `PROJECTS`에 **9번째 카드** 추가. 데이터는 그 레포의 `WORK-LOG.md`·`README.md`·git 이력(37커밋)에서 추출한 실데이터.
+
+- **카드**: 펫포토 AI(`slug: petphoto`) · 🐾 · `status: live` · `url: https://pet-photo-ai.vercel.app` · tags `[반려동물, AI 이미지, Vite]` · tint `#fb7185`(브랜드 코랄)
+- **detail**: started `2026-06-30`(1단계 최초 산출물, 독립 repo 분리는 7-02) / launched `2026-07-22`(실결제 E2E 완주) → 상세에 **"0 → 배포 22일"** 표시. summary·features 7 · stack 10 · timeline 8 · challenges 4 · retro 1.
+- **이미지**: `public/shots/petphoto-cover.png`(라이브 랜딩 Chrome 헤드리스 캡처) + 실제 생성 샘플 4장(`petphoto-{original,studio,hanbok,fantasy}.jpg`, PetPhotoAI `public/samples/terrier/`에서 복사) → 상세 "화면" 섹션이 **원본 → 3스타일** before/after로 뜸.
+- `public/sitemap.xml`에 `/p/petphoto` 추가. `ME.about`의 분야 나열에 "반려동물 AI 프로필 사진" 추가(검색 키워드 동기화).
+
+### 검증 ✅
+
+| 항목 | 결과 |
+|---|---|
+| 빌드 + 프리렌더 | ✅ `dist/p/petphoto/index.html` 생성, 프로젝트 9개로 증가 |
+| 라우트 메타 | ✅ title `펫포토 AI — 메이킹 스토리 · JunoMinu` / og:image `/shots/petphoto-cover.png` |
+| lint | ✅ |
+| 홈 카드 육안 | ✅ 3행 1열에 카드 렌더, 지표 자동 갱신 — 프로젝트 **9** · 누적 커밋 **1,249** · 운영 중 **6** |
+| 상세 페이지 육안 | ✅ 커버·지표(22일/첫 커밋)·기능·화면 4장·스택·타임라인 정상 |
+
+### 사용자 확인 완료 ✅
+
+1. **`prompts` 채움** — 사용자가 실제 프롬프트 확정: *"샘플 보기 생성 후 결제 연동하는 것을 선결제 후 실제 결과물 생성으로 수정하자. API 비용 대비 수익이 나기 위해서는 샘플 보기로 인한 비용 지출을 막아야 할 필요가 있어."*(제목 「선결제 전환 — 원가 방어」) → `/prompts` 프롬프트 노트에 자동 집계됨.
+2. **`status: "live"` 확정** — 사용자 확인. 배포·live 키·실결제 E2E 통과 상태.
+3. (참고) `ME.now`는 안 건드렸다 — 현재 아이복지모아·중개프로·소리야 3개. 펫포토 오픈 준비를 넣고 싶으면 말해 줄 것.
+
+---
+
 ## 2026-07-22 (3) — 라우트별 메타·OG 프리렌더 (공유 카드 정상화)
 
 ### 무엇을 했나
