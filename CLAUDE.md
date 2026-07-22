@@ -134,6 +134,17 @@ slug: my-post          # (선택) 없으면 파일명에서 자동(날짜 접두
 
 `blogData.js`가 `import.meta.glob`로 전부 읽어 frontmatter를 파싱하고 `marked`로 HTML 변환, 날짜 내림차순 정렬. 새 글·프로젝트를 추가하면 **`public/sitemap.xml`에도 URL 한 줄 추가**할 것.
 
+### 라우트별 메타·OG 프리렌더 (중요)
+
+SPA라 모든 경로가 같은 `index.html`을 받는데, **스레드·카카오톡·구글 크롤러는 JS를 실행하지 않는다.** 그래서 `/p/bokjimoa`를 공유해도 미리보기 카드가 "사이트 공통 OG"로 떴다. 이를 막기 위해 **빌드 후 라우트마다 정적 HTML을 만들어 메타만 갈아끼운다.**
+
+- 스크립트: `scripts/prerender-meta.js` — `npm run build`에서 `vite build` **다음에 자동 실행**.
+- 산출물: `dist/p/<slug>/index.html`, `dist/blog/<slug>/index.html`, `dist/{blog,prompts,contact}/index.html` (+ 원본 `dist/index.html` = `/`).
+- 데이터 원천은 `src/projects.js`와 `src/posts/*.md` → **프로젝트·글을 추가하면 자동으로 늘어난다.** 스크립트를 고칠 필요 없음.
+- 프로젝트 상세는 `detail.cover`(없으면 `detail.thumb`)를 **og:image로** 쓴다 → 공유 카드에 실제 제품 화면이 뜬다. 스크린샷은 1200×630이 아니라서 `og:image:width/height` 태그는 자동 제거된다.
+- `vercel.json`은 그대로 둔다 — **Vercel은 rewrites보다 실제 파일을 먼저 서빙**하므로, 파일이 있는 경로는 프리렌더본이 나가고 없는 경로만 SPA fallback으로 넘어간다.
+- ⚠️ `npm run dev`/`vite preview`에는 적용되지 않는다(빌드 산출물이라). **메타 확인은 배포본에서** 할 것.
+
 ### OG 이미지 재생성
 
 `public/og.png`(1200×630)는 빌드 산출물이 아니라 별도로 만든 정적 이미지다. 디자인을 바꾸려면 사이트 톤에 맞춘 카드 HTML(1200×630, Pretendard CDN)을 임시로 만들고 **Chrome 헤드리스로 스크린샷**을 떠서 `public/og.png`를 덮어쓰면 된다:
