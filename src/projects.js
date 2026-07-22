@@ -84,7 +84,7 @@ export const ME = {
     formUrl: "https://tally.so/r/b5EKOL",   // Tally — 1:1 코칭·외주 문의 폼(새 탭 폴백용)
     formId: "b5EKOL",                        // Tally 폼 ID — /contact에서 팝업 임베드(Tally.openPopup)
     email: "junominu@gmail.com",
-    lead: "20년 IT 경력 위에, 지금은 AI 바이브코딩으로 혼자 기획·개발·배포합니다.\n그 방법을 나누고(코칭), 필요한 제품을 대신 만들어 드립니다(외주).",
+    lead: "22년 IT 경력(시스템 아키텍트·정보보안 기획) 위에, 지금은 AI 바이브코딩으로 혼자 기획·개발·배포합니다.\n그 방법을 나누고(코칭), 필요한 제품을 대신 만들어 드립니다(외주).",
     offers: [
       {
         key: "coaching",
