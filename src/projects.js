@@ -99,6 +99,7 @@ export const ME = {
         note: "온라인 1:1(화상) · 회차·시간 협의",
         cta: "1:1 코칭 신청",
         subject: "[junominu] 1:1 코칭 신청",
+        typeValue: "1:1 코칭",         // Tally 숨김필드 'type' 로 전달(버튼별 문의유형 자동기록)
         // formUrl: "",                // (선택) 코칭 전용 폼
       },
       {
@@ -115,6 +116,7 @@ export const ME = {
         note: "요구사항 협의 → 견적 → 제작",
         cta: "외주 문의하기",
         subject: "[junominu] 외주 문의",
+        typeValue: "외주 문의",         // Tally 숨김필드 'type' 로 전달
         // formUrl: "",                // (선택) 외주 전용 폼
       },
     ],

@@ -13,21 +13,33 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
+// 버튼 URL: 개별 폼(offer.formUrl) → 공용 폼(contact.formUrl) → 이메일 폴백.
+// 폼으로 갈 땐 typeValue 를 Tally 숨김필드 'type' 파라미터로 붙여, 버튼에 따라
+// 코칭/외주가 자동 기록되게 한다(폼에서 '문의 유형'을 다시 안 물어봐도 됨).
+function buildFormUrl(o, c) {
+  const base = o.formUrl || c.formUrl
+  if (!base) return gmailCompose(c.email, o.subject)
+  if (!o.typeValue) return base
+  const sep = base.includes('?') ? '&' : '?'
+  return `${base}${sep}type=${encodeURIComponent(o.typeValue)}`
+}
+
 function OfferCard({ o, contact }) {
-  // 개별 폼(offer.formUrl) → 공용 폼(contact.formUrl) → 이메일 폴백 순으로 연결
-  const url = o.formUrl || contact.formUrl || gmailCompose(contact.email, o.subject)
+  const url = buildFormUrl(o, contact)
   return (
     <article className="offer">
       <div className="offer__head">
         <span className="offer__emoji" aria-hidden="true">{o.emoji}</span>
         <h3 className="offer__title">{o.title}</h3>
       </div>
-      <p className="offer__tagline">{o.tagline}</p>
-      <p className="offer__who">{o.who}</p>
-      <ul className="now">
-        {o.points.map((pt, i) => <li className="now__item" key={i}>{pt}</li>)}
-      </ul>
-      {o.note && <p className="offer__note">{o.note}</p>}
+      <div className="offer__body">
+        <p className="offer__tagline">{o.tagline}</p>
+        <p className="offer__who">{o.who}</p>
+        <ul className="now">
+          {o.points.map((pt, i) => <li className="now__item" key={i}>{pt}</li>)}
+        </ul>
+        {o.note && <p className="offer__note">{o.note}</p>}
+      </div>
       <a className="btn btn--primary offer__cta" href={url} target="_blank" rel="noreferrer">
         {o.cta} →
       </a>
