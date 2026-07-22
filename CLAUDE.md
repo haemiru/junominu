@@ -61,7 +61,8 @@ junominu/
 ├── index.html          # 메타 + Pretendard CDN + 이모지 파비콘(⚡)
 ├── vercel.json         # SPA fallback rewrites (/(.*) → /index.html, 상세 페이지 새로고침 404 방지)
 ├── src/
-│   ├── main.jsx        # 진입점
+│   ├── main.jsx        # 진입점 (렌더 전 captureAttribution() 1회 호출)
+│   ├── attribution.js  # 유입 경로(utm/referrer)를 첫 진입 때 sessionStorage에 first-touch 저장 → /contact가 Tally 숨김필드 src로 전달
 │   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact) + ScrollToTop + BackToTop
 │   ├── Home.jsx        # 홈: Hero(코칭·외주 CTA 버튼)·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·ContactCTA 밴드·풋터 + ProjectCard (내비 BLOG·함께하기, 풋터 프롬프트노트·블로그·코칭외주 링크)
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
@@ -82,6 +83,8 @@ junominu/
 │   ├── og.png          # OG/SNS 미리보기 이미지 1200×630 (index.html og:image). 재생성법은 아래
 │   ├── sitemap.xml     # 정적 사이트맵 (프로젝트/글 추가 시 같이 갱신)
 │   └── robots.txt
+├── scripts/
+│   └── prerender-meta.js  # 빌드 후 라우트별 정적 HTML 생성(제목·OG 치환). npm run build에 물려 있음
 └── vite.config.js
 ```
 
@@ -177,6 +180,9 @@ npm run preview  # 빌드 결과 로컬 확인
 
 ## 참고
 
-- **작업 이력·다음 할 일**: 루트 `WORKLOG.md` — 세션별 작업 내역/현재 상태/TODO/핵심 참조. **이어 작업할 땐 여기부터** 읽고, 마치면 새 날짜 섹션으로 갱신할 것.
+- **작업 이력·다음 할 일**: 루트 `WORKLOG.md` — 세션별 작업 내역/현재 상태/TODO/핵심 참조.
+  - 🔴 **"이제 뭐 해야 해?" 라는 질문을 받으면 `WORKLOG.md` 맨 위의 「▶ 지금 할 차례」 블록을 읽고 거기서부터 안내한다.** 우선순위(2순위 → 3순위 → 4순위)와 손댈 파일까지 적혀 있다.
+  - 이어 작업할 땐 **여기부터** 읽고, 마치면 「▶ 지금 할 차례」를 갱신한 뒤 새 날짜 섹션을 추가할 것.
+- **스레드 채널 운영**: `.claude/skills/threads-post/` 3단 구조 — `SKILL.md`(글 한 편) / `threads-strategy.md`(채널 운영·플랫폼 팩트·KPI) / `threads-log.md`(발행 이력·월간 KPI). 플랫폼 사실이 어긋나면 **전략 §1이 우선**(기준일·출처 있음).
 - 사업자 정보(강남상회) 풋터는 옛 허브에 있었으나 개인 작업실로 전환하며 제거함. 직접 판매(통신판매) 페이지가 아니면 표시 의무 없음. 필요 시 풋터에 다시 추가 가능.
 - 관련 전략 문서(도구 쪽): 책방 repo `docs/tools-strategy.md`. 단, **이 사이트 자체는 그 전략과 무관한 개인 프로젝트**임.
