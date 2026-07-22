@@ -995,6 +995,116 @@
   color: var(--text-soft);
 }
 
+/* 본문 이미지 — 실제 앱 캡처가 주 재료라 카드처럼 보이게 */
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.prose figure {
+  margin: 24px 0;
+}
+
+.prose figcaption {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* 표 — 좁은 화면에서는 표 자체가 가로 스크롤 (마크다운 표를 그대로 쓰기 위해) */
+.prose table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 18px;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.prose th,
+.prose td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 한 줄 답 — AI 검색(AI Overviews·Perplexity)이 통째로 인용하기 좋은 블록 */
+.prose .answer {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-hover);
+  border-left: 3px solid var(--accent-2);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.prose .answer strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--accent-2);
+}
+
+.prose .answer p {
+  margin: 0;
+  color: var(--text);
+}
+
+/* 글쓴이 — E-E-A-T 시그널(누가 썼는지) */
+.prose .byline {
+  margin: 0 0 28px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-faint);
+}
+
+.prose .byline strong {
+  color: var(--text-soft);
+}
+
+/* 글 끝 CTA — 해당 프로젝트 상세/사이트로 보내는 버튼 */
+.prose .post-cta {
+  margin: 32px 0 8px;
+  text-align: center;
+}
+
+.prose .post-cta a {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.prose .post-cta a:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+}
+
 /* ── 맨 위로 버튼 ───────────────────── */
 .to-top {
   position: fixed;
