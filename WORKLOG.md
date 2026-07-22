@@ -8,12 +8,14 @@
 
 ## ▶ 지금 할 차례 (2026-07-23 기준)
 
-> **"이제 뭐 해야 해?" → 사이트 개선 4순위 「블로그 콘텐츠」부터.**
+> **"이제 뭐 해야 해?" → `/blog-post` 스킬로 글 쓰기. 첫 타자는 `petphoto`.**
 
 1순위(라우트별 메타·OG 프리렌더)·2순위(홈 첫인상)·3순위(번들 다이어트) 모두 **완료**. 사이트 코드 쪽 대기열은 비었고, 남은 건 **콘텐츠**다.
 
 ### 🟢 4순위 — 블로그 콘텐츠 ← **여기부터**
 - 글 **3개, 마지막이 2026-06-04**. 스레드의 🔧빌드로그·💡인사이트를 **받아주는 심화 글 경로가 비어 있다**. 스레드(짧게) → 블로그(깊게) → `/contact` 흐름을 만들어야 한다.
+- ✅ **글 쓰는 도구는 마련됨**(2026-07-23) — **`/blog-post` 스킬**(`.claude/skills/blog-post/`). 프로젝트 slug 하나 주면 끝. 2,000~3,000자 · 앱 캡처 3~5장 · FAQ 3문항 · 표 1개 · 사이트맵·빌드 검증까지.
+- **남은 건 실행뿐.** 프로젝트 9개 = 글 9편 로드맵이 스킬 §6에 표로 있다. 유력 순서: `petphoto`(실결제 E2E) → `bokjimoa`(공공데이터) → `transcripto`(데스크톱 배포).
 
 ### ✅ 모바일 가로 넘침 — **실재하지 않음** (2026-07-22 확인, 수정 불필요)
 - CDP `Emulation.setDeviceMetricsOverride`로 뷰포트를 강제해 실측: **320·360·390·430px 전부 `scrollWidth == viewport`, 넘치는 요소 0개.**
@@ -30,6 +32,54 @@
 - 스레드 글 링크에 **UTM** 붙이기: `?utm_source=threads&utm_campaign=<글슬러그>`
   - 예: `https://www.junominu.com/p/petphoto?utm_source=threads&utm_campaign=petphoto-anchor`
   - 이걸 해야 Tally `src`와 Vercel Analytics **UTM Parameters** 탭이 글 단위로 쪼개진다. 안 붙이면 전부 `l.threads.com` 한 덩어리.
+
+---
+
+## 2026-07-23 (2) — 블로그 글쓰기 스킬 + JSON-LD 프리렌더
+
+### 무엇을 했나
+
+4순위(블로그 콘텐츠)를 **손으로 쓰지 않기 위한 도구**를 먼저 만들었다. 짱샘의 책방 `/add-blog-and-reviews-to-ebook` 커맨드를 이 사이트에 맞게 옮겼다.
+
+**① `/blog-post` 스킬 신설** — `.claude/skills/blog-post/SKILL.md`. 원본과 바꾼 부분:
+
+| | 원본(책방) | 여기 |
+|---|---|---|
+| 저장 | Supabase upsert | `src/posts/*.md` 파일 |
+| 분량 | 8,000~9,500자 | **2,000~3,000자** |
+| 이미지 | Gemini 인포그래픽 9~10장 | **실제 앱 캡처 3~5장**(`public/shots/` 재사용 → 부족분만 헤드리스 캡처) |
+| TOC | 필수 | **제거** — `marked@18`은 제목에 `id`를 안 붙여 점프 링크가 죽는다 |
+| JSON-LD | 본문 인라인 | **프리렌더로 이동**(아래) |
+| 후기 5~7개 | 생성 | 해당 없음(개인 작업실) |
+
+실행 단위는 **프로젝트 1개 → 글 1편**. 재료는 `src/projects.js`의 `detail`(막힌 점·프롬프트·타임라인)에서만 가져오고 지어내지 않는다. 9개 프로젝트 = 9편 로드맵을 스킬 §6에 표로 넣었다.
+
+**② JSON-LD 프리렌더** — `scripts/prerender-meta.js`. 본문에 `<script type="application/ld+json">`을 적어도 **이 사이트에선 무효**다(SPA라 크롤러는 프리렌더된 정적 HTML만 보고, 본문 스크립트는 `dangerouslySetInnerHTML`로 들어가 실행도 노출도 안 됨). 그래서 빌드 때 `</head>` 직전에 심도록 했다.
+
+- `BlogPosting` — frontmatter에서 자동. `updated` 필드 추가(→ `dateModified`).
+- `FAQPage` — 본문의 **`### Q. 질문` + 바로 아래 문단**을 파싱. **2개 이상일 때만** 생성(부실 스키마 방지).
+- **글 og:image = `cover` → 없으면 본문 첫 이미지.** 이제 글을 공유해도 카드에 실제 앱 화면이 뜬다(전엔 전부 공통 `og.png`).
+
+**③ 본문 스타일** — `App.css`에 `.prose` 계열 추가: 이미지(카드 테두리)·`<figure>`/`<figcaption>`·표(좁은 화면 가로 스크롤)·`.byline`(E-E-A-T)·`.answer`(한 줄 답, AI 검색 인용용)·`.post-cta`.
+
+### 검증 ✅
+
+임시 글을 넣고 빌드해서 **왕복 실측**한 뒤 삭제했다.
+
+| 항목 | 결과 |
+|---|---|
+| `BlogPosting` 생성 | ✅ headline·description·author·publisher·datePublished·mainEntityOfPage·inLanguage |
+| `updated` → `dateModified` | ✅ `2026-07-23` / `2026-07-24`로 분리 기록 |
+| `tags` → `keywords` | ✅ |
+| `FAQPage` | ✅ 3문항. `### Q.`·`### Q2.` 둘 다 인식, 답변의 `**강조**`·`[링크]()`는 순수 텍스트로 정리됨 |
+| og:image 자동 추출 | ✅ 본문 첫 이미지 → `/shots/petphoto-cover.png` |
+| `og:image:width/height` | ✅ 스크린샷이라 자동 제거됨(카드 잘림 방지) |
+| 기존 글 3편 | ✅ FAQ 없어 `BlogPosting` 1블록만 — 회귀 없음 |
+| 빌드·프리렌더(15개)·lint | ✅ |
+
+### 다음
+
+스킬은 준비됐다. **이제 글을 쓰면 된다.** `petphoto`부터.
 
 ---
 

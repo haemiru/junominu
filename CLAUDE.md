@@ -131,11 +131,21 @@ date: 2026-06-01
 summary: 목록에 보일 한 줄 요약
 tags: [바이브코딩, 회고]
 slug: my-post          # (선택) 없으면 파일명에서 자동(날짜 접두사 제거)
+cover: /shots/xxx.png  # (선택) 공유 카드 이미지. 없으면 본문 첫 이미지가 자동 사용
+updated: 2026-08-01    # (선택) 나중에 고쳤을 때만 — JSON-LD dateModified
 ---
 여기부터 본문 마크다운...
 ```
 
 `blogData.js`가 `import.meta.glob`로 전부 읽어 frontmatter를 파싱하고 `marked`로 HTML 변환, 날짜 내림차순 정렬. 새 글·프로젝트를 추가하면 **`public/sitemap.xml`에도 URL 한 줄 추가**할 것.
+
+**글 쓰는 건 `/blog-post` 스킬이 한다** (`.claude/skills/blog-post/`) — 프로젝트 slug 하나를 주면 `src/projects.js`의 `detail` 실데이터로 2,000~3,000자 SEO 글을 쓰고, 이미지는 `public/shots/`의 실제 앱 캡처를 재사용(모자라면 라이브 URL을 헤드리스로 캡처)한다. 사이트맵 갱신·자수·빌드 검증까지 포함.
+
+**본문에서 쓸 수 있는 것** (`.prose` 스타일이 `App.css`에 있음):
+- `<div class="byline">` 글쓴이(E-E-A-T) · `<div class="answer">` 한 줄 답(AI 검색 인용용) · `<div class="post-cta">` 끝 CTA 버튼
+- 마크다운 표(좁은 화면에선 표가 가로 스크롤) · 이미지(카드 테두리 자동) · `<figure>`+`<figcaption>` 캡션
+- ⚠️ **JSON-LD `<script>`를 본문에 넣지 말 것** — SPA라 크롤러가 못 본다. 아래 프리렌더가 대신 심는다.
+- ⚠️ **H1(`#`) 금지** — 제목은 `title` 필드가 `<h1>`으로 그려진다. TOC도 쓰지 않는다(`marked@18`은 제목에 `id`를 안 붙여 점프 링크가 죽음).
 
 ### 라우트별 메타·OG 프리렌더 (중요)
 
@@ -145,6 +155,11 @@ SPA라 모든 경로가 같은 `index.html`을 받는데, **스레드·카카오
 - 산출물: `dist/p/<slug>/index.html`, `dist/blog/<slug>/index.html`, `dist/{blog,prompts,contact}/index.html` (+ 원본 `dist/index.html` = `/`).
 - 데이터 원천은 `src/projects.js`와 `src/posts/*.md` → **프로젝트·글을 추가하면 자동으로 늘어난다.** 스크립트를 고칠 필요 없음.
 - 프로젝트 상세는 `detail.cover`(없으면 `detail.thumb`)를 **og:image로** 쓴다 → 공유 카드에 실제 제품 화면이 뜬다. 스크린샷은 1200×630이 아니라서 `og:image:width/height` 태그는 자동 제거된다.
+- **블로그 글도 같다** — frontmatter `cover`, 없으면 **본문 첫 이미지**를 og:image로 쓴다.
+- **구조화 데이터(JSON-LD)도 여기서 심는다** — 글마다 `</head>` 직전에:
+  - `BlogPosting` — frontmatter(`title`·`summary`·`date`·`updated`·`tags`) + og:image에서 자동 생성.
+  - `FAQPage` — 본문의 **`### Q. 질문` + 바로 아래 문단** 형식을 파싱해서 만든다(`### Q1.`도 인식). **2개 이상일 때만** 생성(부실한 스키마를 내보내지 않기 위해).
+  - 확인: `dist/blog/<slug>/index.html`에서 `application/ld+json` 블록이 1~2개.
 - `vercel.json`은 그대로 둔다 — **Vercel은 rewrites보다 실제 파일을 먼저 서빙**하므로, 파일이 있는 경로는 프리렌더본이 나가고 없는 경로만 SPA fallback으로 넘어간다.
 - ⚠️ `npm run dev`/`vite preview`에는 적용되지 않는다(빌드 산출물이라). **메타 확인은 배포본에서** 할 것.
 
@@ -185,6 +200,7 @@ npm run preview  # 빌드 결과 로컬 확인
 - **작업 이력·다음 할 일**: 루트 `WORKLOG.md` — 세션별 작업 내역/현재 상태/TODO/핵심 참조.
   - 🔴 **"이제 뭐 해야 해?" 라는 질문을 받으면 `WORKLOG.md` 맨 위의 「▶ 지금 할 차례」 블록을 읽고 거기서부터 안내한다.** 우선순위(2순위 → 3순위 → 4순위)와 손댈 파일까지 적혀 있다.
   - 이어 작업할 땐 **여기부터** 읽고, 마치면 「▶ 지금 할 차례」를 갱신한 뒤 새 날짜 섹션을 추가할 것.
+- **블로그 글쓰기**: `.claude/skills/blog-post/SKILL.md` — 프로젝트 1개 → 글 1편. 분량·이미지·FAQ·검증 규약이 전부 여기 있다. 짱샘의 책방 `/add-blog-and-reviews-to-ebook`을 이 사이트(정적 md·앱 캡처·짧은 분량)에 맞게 옮긴 것.
 - **스레드 채널 운영**: `.claude/skills/threads-post/` 3단 구조 — `SKILL.md`(글 한 편) / `threads-strategy.md`(채널 운영·플랫폼 팩트·KPI) / `threads-log.md`(발행 이력·월간 KPI). 플랫폼 사실이 어긋나면 **전략 §1이 우선**(기준일·출처 있음).
 - 사업자 정보(강남상회) 풋터는 옛 허브에 있었으나 개인 작업실로 전환하며 제거함. 직접 판매(통신판매) 페이지가 아니면 표시 의무 없음. 필요 시 풋터에 다시 추가 가능.
 - 관련 전략 문서(도구 쪽): 책방 repo `docs/tools-strategy.md`. 단, **이 사이트 자체는 그 전략과 무관한 개인 프로젝트**임.
