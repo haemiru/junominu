@@ -62,9 +62,10 @@ junominu/
 ├── vercel.json         # SPA fallback rewrites (/(.*) → /index.html, 상세 페이지 새로고침 404 방지)
 ├── src/
 │   ├── main.jsx        # 진입점
-│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts) + ScrollToTop + BackToTop
-│   ├── Home.jsx        # 홈: Hero·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·풋터 + ProjectCard (내비 BLOG, 풋터 프롬프트노트·블로그 링크)
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact) + ScrollToTop + BackToTop
+│   ├── Home.jsx        # 홈: Hero(코칭·외주 CTA 버튼)·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·ContactCTA 밴드·풋터 + ProjectCard (내비 BLOG·함께하기, 풋터 프롬프트노트·블로그·코칭외주 링크)
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
+│   ├── Contact.jsx     # 함께하기 (/contact) — ME.contact 로 1:1 코칭·외주 오퍼 카드 자동 렌더. 버튼은 외부 폼(formUrl)→없으면 Gmail 폴백
 │   ├── Blog.jsx        # 블로그 목록 (/blog)
 │   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더
 │   ├── Prompts.jsx     # 프롬프트 노트 (/prompts) — 전 프로젝트 detail.prompts 자동 집계
@@ -72,7 +73,7 @@ junominu/
 │   │                   #   ⚠️ 파일명 주의: 컴포넌트 Blog.jsx와 대소문자 충돌(Windows) 피하려 blogData.js
 │   ├── BackToTop.jsx   # 우측 하단 "맨 위로" 버튼
 │   ├── Logo.jsx        # 로고 마크
-│   ├── projects.js     # ME + PROJECTS + STATUS + findProject (데이터, 여기만 고치면 됨)
+│   ├── projects.js     # ME(+ME.contact) + PROJECTS + STATUS + findProject (데이터, 여기만 고치면 됨)
 │   ├── posts/          # 블로그 글 .md (frontmatter + 본문). 파일 추가하면 글이 자동 생김
 │   ├── index.css       # 다크 테마 토큰 + 리셋 + scroll-behavior
 │   └── App.css         # 레이아웃·카드·상태 pill·상세·블로그·JOURNEY·프롬프트·내비·버튼 스타일
@@ -100,6 +101,15 @@ detail: {
   ],
 }
 ```
+
+### 코칭·외주 문의 (/contact) — 외부 폼 연결
+
+스레드 프로필이 "1:1 코칭·외주 문의 ↓ junominu.com"으로 유도하므로, 그 접점을 `/contact`에 둔다. 백엔드가 없어 **접수는 외부 폼**(구글폼/Tally)으로 받는다.
+
+- 데이터는 `projects.js`의 `ME.contact` 하나에 모여 있고, `Contact.jsx`가 자동 렌더한다(오퍼 카드 = `ME.contact.offers[]`).
+- **폼 연결**: 구글폼/Tally로 폼을 만든 뒤 `ME.contact.formUrl`에 링크만 붙이면 모든 "신청/문의" 버튼이 그 폼으로 연결된다. 코칭·외주를 다른 폼으로 받으려면 각 `offers[].formUrl`로 개별 지정.
+- **폴백**: `formUrl`이 비어 있으면 버튼이 `subject`가 채워진 Gmail 작성창(`ME.contact.email`)으로 열린다 → 폼이 없어도 죽은 링크가 안 생김.
+- 홈 진입점: 히어로 CTA 버튼 + 내비 "함께하기" + 하단 `ContactCTA` 밴드(`#contact`) + 풋터 "코칭·외주". 문안(오퍼·소개)은 전부 `ME.contact`에서 수정.
 
 ### 블로그 글 추가 (Phase 3)
 

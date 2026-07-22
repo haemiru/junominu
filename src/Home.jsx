@@ -182,6 +182,31 @@ function Stats() {
   )
 }
 
+// 홈 하단 CTA 밴드 — 포트폴리오를 다 본 방문자를 코칭·외주로 전환. ME.contact 자동 렌더.
+function ContactCTA() {
+  const c = ME.contact
+  if (!c) return null
+  return (
+    <section id="contact" className="cta">
+      <div className="cta__inner">
+        <p className="hero__kicker cta__kicker">WORK WITH ME</p>
+        <h2 className="cta__title">함께 만들까요?</h2>
+        <p className="cta__lead">
+          {c.lead.split('\n').map((line, i) => (
+            <span key={i}>{i > 0 && <br />}{line}</span>
+          ))}
+        </p>
+        <div className="cta__offers">
+          {c.offers.map((o) => (
+            <span className="cta__chip" key={o.key}>{o.emoji} {o.title}</span>
+          ))}
+        </div>
+        <Link className="btn btn--primary" to="/contact">코칭 · 외주 문의하기 →</Link>
+      </div>
+    </section>
+  )
+}
+
 export default function Home() {
   return (
     <div className="page">
@@ -193,6 +218,9 @@ export default function Home() {
         <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
+        <div className="hero__actions">
+          <Link className="btn btn--primary" to="/contact">1:1 코칭 · 외주 문의 →</Link>
+        </div>
         <nav className="hero__nav" aria-label="섹션 바로가기">
           <a href="#work">PROJECTS</a>
           <a href="#about">About</a>
@@ -201,6 +229,7 @@ export default function Home() {
           <a href="#stack">STACK</a>
           <a href="#journey">JOURNEY</a>
           <Link to="/blog">BLOG</Link>
+          <Link to="/contact">함께하기</Link>
         </nav>
       </header>
 
@@ -263,12 +292,16 @@ export default function Home() {
 
       <Journey />
 
+      <ContactCTA />
+
       <footer className="foot">
         <span>© {new Date().getFullYear()} {ME.name}</span>
         <span className="foot__sep">·</span>
         <Link to="/prompts" className="foot__link">프롬프트 노트</Link>
         <span className="foot__sep">·</span>
         <Link to="/blog" className="foot__link">블로그</Link>
+        <span className="foot__sep">·</span>
+        <Link to="/contact" className="foot__link">코칭·외주</Link>
         <span className="foot__sep">·</span>
         <span>made with vibe coding</span>
       </footer>

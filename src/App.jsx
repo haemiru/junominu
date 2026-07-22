@@ -6,6 +6,7 @@ import ProjectDetail from './ProjectDetail'
 import Blog from './Blog'
 import Post from './Post'
 import Prompts from './Prompts'
+import Contact from './Contact'
 import BackToTop from './BackToTop'
 
 // 라우트가 바뀌면(홈↔상세) 맨 위에서 시작 — 단, #앵커 이동은 건드리지 않음
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<Post />} />
         <Route path="/prompts" element={<Prompts />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <BackToTop />
