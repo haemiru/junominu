@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import Home from './Home'
 import ProjectDetail from './ProjectDetail'
@@ -33,6 +34,9 @@ export default function App() {
         <Route path="*" element={<Home />} />
       </Routes>
       <BackToTop />
+      {/* 방문/유입 계측 — Vercel Analytics. 라우트 변경(SPA)도 자동 추적.
+          dev에서는 스크립트만 로드되고 데이터는 안 쌓임(프로덕션에서만 집계). */}
+      <Analytics />
     </BrowserRouter>
   )
 }
