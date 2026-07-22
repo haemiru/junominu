@@ -34,14 +34,15 @@
 **E. Vercel Analytics 설치 — 계측 구멍 해소**
 - `@vercel/analytics@2.0.1` 추가 → `src/App.jsx`의 `BrowserRouter` 안에 `<Analytics />`. SPA 라우트 변경도 자동 추적.
 - 빌드·린트 통과, 번들에 `/_vercel/insights/script.js` 로더 포함 확인.
-- ⚠️ **Vercel 대시보드에서 Analytics를 켜야 실제 수집 시작**(Project → Analytics → Enable). 켜기 전엔 데이터 0.
-- 스레드 링크엔 UTM을 붙여 쓴다: `junominu.com/p/bokjimoa?utm_source=threads&utm_campaign=<글슬러그>`.
+- Vercel 대시보드에서 Analytics **Enable 완료** → **첫 데이터 수신 확인**(2026-07-22): Visitors 3 / PV 10, Pages `/`·`/blog`, **Referrers에 `l.threads.com` 1** = 스레드 앵커 글에서 실제 유입 발생.
+- 스레드 링크엔 UTM을 붙여 쓴다: `junominu.com/p/bokjimoa?utm_source=threads&utm_campaign=<글슬러그>` → 대시보드 **UTM Parameters** 탭에서 글 단위 귀속.
+- ⚠️ 주의 2가지: **본인 방문이 섞인다**(자기 트래픽 자동 제외 없음) · **광고 차단기 방문자는 누락**된다 → 총 Visitors를 성과로 읽지 말고 referrer/UTM 붙은 건만 셀 것.
 
 ### 현재 상태 ✅
-- 문서 3종 정합성 확인(낡은 수치 잔존 없음). Analytics 배선 완료 — 대시보드 활성화만 남음.
+- 문서 3종 정합성 확인(낡은 수치 잔존 없음). **Analytics 가동·검증 완료** — 스레드→사이트 구간 측정됨.
 
 ### 다음에 할 일 (TODO)
-- [x] **Vercel Analytics 설치** (2026-07-22 완료). → **대시보드에서 Enable 필요**.
+- [x] **Vercel Analytics 설치 + Enable + 수신 검증** (2026-07-22 완료).
 - [ ] **문의까지 연결** — Tally에 유입 경로 숨김필드(예: `src`) 추가 + `Contact.jsx`에서 `utm_source`를 넘겨주기. 이게 있어야 "어느 글이 문의를 만들었나"가 잡힌다.
 - [ ] 프로필 3층 정비(전략 §3) — 현 bio "1:1 코칭·외주 문의 ↓"는 초기 단계 전환이 약함. 먼저 궁금증을 만드는 문구로.
 - [ ] 동료 링 20~30계정 리스트업(전략 §5)
