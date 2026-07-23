@@ -42,6 +42,17 @@ function parseFrontmatter(raw) {
   return { meta, body: m[2] }
 }
 
+/** 읽는 시간(분) — 한글 기준 분당 600자. 목록 카드에 "N분 읽기"로 표시. */
+function readMinutes(body) {
+  const plain = body
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/[!-~]/g, '')
+    .replace(/\s+/g, '')
+  return Math.max(1, Math.round(plain.length / 600))
+}
+
 function slugFromPath(path) {
   return path
     .split('/')
@@ -60,6 +71,8 @@ export const POSTS = Object.entries(files)
       date: meta.date || '',
       summary: meta.summary || '',
       tags,
+      cover: meta.cover || '',          // 목록 카드 썸네일(없으면 색조 플레이스홀더)
+      readMin: readMinutes(body),
       html: marked.parse(body),
     }
   })

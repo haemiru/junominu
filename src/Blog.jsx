@@ -22,14 +22,30 @@ export default function Blog() {
           {POSTS.map((p) => (
             <li key={p.slug}>
               <Link className="postcard" to={`/blog/${p.slug}`}>
-                {p.date && <span className="postcard__date">{fmtDate(p.date)}</span>}
-                <h2 className="postcard__title">{p.title}</h2>
-                {p.summary && <p className="postcard__sum">{p.summary}</p>}
-                {p.tags?.length > 0 && (
-                  <ul className="card__tags">
-                    {p.tags.map((t) => <li key={t}>{t}</li>)}
-                  </ul>
-                )}
+                {/* 썸네일 — cover 가 없거나 파일이 사라져도 색조 밴드가 남는다 */}
+                <span className="postcard__media">
+                  <span className="postcard__ph">{p.tags[0] || 'NOTE'}</span>
+                  {p.cover && (
+                    <img
+                      src={p.cover}
+                      alt=""
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.style.display = 'none' }}
+                    />
+                  )}
+                </span>
+
+                <span className="postcard__body">
+                  <span className="postcard__meta">
+                    {p.tags[0] && <span className="postcard__cat">{p.tags[0]}</span>}
+                    <span className="postcard__min">{p.readMin}분 읽기</span>
+                  </span>
+
+                  <h2 className="postcard__title">{p.title}</h2>
+                  {p.summary && <p className="postcard__sum">{p.summary}</p>}
+
+                  {p.date && <span className="postcard__date">{fmtDate(p.date)}</span>}
+                </span>
               </Link>
             </li>
           ))}
