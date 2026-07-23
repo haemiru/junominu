@@ -41,8 +41,12 @@
   - `url: "https://kmong.com/gig/795581"` 추가 → 상세 `/p/transcripto`의 "사이트 열기 →" 버튼 활성.
   - summary의 "판매를 준비하는 베타" → "지금은 크몽에서 일회 라이선스로 판매하고 있습니다"로 수정.
   - timeline에 `2026-07-24 크몽 판매 승인 — 정식 출시` 한 줄 추가.
-- `status`는 이미 `live`, 프로젝트 개수 변화 없음(OG `9 PROJECTS` 유지). `npm run build` 통과(프리렌더 24개).
-- **남은 접점(선택)**: ① 트랜스크립토 출시 알림 **스레드 글**(sale 유도) ② 로드맵상 블로그 글 후보(petphoto → bokjimoa → **transcripto**). 둘 다 아직 안 함.
+- `status`는 이미 `live`, 프로젝트 개수 변화 없음(OG `9 PROJECTS` 유지). `npm run build` 통과.
+- **이어서 출시 접점 2개 제작·발행 준비 완료**(같은 날, 한 줄기 — 스레드 짧게 → 블로그 깊게):
+  - 📝 **블로그 결정형 글** `src/posts/2026-07-24-transcripto-kmong-launch.md` (2,191자) — "왜 설치형·일회 라이선스·크몽인가". 기존 삽질형(frozen-exe-bugs)과 다른 각도. JSON-LD 2블록(BlogPosting+FAQPage)·sitemap 갱신·빌드·lint 통과. **배포됨**.
+  - 🧵 **스레드 단발 4편 초안** `drafts/2026-07-24-transcripto-A-launch.txt` (채점 85/100) — 트랜스크립토 첫 스레드 등장. 로그 갱신. **아직 미발행**(사용자가 붙여넣어 발행).
+    - UTM `transcripto-launch`, 링크는 `/p/transcripto`(계측) → "사이트 열기 →"로 크몽. 곧장 판매 노리면 링크를 크몽 gig로 교체.
+  - ⏭️ **다음 후보**: 트랜스크립토 제작기 앵커(스레드, 아직 없음) / 블로그 로드맵 남은 것(petphoto·bokjimoa 등) / 발행 후 첫 판매·후기 수치 기록.
 
 ## 2026-07-23 (2) — 블로그 글쓰기 스킬 + JSON-LD 프리렌더
 
