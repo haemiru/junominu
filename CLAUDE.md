@@ -165,7 +165,7 @@ SPA라 모든 경로가 같은 `index.html`을 받는데, **스레드·카카오
 
 ### OG 이미지 재생성
 
-`public/og.png`(1200×630)는 빌드 산출물이 아니라 별도로 만든 정적 이미지다. 디자인을 바꾸려면 사이트 톤에 맞춘 카드 HTML(1200×630, Pretendard CDN)을 임시로 만들고 **Chrome 헤드리스로 스크린샷**을 떠서 `public/og.png`를 덮어쓰면 된다:
+`public/og.png`(1200×630)는 빌드 산출물이 아니라 별도로 만든 정적 이미지다. **프로젝트 개수가 박혀 있으니(`9 PROJECTS`) 프로젝트를 추가하면 같이 갱신할 것.** 디자인을 바꾸려면 사이트 톤에 맞춘 카드 HTML(1200×630, Pretendard CDN)을 임시로 만들고 **Chrome 헤드리스로 스크린샷**을 떠서 `public/og.png`를 덮어쓰면 된다:
 
 ```powershell
 & "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless --disable-gpu `
@@ -179,10 +179,19 @@ SPA라 모든 경로가 같은 `index.html`을 받는데, **스레드·카카오
 
 ## 디자인
 
-- 다크 테마. 배경 `#0b0d12`, accent 보라 `#7c5cff` / 시안 `#22d3ee`
-- 상태 색: live=초록, building=노랑, idea=회색
-- 폰트: Pretendard (index.html에서 CDN 로드)
-- 분위기: 메이커의 작업실/콕핏 (미니멀, 카드 hover lift)
+**라이트 테마. 토큰 원천은 레포 루트 `DESIGN.md`** — oh-my-design.kr에서 받은 **오늘의집(Ohouse) 실측 스냅샷**(omd 0.1, 2026-07-13). 색·타이포·간격·그림자는 그 문서를 따르고, **형태(카드 라운드 18px·큰 히어로 타이포)는 junominu 것을 유지**한다.
+
+- **캔버스** 바탕 `#fbfcfd` / 카드 `#ffffff` / 눌린 면 `#f4f6f8` / hairline `#e0e0e0`
+- **글자** `#2f3438`(제목) · `#424242`(본문) · `#828c94`(보조), tracking `-0.3px`
+- **액션** `#00a1ff` — **채움 배경 전용**(흰 글자). 흰 배경 위 텍스트·링크는 `--accent-ink #0077cc`(대비 4.6:1, AA). `#00a1ff`를 본문 텍스트에 쓰면 대비 2.8:1로 떨어진다.
+- **상태 색**: live 초록 `#067647` / building 앰버 `#b54708` / idea 회색 `#667085` — 각각 `--*-wash`·`--*-line` 짝이 있음
+- **그림자** `--shadow-float`(문서 실측) / `--shadow-lift`(hover)
+- **폰트**: Pretendard Variable (index.html CDN) — 문서와 같은 계열
+- 분위기: 밝고 담백한 작업 기록. **작품(앱 캡처)이 주인공, UI는 물러난다.**
+
+> ⚠️ **DESIGN.md에 없는 것은 우리가 정한 값**이고 `src/index.css`에 `※`로 표시해 뒀다. 문서는 상태값(hover/focus/pressed)을 아예 측정하지 않았고(`interactionCount: 0`), 반응형·모션도 미측정이다. 그 영역을 "오늘의집이 이렇다"고 인용하지 말 것.
+>
+> 토큰은 **`src/index.css` 한 곳**에만 있다. 색을 바꿀 땐 여기만 고친다. `App.css`에 하드코딩된 색을 새로 심지 말 것.
 
 ## 명령어
 

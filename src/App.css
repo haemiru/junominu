@@ -11,8 +11,8 @@
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(60% 50% at 12% -5%, rgba(124, 92, 255, 0.20), transparent 60%),
-    radial-gradient(50% 45% at 105% 8%, rgba(34, 211, 238, 0.12), transparent 55%);
+    radial-gradient(60% 50% at 12% -5%, rgba(0, 161, 255, 0.07), transparent 60%),
+    radial-gradient(50% 45% at 105% 8%, rgba(0, 161, 255, 0.04), transparent 55%);
   pointer-events: none;
   z-index: 0;
 }
@@ -38,7 +38,7 @@
 
 .logo {
   flex: none;
-  filter: drop-shadow(0 4px 16px rgba(124, 92, 255, 0.35));
+  filter: drop-shadow(0 2px 6px rgba(0, 161, 255, 0.25));
 }
 
 .hero__kicker {
@@ -93,8 +93,8 @@
 .hero__nav a:hover {
   transform: translateY(-2px);
   border-color: var(--accent);
-  background: rgba(124, 92, 255, 0.12);
-  color: #fff;
+  background: var(--accent-wash);
+  color: var(--accent-ink);
 }
 
 /* ── Stats ──────────────────────────── */
@@ -120,10 +120,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent-ink);
 }
 
 .stat__label {
@@ -181,7 +178,7 @@
   padding: 9px 15px 9px 13px;
   border: 1px solid var(--border);
   border-radius: 11px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface);
   color: var(--text-soft);
   font-size: 14px;
   font-weight: 600;
@@ -207,7 +204,7 @@
   transform: translateY(-2px);
   border-color: var(--accent-2);
   color: var(--text);
-  background: rgba(34, 211, 238, 0.06);
+  background: var(--accent-wash);
 }
 
 .link:hover .link__icon {
@@ -235,7 +232,7 @@
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: var(--accent);
 }
 
 /* ── Stack / 도구함 ─────────────────── */
@@ -314,14 +311,14 @@
   overflow: hidden;
   background:
     radial-gradient(120% 140% at 50% -20%, color-mix(in srgb, var(--tint) 42%, transparent), transparent 70%),
-    linear-gradient(160deg, color-mix(in srgb, var(--tint) 16%, transparent), rgba(255, 255, 255, 0.015));
+    linear-gradient(160deg, color-mix(in srgb, var(--tint) 16%, transparent), rgba(255, 255, 255, 0.6));
   border-bottom: 1px solid var(--border);
 }
 
 .card__media-emoji {
   font-size: 38px;
   line-height: 1;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+  filter: drop-shadow(0 2px 5px rgba(63, 71, 77, 0.2));
   opacity: 0.95;
 }
 
@@ -429,20 +426,20 @@
 
 .status--live {
   color: var(--live);
-  background: rgba(52, 211, 153, 0.1);
-  border-color: rgba(52, 211, 153, 0.25);
+  background: var(--live-wash);
+  border-color: var(--live-line);
 }
 
 .status--building {
   color: var(--building);
-  background: rgba(251, 191, 36, 0.1);
-  border-color: rgba(251, 191, 36, 0.25);
+  background: var(--building-wash);
+  border-color: var(--building-line);
 }
 
 .status--idea {
   color: var(--idea);
-  background: rgba(148, 163, 184, 0.1);
-  border-color: rgba(148, 163, 184, 0.22);
+  background: var(--idea-wash);
+  border-color: var(--idea-line);
 }
 
 /* ── Footer ─────────────────────────── */
@@ -500,8 +497,8 @@
   letter-spacing: 0.04em;
   vertical-align: middle;
   color: var(--building);
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.25);
+  background: var(--building-wash);
+  border: 1px solid var(--building-line);
   border-radius: 999px;
   padding: 2px 7px;
 }
@@ -565,14 +562,15 @@
   border-radius: 999px;
   font-weight: 700;
   font-size: 14.5px;
-  color: #0b0d12;
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  color: #fff;
+  background: var(--accent);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .dhero__cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(124, 92, 255, 0.32);
+  box-shadow: var(--shadow-lift);
+  background: var(--accent-hover);
 }
 
 .dmeta {
@@ -599,10 +597,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent-ink);
 }
 
 .dmeta__label {
@@ -642,7 +637,7 @@
   width: 12px;
   height: 12px;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: var(--accent);
   border: 2px solid var(--bg);
 }
 
@@ -697,7 +692,7 @@
 }
 
 .jlink:hover .jrow__name {
-  color: #fff;
+  color: var(--accent-ink);
 }
 
 .tl--journey .tl__label {
@@ -729,7 +724,7 @@
   border-radius: 999px;
   border: 1px solid var(--border);
   color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
 }
 
 .rtag--career {
@@ -752,7 +747,7 @@
   margin-top: 10px;
   height: 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--surface-sunken);
   border: 1px solid var(--border);
   overflow: hidden;
 }
@@ -822,7 +817,7 @@
   border-radius: 16px;
   border: 1px solid var(--border);
   background: var(--surface);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-float);
 }
 
 .dshot__cap {
@@ -846,7 +841,7 @@
 
 .shots .dshot__img {
   border-radius: 18px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-float);
 }
 
 /* ── 블로그 목록 — 썸네일 카드 그리드 ── */
@@ -888,9 +883,9 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background:
-    radial-gradient(120% 120% at 15% 0%, rgba(124, 92, 255, 0.35), transparent 60%),
-    radial-gradient(120% 120% at 100% 100%, rgba(34, 211, 238, 0.28), transparent 55%),
-    #0e1118;
+    radial-gradient(120% 120% at 15% 0%, rgba(0, 161, 255, 0.16), transparent 60%),
+    radial-gradient(120% 120% at 100% 100%, rgba(0, 161, 255, 0.09), transparent 55%),
+    var(--surface-sunken);
   border-bottom: 1px solid var(--border);
 }
 
@@ -903,7 +898,7 @@
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: rgba(232, 234, 240, 0.42);
+  color: var(--text-faint);
   text-align: center;
 }
 
@@ -939,7 +934,7 @@
   padding: 4px 10px;
   border: 1px solid var(--border-hover);
   border-radius: 999px;
-  background: rgba(124, 92, 255, 0.12);
+  background: var(--accent-wash);
   font-size: 11.5px;
   font-weight: 700;
   color: var(--text-soft);
@@ -1066,7 +1061,7 @@
 .prose code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.88em;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--surface-sunken);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 1px 6px;
@@ -1075,7 +1070,7 @@
 .prose pre {
   margin: 0 0 18px;
   padding: 16px 18px;
-  background: #0e1118;
+  background: var(--surface-sunken);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow-x: auto;
@@ -1133,7 +1128,7 @@
 }
 
 .prose th {
-  background: var(--surface);
+  background: var(--surface-sunken);
   color: var(--text);
   font-weight: 700;
   white-space: nowrap;
@@ -1212,11 +1207,11 @@
   height: 46px;
   border-radius: 50%;
   border: 1px solid var(--border-hover);
-  background: rgba(20, 23, 31, 0.82);
+  background: var(--surface);
   backdrop-filter: blur(8px);
   color: var(--text);
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-lift);
   opacity: 0;
   transform: translateY(12px) scale(0.92);
   pointer-events: none;
@@ -1232,8 +1227,8 @@
 .to-top:hover {
   transform: translateY(-2px) scale(1);
   border-color: var(--accent);
-  background: rgba(124, 92, 255, 0.18);
-  color: #fff;
+  background: var(--accent-wash);
+  color: var(--accent-ink);
 }
 
 /* 앵커 내비로 점프할 때 섹션 상단 여백 */
@@ -1281,13 +1276,14 @@
 }
 
 .btn--primary {
-  color: #0b0d12;
-  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  color: #fff;
+  background: var(--accent);
 }
 
 .btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(124, 92, 255, 0.32);
+  box-shadow: var(--shadow-lift);
+  background: var(--accent-hover);
 }
 
 .btn--ghost {
@@ -1299,8 +1295,8 @@
 .btn--ghost:hover {
   transform: translateY(-2px);
   border-color: var(--accent);
-  background: rgba(124, 92, 255, 0.12);
-  color: #fff;
+  background: var(--accent-wash);
+  color: var(--accent-ink);
 }
 
 /* 히어로 CTA 버튼 줄 */
@@ -1328,7 +1324,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background:
-    radial-gradient(70% 160% at 0% 50%, rgba(34, 211, 238, 0.09), transparent 62%),
+    radial-gradient(70% 160% at 0% 50%, rgba(0, 161, 255, 0.10), transparent 62%),
     var(--surface);
 }
 
@@ -1376,8 +1372,8 @@
   padding: clamp(30px, 5vw, 52px);
   text-align: center;
   background:
-    radial-gradient(80% 130% at 0% 0%, rgba(124, 92, 255, 0.16), transparent 58%),
-    radial-gradient(80% 130% at 100% 100%, rgba(34, 211, 238, 0.12), transparent 58%),
+    radial-gradient(80% 130% at 0% 0%, rgba(0, 161, 255, 0.14), transparent 58%),
+    radial-gradient(80% 130% at 100% 100%, rgba(0, 161, 255, 0.08), transparent 58%),
     var(--surface);
 }
 
@@ -1412,7 +1408,7 @@
   font-weight: 700;
   color: var(--text);
   border: 1px solid var(--border-hover);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface);
   padding: 7px 14px;
   border-radius: 999px;
 }
