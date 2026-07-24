@@ -1,7 +1,7 @@
 중개프로 · 🫶 서비스 스토리(1편) · 공감형 훅 · 각도: 통합 플랫폼(업무 강도↓ + 홈페이지 비용↓)
 관점: 서비스(사용자·그의 일이 주인공) — 개발 이야기 없음
 UTM: ?utm_source=threads&utm_campaign=jungaepro-allinone
-토픽: #바이브코딩
+토픽: #부동산 (사용자·도메인 토픽 — 독자가 공인중개사·부동산 관심층이라 #바이브코딩 아님)
 첨부: /shots/jungaepro-cover.png (있으면 한 화면에 매물·고객·계약이 모인 대시보드가 더 좋음)
 CTA 링크(제품 직행): https://smart-sjhome.vercel.app/auth/signup?utm_source=threads&utm_campaign=jungaepro-allinone
 
