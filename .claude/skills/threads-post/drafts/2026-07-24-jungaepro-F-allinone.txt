@@ -1,0 +1,21 @@
+중개프로 · 🫶 서비스 스토리(1편) · 공감형 훅 · 각도: 통합 플랫폼(업무 강도↓ + 홈페이지 비용↓)
+관점: 서비스(사용자·그의 일이 주인공) — 개발 이야기 없음
+UTM: ?utm_source=threads&utm_campaign=jungaepro-allinone
+토픽: #바이브코딩
+첨부: /shots/jungaepro-cover.png (있으면 한 화면에 매물·고객·계약이 모인 대시보드가 더 좋음)
+CTA 링크(제품 직행): https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-allinone
+
+▼ 본문 (1편 · 그대로 붙여넣기)
+제가 옆에서 본 공인중개사 한 분은, 하루에 이 일을 다 해요.
+
+매물 찾고, 블로그 쓰고, 손님 미팅하고, 임장 다니고… 그런데 이게 다 따로 놀아요. 엑셀 따로, 포털 따로, 카톡 따로.
+
+홈페이지는 100만 원 넘게 주고 만들어도, 매물만 걸어두는 '전시장'이지 정작 일은 하나도 안 도와주고요.
+
+그래서 그분 일을 한 화면에 모았어요. 월 3천 원, 커피 한 잔 값이면 — 우리 부동산 홈페이지가 뚝딱 생기고, 매물관리·고객관리·매물 보고서에 계약서 작성까지 한 곳에서.
+
+흩어진 일을 한 데 모으니까, 하루가 확 가벼워지더라고요.
+
+부동산 하시는 분, 이 일들 지금 몇 개나 따로따로 하고 계세요?
+
+🏢 중개프로 → https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-allinone
