@@ -1,17 +1,16 @@
-중개프로 · 🔧 빌드로그(단발 4편) · 반전형 훅 · 각도: 부동산 타입별 폼(challenges 0)
+중개프로 · 🔧 빌드로그 · 1편(단일) · 반전형 훅 · 각도: 부동산 타입별 폼(challenges 0)
 UTM: ?utm_source=threads&utm_campaign=jungaepro-listing-forms
-토픽: #바이브코딩 / 첨부: /shots/jungaepro-cover.png
-링크(4편): https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
-※ 편 번호는 스레드가 자동. // = 문단 크게, / = 줄바꿈
+토픽: #바이브코딩
+첨부: /shots/jungaepro-cover.png (있으면 '유형별 폼' 화면 캡처가 더 좋음 — 아파트↔공장 폼이 다르게 뜨는 장면)
+링크: https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
 
-▼ 1편
-매물 등록 폼 하나 만들면 되는 줄 알았어요. // 근데 부동산은 종류마다 완전히 다른 물건이더라고요. // 아파트랑 공장은, 받아야 하는 정보가 아예 달랐거든요.
+▼ 본문 (1편 · 그대로 붙여넣기)
+'매물 등록 폼' 하나 만들면 될 줄 알았는데, 아파트·공장·토지가 다 다른 서류더라고요.
 
-▼ 2편
-아파트는 간단해요. 면적, 층, 방향 정도면 되니까. // 근데 공장은 전기 용량이며 차가 들어올 수 있는지가 중요하고, / 토지는 무슨 용도로 지을 수 있는 땅인지가 핵심이에요. // 겉보기엔 다 똑같은 '매물'인데, 실제로는 서로 다른 서류였어요.
+아파트는 면적·층·방향이면 되는데, 공장은 전기 용량, 토지는 무슨 용도로 지을 수 있는지가 핵심이라 하나로 못 묶여요.
 
-▼ 3편
-그래서 하나로 묶으려던 걸 접고, 종류를 고르면 칸이 통째로 바뀌는 '유형별 폼'으로 나눴어요. // 코드는 어렵지 않았어요. / 어려웠던 건, '편하게 하나로 퉁치고 싶은 마음'을 접는 거였어요. // 부동산 좀 안다고 생각했는데도, 공장이랑 토지 앞에선 저도 다시 찾아봐야 했거든요.
+결국 종류를 고르면 칸이 통째로 바뀌는 '유형별 폼'으로 나눴어요. 코드보다 어려웠던 건, '편하게 하나로 퉁치고 싶은 마음'을 접는 거였습니다.
 
-▼ 4편
-만들다 보니 알겠더라고요. / 소프트웨어는 자꾸 하나로 묶으려 하는데, 현장은 그렇게 안 굴러가요. // 잘 쓰이는 건, 불편해도 현장을 그대로 담은 쪽이었어요. // 여러분 일에도 '겉보기엔 같은데 실은 다 다른' 것, 있지 않으세요? // 🏢 중개프로 → https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
+여러분 일에도 겉보기엔 같은데 실은 다 다른 것, 있죠?
+
+🏢 중개프로 → https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
