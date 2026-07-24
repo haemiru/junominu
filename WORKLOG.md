@@ -8,7 +8,7 @@
 
 ## ▶ 지금 할 차례 (2026-07-23 기준)
 
-> **"이제 뭐 해야 해?" → `/blog-post` 스킬로 글 쓰기. 첫 타자는 `petphoto`.**
+> **"이제 뭐 해야 해?" → 프로젝트 9개 × 1편 블로그 로드맵은 사실상 다 채웠다(아래). 이제는 ⏸️ 사이트 밖 레버(UTM·동료 링) + 스레드 발행.**
 
 1순위(라우트별 메타·OG 프리렌더)·2순위(홈 첫인상)·3순위(번들 다이어트) 모두 **완료**. 사이트 코드 쪽 대기열은 비었고, 남은 건 **콘텐츠**다.
 
@@ -34,6 +34,18 @@
   - 이걸 해야 Tally `src`와 Vercel Analytics **UTM Parameters** 탭이 글 단위로 쪼개진다. 안 붙이면 전부 `l.threads.com` 한 덩어리.
 
 ---
+
+## 2026-07-24 (2) — 펫포토 AI 크몽 설치형(exe) 카드 반영 + 블로그
+
+- **펫포토 AI = 한 프로젝트, 두 제품**임이 확정됨(같은 repo). 기존 `petphoto` 카드는 **웹 SaaS**만 담고 있었는데, 이제 **설치형 데스크톱판 '펫포토 AI 스튜디오'(Electron exe)**를 크몽에 **판매 등록(2026-07-24 제출·심사 중)**했다. → **새 카드를 만들지 않고 기존 `petphoto` 카드에 합쳤다**(트랜스크립토처럼 1프로젝트=1카드 유지 → OG `9 PROJECTS` 그대로, 재생성 불필요).
+  - `src/projects.js` 수정: `description`(웹+설치형 명시)·`tags`(+크몽·데스크톱 앱)·summary 3번째 문단(B2B/구매자 자기 키)·features 3줄(설치형·자기 키·복제 방지)·stack(+Electron·electron-builder)·timeline 2줄(07-23 exe 빌드, 07-24 크몽 등록)·challenges 1줄(프롬프트 보호)·retro 1줄(원가 인버전).
+  - ⚠️ **크몽 상태 = 심사 중**(승인/공개 gig URL 아직 없음). "판매 중" 아님 → "판매 등록(심사 중)"으로 정확히 표기. 카드 `status`는 웹이 live라 `live` 유지. **승인되면** transcripto처럼 detail에 크몽 gig URL을 연결(현재 카드 `url`은 웹 `pet-photo-ai.vercel.app` 유지).
+- **블로그 1편 발행** `src/posts/2026-07-24-petphoto-kmong-desktop.md` (slug `petphoto-kmong-desktop`, 본문 2,247자):
+  - 각도 = **결정형** "같은 AI 앱을 웹과 크몽 설치형 둘로 나눈 이유". 기존 petphoto 글(`petphoto-prepay-pivot` 선결제)·transcripto 글 2편과 각도 안 겹침 — 여기 핵심은 **원가 인버전**(웹=우리 부담 vs 설치형=구매자 자기 키 무제한)·프롬프트 보호·라이선스.
+  - 히어로=크몽 상세 대표이미지(`/shots/petphoto-kmong-main.jpg`, `docs/kmong/main-652x488.jpg`에서 복사) → og:image. 이미지 4장(재사용 3 + 신규 1).
+  - JSON-LD 2블록(BlogPosting+FAQPage) 확인, sitemap 2줄 갱신(`/blog/petphoto-kmong-desktop` 추가 + `/p/petphoto` lastmod 07-24), `npm run build`·`npm run lint` 통과.
+- **미커밋** — 사용자 검토 후 커밋. `git add` 자동 실행 안 함(스킬 규약).
+- ⏭️ **다음 후보**: 펫포토 설치형 스레드 단발/앵커(아직 없음) / 크몽 승인 시 gig URL 연결 / 첫 주문·후기 수치 기록.
 
 ## 2026-07-24 — 트랜스크립토 크몽 판매 승인 → gig URL 연결
 
