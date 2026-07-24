@@ -3,7 +3,7 @@
 UTM: ?utm_source=threads&utm_campaign=jungaepro-allinone
 토픽: #바이브코딩
 첨부: /shots/jungaepro-cover.png (있으면 한 화면에 매물·고객·계약이 모인 대시보드가 더 좋음)
-CTA 링크(제품 직행): https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-allinone
+CTA 링크(제품 직행): https://smart-sjhome.vercel.app/auth/signup?utm_source=threads&utm_campaign=jungaepro-allinone
 
 ▼ 본문 (1편 · 그대로 붙여넣기)
 제가 옆에서 본 공인중개사 한 분은, 하루에 이 일을 다 해요.
@@ -18,4 +18,4 @@ CTA 링크(제품 직행): https://smart-sjhome.vercel.app/?utm_source=threads&u
 
 부동산 하시는 분, 이 일들 지금 몇 개나 따로따로 하고 계세요?
 
-🏢 중개프로 → https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-allinone
+🏢 중개프로 → https://smart-sjhome.vercel.app/auth/signup?utm_source=threads&utm_campaign=jungaepro-allinone

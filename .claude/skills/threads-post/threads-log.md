@@ -274,7 +274,7 @@
 - **관점**: 🫶 서비스 — 개발 난관·스택·프롬프트 **0개**. 주인공=사용자.
 - **토픽**: #바이브코딩
 - **첨부 추천**: /shots/jungaepro-cover.png (한 화면에 매물·고객·계약 모인 대시보드면 더 좋음)
-- **CTA 링크**: **중개프로 앱 직행** `https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-allinone` (§6·§9)
+- **CTA 링크**: **중개프로 앱 직행** `https://smart-sjhome.vercel.app/auth/signup?utm_source=threads&utm_campaign=jungaepro-allinone` (§6·§9)
 - **채점**: 90/100(1편) — 후킹(업무 나열 공감)·공감(따로 노는 하루·100만원 낭비)·서비스 관점 셋 다 강. 팔로우 유발: "내 업계를 아는 사람이 만든 툴" + 커피값 가격 반전.
 - **원고 파일**: `drafts/2026-07-24-jungaepro-F-allinone.txt`
 - **본문 전문(1편)**:
