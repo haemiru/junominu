@@ -2,7 +2,7 @@
 UTM: ?utm_source=threads&utm_campaign=jungaepro-listing-forms
 토픽: #바이브코딩
 첨부: /shots/jungaepro-cover.png (있으면 '유형별 폼' 화면 캡처가 더 좋음 — 아파트↔공장 폼이 다르게 뜨는 장면)
-링크: https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
+링크: https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-listing-forms
 
 ▼ 본문 (1편 · 그대로 붙여넣기)
 '매물 등록 폼' 하나 만들면 될 줄 알았는데, 아파트·공장·토지가 다 다른 서류더라고요.
@@ -13,4 +13,4 @@ UTM: ?utm_source=threads&utm_campaign=jungaepro-listing-forms
 
 여러분 일에도 겉보기엔 같은데 실은 다 다른 것, 있죠?
 
-🏢 중개프로 → https://www.junominu.com/p/jungaepro?utm_source=threads&utm_campaign=jungaepro-listing-forms
+🏢 중개프로 → https://smart-sjhome.vercel.app/?utm_source=threads&utm_campaign=jungaepro-listing-forms
