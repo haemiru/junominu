@@ -49,6 +49,20 @@ export default function Prompts() {
         ))
       )}
 
+      {groups.length > 0 && (
+        <section className="cta">
+          <div className="cta__inner">
+            <p className="hero__kicker cta__kicker">이 프롬프트가 도움이 됐다면</p>
+            <h2 className="cta__title">내 프로젝트엔 어떻게 적용할까요?</h2>
+            <p className="cta__lead">
+              전부 실제로 써서 배포까지 간 프롬프트예요. 막상 내 것에 적용하려면
+              막히는 지점이 생기죠. 1:1 코칭·외주로 같이 풀어드립니다.
+            </p>
+            <Link className="btn btn--primary" to="/contact">코칭 · 외주 문의하기 →</Link>
+          </div>
+        </section>
+      )}
+
       <footer className="foot">
         <Link to="/" className="back">← 작업실로 돌아가기</Link>
       </footer>
