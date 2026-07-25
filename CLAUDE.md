@@ -211,5 +211,6 @@ npm run preview  # 빌드 결과 로컬 확인
   - 이어 작업할 땐 **여기부터** 읽고, 마치면 「▶ 지금 할 차례」를 갱신한 뒤 새 날짜 섹션을 추가할 것.
 - **블로그 글쓰기**: `.claude/skills/blog-post/SKILL.md` — 프로젝트 1개 → 글 1편. 분량·이미지·FAQ·검증 규약이 전부 여기 있다. 짱샘의 책방 `/add-blog-and-reviews-to-ebook`을 이 사이트(정적 md·앱 캡처·짧은 분량)에 맞게 옮긴 것.
 - **스레드 채널 운영**: `.claude/skills/threads-post/` 3단 구조 — `SKILL.md`(글 한 편) / `threads-strategy.md`(채널 운영·플랫폼 팩트·KPI) / `threads-log.md`(발행 이력·월간 KPI). 플랫폼 사실이 어긋나면 **전략 §1이 우선**(기준일·출처 있음).
+- **스레드 답글(남의 글에 댓글)**: `.claude/skills/threads-reply/` — 타깃 글 검색 → 공감 답글 초안 → **AI 티 자가검증**(`ai-tell-checklist.md`) → **글래스모피즘 승인 카드**를 브라우저에 띄워(`card-ui.md`) 사용자가 편집·완료 토글·발행 → Claude-in-Chrome으로 실제 발행. 가드레일: 애스트로터핑 금지(앱은 밝혀서만·10 중 1개)·발달장애 육아는 순수 공감·휴먼인더루프 발행. 근거는 `threads-strategy.md` §5.
 - 사업자 정보(강남상회) 풋터는 옛 허브에 있었으나 개인 작업실로 전환하며 제거함. 직접 판매(통신판매) 페이지가 아니면 표시 의무 없음. 필요 시 풋터에 다시 추가 가능.
 - 관련 전략 문서(도구 쪽): 책방 repo `docs/tools-strategy.md`. 단, **이 사이트 자체는 그 전략과 무관한 개인 프로젝트**임.
