@@ -77,5 +77,21 @@ window.getPublishQueue=()=>JSON.parse(localStorage.getItem('threads_reply_queue'
 
 ---
 
+## ⚠️ 발행(타이핑) 안정성 — 렌더러 글리치 대응 (2026-07-25 실전)
+
+스레드 답글 작성창(Lexical/contenteditable)에 `computer.type`으로 길게 칠 때, **탭 렌더러가 느려지면 띄어쓰기·따옴표·줄바꿈이 통째로 유실**된다("애 셋에…"→"애셋에…"). 눈으로만 보면 놓치기 쉽다. 그래서:
+
+1. **발행(게시) 직전 반드시 JS로 실제 입력값을 검증한다** — 절대 스크린샷만 믿지 말 것:
+   ```js
+   const e=document.querySelector('[contenteditable="true"]'); e.innerText   // 띄어쓰기·\n 확인
+   ```
+   유실됐으면 **게시하지 말고** 지우고 재입력. (검증 덕에 이날 깨진 답글은 0건 발행.)
+2. **입력창 포커스가 안 잡히면** 좌표 클릭 대신 JS로: `document.querySelector('[contenteditable="true"]').focus()` 후 `document.activeElement`로 확인. 인라인 창은 **한 번 클릭해야 contenteditable이 생성**되므로, 클릭→JS focus 순.
+3. **입력창이 화면 밖이면** placeholder 요소를 `scrollIntoView({block:'center'})`로 올린 뒤 그 `getBoundingClientRect()` 중심을 클릭.
+4. **탭이 계속 버벅이면**(스크린샷 타임아웃 반복) **새 탭을 만들어**(`tabs_create_mcp`) 같은 permalink로 다시 여는 게 제일 빠른 복구다. 오래 열어둔 탭일수록 잘 샌다.
+5. **줄바꿈은 `shift+Return`**(엔터 단독은 인라인 창에서 전송될 수 있음). 편별로 `type`→`shift+Return`→`type`.
+6. `navigator.clipboard.writeText`는 **권한 거부**(paste 우회 불가). `execCommand('insertText')`는 띄어쓰기는 보존하나 기존 텍스트 클리어가 불안정 → 신뢰도 낮음.
+7. 그래도 2~3회 실패하면 **사용자에게 최종 텍스트를 넘겨 직접 붙여넣게** 한다(사람 타이핑엔 글리치 없음). 루프 돌지 말 것.
+
 ## 계정 확인 (매 세션)
 발행 전 threads.com 좌측 프로필이 **solopreneur.jm** 인지 스크린샷으로 확인. 여러 크롬 프로필 함정은 SKILL.md §6.
