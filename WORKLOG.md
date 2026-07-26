@@ -40,6 +40,16 @@
 
 ---
 
+## 2026-07-27 — 서비스명 확정 반영 (매일 두뇌 활동 → 기억정원, 펫포토 AI → PetPhotoAI)
+
+- 사용자가 두 서비스의 **정식 이름을 확정**해 사이트 전체 표기를 맞췄다.
+  - `매일 두뇌 활동` → **기억정원** (설명 끝도 "두뇌 활동 플랫폼" → "인지 훈련 플랫폼")
+  - `펫포토 AI` → **PetPhotoAI** (설치형은 `PetPhotoAI 스튜디오`)
+- 고친 곳: `src/projects.js`(name·description·coverCaption·본문 언급) + 블로그 3편 본문·이미지 alt·CTA(`brain-kakao-login-koe205`, `petphoto-prepay-pivot`, `petphoto-kmong-desktop`).
+- **slug는 그대로 뒀다**(`/p/brain`, `/p/petphoto`). 이미 스레드·블로그·sitemap에 나간 URL이라 바꾸면 링크가 깨진다 → `sitemap.xml` 수정 불필요. 프로젝트 개수도 그대로라 `og.png`(`9 PROJECTS`) 재생성 불필요.
+- 검증: `npm run build` 통과 · 프리렌더 26개(프로젝트 9·글 14·고정 3) · `dist/p/brain` 타이틀 `기억정원 — 메이킹 스토리`, `dist/p/petphoto` 타이틀 `PetPhotoAI — 메이킹 스토리` 확인.
+- ⏭️ 남은 것(사이트 밖): 실제 앱/크몽 상세페이지·스레드 프로필 등 **외부 표기**도 새 이름으로 맞출지 판단. 카드 이모지는 🧠 / 🐾 유지(원하면 교체 가능).
+
 ## 2026-07-25 — 스레드 답글 엔진(threads-reply 스킬) + 문체 학습 + 실전 발행
 
 ### 왜
