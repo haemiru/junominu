@@ -41,9 +41,12 @@ document.body.innerHTML=`<div class="topbar">…<button class="publish-btn" id="
 //  - textarea input → autosize + '수정됨' 표시
 //  - .done-toggle change → el.classList.toggle('done') + refresh()
 // completedCards() = 토글 켜진 카드. refresh() = 카운트/버튼 활성.
-// publishBtn click → completedCards()의 {user,url,comment(현재 textarea 값)}을 localStorage['threads_reply_queue']에 저장 + toast("채팅에 '발행'").
+// publishBtn click → completedCards()의 {user,url,comment(현재 textarea 값)}을 localStorage['threads_reply_queue']에 저장 + toast(다음 단계 안내).
 window.getPublishQueue=()=>JSON.parse(localStorage.getItem('threads_reply_queue')||'[]');
 ```
+
+> 🚨 **버튼 문구는 "발행"이 아니라 "✅ 승인 확정"**(2026-07-26 혼선). 페이지는 Claude를 호출할 수 없어 버튼은 **대기열에 담기만** 한다. "발행"이라 써 두면 사용자가 이미 게시된 줄 알고 "왜 또 발행하래?"가 된다.
+> 안내 문구도 두 단계를 분리해서 쓴다: 카드에서 **① 승인 확정** → 채팅에서 **② "발행"**.
 
 > 이 세션의 완성본 참고: 스크래치패드 `threads-reply-cards.html`(같은 UI의 단독 HTML). 그대로 열 수는 없지만 CSS/JS 원본으로 재사용.
 
@@ -77,7 +80,51 @@ window.getPublishQueue=()=>JSON.parse(localStorage.getItem('threads_reply_queue'
 
 ---
 
-## ⚠️ 발행(타이핑) 안정성 — 렌더러 글리치 대응 (2026-07-25 실전)
+## ✅ 발행 표준 기법 — 타이핑 말고 **합성 붙여넣기** (2026-07-26 확립, 이걸 먼저 쓴다)
+
+`computer.type`은 **크롬을 재시작해도** 스레드 답글창에서 공백·따옴표·마침표·영문을 통째로 삼킨다("취소할까 어쩔까" → "취소할까어쩔까"). 아래 두 함수를 주입해 쓰면 5건 연속 무결하게 나갔다.
+
+```js
+// ① 본문 채우기 — 전체 선택 후 paste 이벤트로 덮어쓴다(delete는 불안정하니 쓰지 말 것)
+window.fill = async (txt) => {
+  const ce = document.querySelector('[contenteditable="true"]');
+  if (!ce) return { err: 'no composer' };
+  ce.focus();
+  const s = window.getSelection(), r = document.createRange();
+  r.selectNodeContents(ce); s.removeAllRanges(); s.addRange(r);
+  await new Promise(x => setTimeout(x, 150));
+  const dt = new DataTransfer(); dt.setData('text/plain', txt);
+  ce.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+  await new Promise(x => setTimeout(x, 900));
+  return { match: ce.innerText.trim() === txt.trim(), got: ce.innerText };   // ← match:true 아니면 게시 금지
+};
+
+// ② 게시 — 좌표 클릭은 안 먹는다. 엘리먼트를 찾아 .click()
+window.send = async () => {
+  const ce = document.querySelector('[contenteditable="true"]');
+  const cr = ce.getBoundingClientRect();
+  const c = [...document.querySelectorAll('div[role="button"]')].map(b => {
+    const r = b.getBoundingClientRect();
+    return { b, cx: r.x + r.width/2, cy: r.y + r.height/2, w: r.width, h: r.height };
+  }).filter(o => o.w >= 32 && o.w <= 44 && o.h >= 32 && o.h <= 44
+             && o.cx > cr.right && o.cy > cr.top - 40 && o.cy < cr.bottom + 60);
+  if (!c.length) return { err: 'no send button' };
+  c[0].b.click();
+  await new Promise(x => setTimeout(x, 2500));
+  const cc = document.querySelector('[contenteditable="true"]');
+  return { sent: !cc || cc.innerText.trim() === '' };
+};
+```
+
+**주의점**
+- 줄바꿈은 `\n`을 그대로 넣으면 된다. `shift+Return` 키 조작 불필요.
+- **`send()`가 `no send button`이면** 둥근 ↑ 버튼이 아직 안 그려진 것 → **작성창을 실제로 한 번 클릭**(`computer.left_click`)하면 나타난다. 그 뒤 `send()` 재실행.
+- `execCommand('delete')`는 내용을 못 지우고 **순서가 뒤엉킨다**(2026-07-26 실측). 반드시 위처럼 **선택 → paste 덮어쓰기**로.
+- ⚠️ **좌표 환산**: 스크린샷 폭과 `window.innerWidth`가 다르다(예: 1540 vs 1784). 스크린샷에서 읽은 좌표로 `computer.left_click`할 땐 `DOM좌표 × (1540/innerWidth)`로 변환한다. 그래서 애초에 좌표보다 **DOM 탐색 + `.click()`** 이 안전하다.
+- 발행 전 **원글이 맞는지 placeholder로 확인**: `"<user>님에게 답글 남기기..."` 텍스트에 대상 계정명이 들어 있다. 추천 글이 위에 섞여 첫 `data-pressable-container`가 엉뚱한 글일 수 있으니 이쪽이 확실하다.
+- **무거운 글(답글 10개+ 이미지 다수)은 렌더러를 얼린다.** `Runtime.evaluate` 45초 타임아웃이 2회 연속 나면 그 글은 포기하고 사용자에게 텍스트를 넘긴다(루프 금지).
+
+## ⚠️ 참고 — 렌더러 글리치 원인 규명 이전 기록 (2026-07-25)
 
 스레드 답글 작성창(Lexical/contenteditable)에 `computer.type`으로 길게 칠 때, **탭 렌더러가 느려지면 띄어쓰기·따옴표·줄바꿈이 통째로 유실**된다("애 셋에…"→"애셋에…"). 눈으로만 보면 놓치기 쉽다. 그래서:
 
