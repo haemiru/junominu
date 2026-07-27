@@ -99,24 +99,42 @@ window.fill = async (txt) => {
   return { match: ce.innerText.trim() === txt.trim(), got: ce.innerText };   // ← match:true 아니면 게시 금지
 };
 
-// ② 게시 — 좌표 클릭은 안 먹는다. 엘리먼트를 찾아 .click()
+// ② 게시 — 좌표 클릭은 안 먹는다. 전송 버튼은 svg[aria-label="답글"]로 잡는다(2026-07-27 확정)
 window.send = async () => {
   const ce = document.querySelector('[contenteditable="true"]');
+  if (!ce) return { err: 'no composer' };
   const cr = ce.getBoundingClientRect();
-  const c = [...document.querySelectorAll('div[role="button"]')].map(b => {
-    const r = b.getBoundingClientRect();
-    return { b, cx: r.x + r.width/2, cy: r.y + r.height/2, w: r.width, h: r.height };
-  }).filter(o => o.w >= 32 && o.w <= 44 && o.h >= 32 && o.h <= 44
-             && o.cx > cr.right && o.cy > cr.top - 40 && o.cy < cr.bottom + 60);
-  if (!c.length) return { err: 'no send button' };
-  c[0].b.click();
-  await new Promise(x => setTimeout(x, 2500));
+  const c = [...document.querySelectorAll('svg[aria-label="답글"]')]
+    .map(s => ({ s, r: s.getBoundingClientRect() }))
+    .filter(o => o.r.y > cr.top - 60 && o.r.y < cr.bottom + 100 && o.r.x > cr.x + cr.width * 0.4);
+  if (!c.length) return { err: 'no send button' };   // ← 작성창을 실제로 한 번 클릭하면 나타난다
+  let n = c[0].s;
+  while (n && !(n.getAttribute && n.getAttribute('role') === 'button')) n = n.parentElement;
+  (n || c[0].s).click();
+  await new Promise(x => setTimeout(x, 3000));
   const cc = document.querySelector('[contenteditable="true"]');
   return { sent: !cc || cc.innerText.trim() === '' };
+};
+
+// ③ fill + send를 한 번의 tool 호출로 — 호출이 나뉘면 포커스가 풀려 전송 버튼이 사라진다
+window.go = async (txt) => {
+  const f = await window.fill(txt);
+  if (!f.match) return { stopped: true, ...f };   // 승인본과 다르면 게시하지 않는다
+  return { fill: true, ...(await window.send()) };
 };
 ```
 
 **주의점**
+- 🚨 **한글은 `\uXXXX` 이스케이프로 넘기지 말 것**(2026-07-27 사고). 답글 본문을 이스케이프로 조립하다 3건에 오타가 나갔다(`뜯`→`뜽`, `뿌듯`→`뿌뤻`, `왠지`→`왜지`). **한글 원문을 그대로** `window.go("...")` 에 넣는다 — `javascript_tool`의 `text`는 UTF-8을 그대로 받는다. `fill()`의 `match:true`는 "내가 넘긴 값과 같다"만 보증하지, **넘긴 값이 승인본과 같은지는 검증하지 않는다.**
+- **발행 후 승인본과 대조하라.** `document.body.innerText`에서 내 답글을 뽑아 대기열 텍스트와 눈으로 맞춰본다. 오타를 늦게 발견하면 되돌릴 방법이 비싸다(아래).
+- **수정 창은 게시 후 약 10분**(⋯ 메뉴의 `수정` 옆 카운트다운). 지나면 `수정` 항목이 사라지고 **삭제 후 재발행**밖에 없다(좋아요·답글 유실).
+- **수정 모달의 입력란은 `document.querySelector('[contenteditable="true"]')`로 잡히지 않는다** — 페이지 하단 답글 작성창이 DOM에서 먼저 나온다. 반드시 `[role="dialog"]` 안쪽에서 고를 것:
+  ```js
+  const dlg = document.querySelector('[role="dialog"]');
+  const ce = [...document.querySelectorAll('[contenteditable="true"]')].find(e => dlg.contains(e));
+  ```
+  이걸 놓치면 수정본이 **새 답글 작성창에 들어가** 중복 발행 직전까지 간다(실제 발생). 그땐 페이지를 새로고침해 초안을 버린다.
+- **⋯ 메뉴·모달 버튼은 좌표 클릭 말고 DOM 텍스트로 찾아 `.click()`.** 메뉴가 열리면서 레이아웃이 밀려 스크린샷 좌표가 어긋난다(`수정`을 누르려다 `인사이트`가 열림).
 - 줄바꿈은 `\n`을 그대로 넣으면 된다. `shift+Return` 키 조작 불필요.
 - **`send()`가 `no send button`이면** 둥근 ↑ 버튼이 아직 안 그려진 것 → **작성창을 실제로 한 번 클릭**(`computer.left_click`)하면 나타난다. 그 뒤 `send()` 재실행.
 - `execCommand('delete')`는 내용을 못 지우고 **순서가 뒤엉킨다**(2026-07-26 실측). 반드시 위처럼 **선택 → paste 덮어쓰기**로.
