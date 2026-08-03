@@ -242,74 +242,44 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 히어로 아래 대표 화면 — 큰 것 하나 + 작은 것 둘, 비대칭 3분할 (2026-08-03 4차).
+// 히어로 아래 대비 밴드 (2026-08-03 5차) — 프로젝트 화면 진열을 걷어낸 자리.
 //
-// 두 번 갈아엎고 나온 답이다.
-//   1차) 썸네일 9개를 가로로 쭉 → 모바일은 괜찮은데 PC 폭에서 작은 카드가 줄줄이 늘어서 나빴다.
-//   2차) 한 장만 크게 → 이번엔 "junominu.com 이 중개프로 랜딩 페이지"처럼 보였다.
-//   3차) 🔴 셋. 하나면 그 제품 사이트가 되고, 아홉이면 잡동사니가 된다.
-//        셋이면 "이 사람이 여러 개를 만들었구나"가 한눈에 읽히면서 각각도 충분히 크다.
+// 히어로에 뭘 놓을지 네 번 갈아엎었다.
+//   ① 썸네일 9개 가로 스트립  → PC 폭에서 줄줄이 늘어서 나빴다
+//   ② 화면 한 장만 크게       → "junominu.com 이 중개프로 랜딩"처럼 보였다
+//   ③ 큰 것 하나 + 작은 것 둘 → 나아졌지만 여전히 특정 프로젝트 진열이었다
+//   ④ 🔴 아예 뺐다 — "간판은 상품 진열장이 아니다"(사용자 지적).
+//        프로젝트는 바로 아래 PROJECTS 에서 본다. 히어로에서 미리 보여줄 이유가 없다.
 //
-// 큰 자리는 ME.heroShot 으로 지정한다(없으면 대표작 첫 번째). 나머지 둘은 대표작에서 자동.
-function heroShots() {
-  const picked = []
-  const push = (src, slug, alt) => {
-    if (!src || picked.length >= 3 || picked.some((x) => x.src === src)) return
-    picked.push({ src, slug, alt })
-  }
-  // ME.heroShot 이 있으면 그게 큰 자리(첫 번째)
-  push(ME.heroShot, ME.heroShotSlug, ME.heroShotAlt)
-  for (const p of featuredProjects()) {
-    push(p.detail?.cover ?? p.detail?.thumb, p.slug, `${p.name} 화면`)
-  }
-  return picked
-}
-
-function HeroShot() {
-  const shots = heroShots()
-  if (!shots.length) return null
-  return (
-    <div className="shot">
-      <div className={`shot__grid shot__grid--${shots.length}`}>
-        {shots.map((s, i) => {
-          const img = (
-            <img className="shot__img" src={s.src} alt={s.alt ?? '직접 만든 서비스 화면'}
-                 onError={(e) => { e.currentTarget.closest('.shot__frame')?.remove() }} />
-          )
-          const cls = `shot__frame${i === 0 ? ' shot__frame--lead' : ''}`
-          return s.slug
-            ? <Link className={cls} key={s.src} to={`/p/${s.slug}`} aria-label={s.alt}>{img}</Link>
-            : <div className={cls} key={s.src}>{img}</div>
-        })}
-      </div>
-    </div>
-  )
-}
-
-// 숫자 밴드 (2026-08-03) — Mobbin 랜딩의 "A growing library of / 1,150 apps …" 패턴.
-// 지표를 얇은 줄로 흘리지 않고 화면 한 장을 통째로 쓰는 자랑으로 만든다.
-// 숫자 주위에 프로젝트 이모지가 떠 있다(모빈은 앱 아이콘을 띄운다).
-function NumbersBand() {
+// 대신 이 사이트에만 있는 걸 놓는다: 「예전 0개 / 지금 N개」의 낙차.
+// 스레드 계정 고정글의 반전 훅과 같은 메시지라, 글 보고 온 사람이 같은 이야기를 다시 만난다.
+// 숫자는 ME.since 와 PROJECTS 길이로 자동 계산 — 프로젝트를 추가하면 알아서 커진다.
+function ContrastBand() {
+  const c = ME.contrast
+  if (!c) return null
   const live = PROJECTS.filter((p) => p.status === 'live').length
-  const floats = PROJECTS.filter((p) => p.emoji).slice(0, 8)
+  const after = (c.afterLabel ?? '').replace('{n}', monthsSince(ME.since))
   return (
-    <section className="nums" aria-label="작업실 지표">
-      <div className="nums__floats" aria-hidden="true">
-        {floats.map((p, i) => (
-          <span className={`nums__float nums__float--${i + 1}`} key={p.name}>{p.emoji}</span>
-        ))}
+    <section className="cmp" aria-label="예전과 지금">
+      <div className="cmp__row">
+        <div className="cmp__side">
+          <p className="cmp__label">{c.beforeLabel}</p>
+          <p className="cmp__n cmp__n--zero">{c.beforeN}</p>
+          <p className="cmp__note">{c.note}</p>
+        </div>
+        <div className="cmp__arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 24" width="40" height="24" fill="none"
+               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 12h34M28 4l8 8-8 8" />
+          </svg>
+        </div>
+        <div className="cmp__side cmp__side--now">
+          <p className="cmp__label">{after}</p>
+          <p className="cmp__n">{PROJECTS.length}</p>
+          <p className="cmp__note">{c.note}</p>
+        </div>
       </div>
-      <p className="nums__kicker">혼자 기획하고, 만들고, 운영합니다</p>
-      {/* 🔴 "커밋"을 뺐다(사용자 지적 2026-08-03). 이 사이트는 "IT 용어를 모르는
-          사람에게 우리 말로 설명한다"를 파는 곳인데 정작 첫 화면이 개발자 말을
-          쓰고 있었다. 게다가 몇 번 커밋했는지는 읽는 사람에게 의미가 없다.
-          남긴 건 그 사람이 실제로 궁금해할 것 — 얼마 만에, 몇 개를, 몇 개가 살아 있나.
-          monthsSince 는 "경과 개월 수"다(2026-01 시작 → 2026-08 이면 7). */}
-      <p className="nums__line">
-        <span className="nums__hl">{monthsSince(ME.since)}개월</span> 만에{' '}
-        <span className="nums__hl">{PROJECTS.length}개</span>를 만들었습니다
-      </p>
-      <p className="nums__foot">
+      <p className="cmp__foot">
         그중 {live}개는 지금도 사람들이 쓰고 있습니다 · 전부 AI 바이브 코딩으로
       </p>
     </section>
@@ -392,7 +362,13 @@ export default function Home() {
           세 번, "혼자"를 두 번 말하고 있었다. 한 줄로 합쳤다. */}
       <header className="hero">
         {ME.badge && <p className="hero__badge">{ME.badge}</p>}
-        <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
+        {/* 🔴 헤드라인은 이름이 아니라 문장이다(2026-08-03).
+            처음 온 사람에게 "JunoMinu"는 아무 정보가 없는데 제일 큰 자리를 먹고 있었다.
+            간판에는 "여기가 뭐 하는 곳인가"가 적혀야 한다. 이름은 상단 바에 있다.
+            ME.headline 을 지우면 예전처럼 이름이 헤드라인으로 돌아간다. */}
+        <h1 className="hero__headline">
+          {ME.headline ?? ME.name}<span className="hero__dot">.</span>
+        </h1>
         <p className="hero__tagline">{ME.tagline}</p>
         {/* CTA는 하나만. 둘이면 고민하고, 고민하면 안 누른다(Granola 랜딩 참고).
             코칭 전환은 상단 내비 "함께하기" + 하단 ContactCTA 밴드가 받는다 —
@@ -403,8 +379,7 @@ export default function Home() {
       </header>
     </div>
 
-    <HeroShot />
-    <NumbersBand />
+    <ContrastBand />
 
     {/* 아래부터는 밴드가 배경색을 번갈아 깐다 — 흰 → 틴트 → 흰 → 틴트.
         섹션 경계가 눈에 보여야 "어디서 뭘 보는지"가 잡힌다(사용자 지적 2026-08-03). */}
