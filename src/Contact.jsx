@@ -15,11 +15,20 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 버튼 URL: 개별 폼(offer.formUrl) → 공용 폼(contact.formUrl) → 이메일 폴백.
+// 버튼 URL: 외부 판매 페이지(offer.href) → 개별 폼(offer.formUrl) → 공용 폼(contact.formUrl) → 이메일 폴백.
+//
+// o.href — 문의 폼을 안 거치고 외부 상품 페이지로 바로 보내는 오퍼(예: 코칭 → 래피드).
+//   Tally 숨김필드를 못 쓰므로 귀속은 utm 으로만 남는다.
 // 폼으로 갈 땐 Tally 숨김필드 2개를 쿼리로 붙인다:
 //   type — 버튼별 문의유형(코칭/외주). 폼에서 다시 안 물어봐도 된다.
 //   src  — 유입 경로(어느 스레드 글에서 왔나). attribution.js 가 첫 진입 때 잡아둔 값.
 function buildFormUrl(o, c, src) {
+  if (o.href) {
+    const q = new URLSearchParams({ utm_source: 'junominu', utm_medium: 'contact' })
+    if (o.typeValue) q.set('utm_content', o.typeValue)
+    if (src) q.set('utm_campaign', src)   // 스레드 어느 글에서 왔는지
+    return `${o.href}${o.href.includes('?') ? '&' : '?'}${q}`
+  }
   const base = o.formUrl || c.formUrl
   if (!base) return gmailCompose(c.email, o.subject)
   const q = new URLSearchParams()
@@ -36,6 +45,7 @@ function OfferCard({ o, contact }) {
   // 버튼 클릭 → Tally 팝업을 사이트 안에서 연다(type·src 는 숨김필드로 전달).
   // Tally 스크립트가 아직 안 떴으면 preventDefault 를 안 해서 기본 동작(새 탭)으로 폴백.
   const openForm = (e) => {
+    if (o.href) return          // 외부 판매 페이지 오퍼는 팝업으로 가로채지 않는다(그냥 새 탭 이동)
     if (typeof window !== 'undefined' && window.Tally && contact.formId) {
       e.preventDefault()
       window.Tally.openPopup(contact.formId, {

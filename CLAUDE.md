@@ -111,6 +111,9 @@ detail: {
 
 - 데이터는 `projects.js`의 `ME.contact` 하나에 모여 있고, `Contact.jsx`가 자동 렌더한다(오퍼 카드 = `ME.contact.offers[]`).
 - **폼 연결**: 구글폼/Tally로 폼을 만든 뒤 `ME.contact.formUrl`에 링크만 붙이면 모든 "신청/문의" 버튼이 그 폼으로 연결된다. 코칭·외주를 다른 폼으로 받으려면 각 `offers[].formUrl`로 개별 지정.
+- **외부 판매 페이지로 직행**(`offers[].href`): 오퍼에 `href`가 있으면 **폼을 안 거치고 그 URL로 새 탭 이동**한다(Tally 팝업으로 가로채지 않음). 지금 **1:1 대면 코칭 → 래피드 상품 `latpeed.com/products/V8Kxm`** 이 이 방식이다. 숨김필드를 못 쓰므로 귀속은 **utm으로만** 남는다(`utm_source=junominu&utm_medium=contact&utm_content=<typeValue>&utm_campaign=<유입경로>`).
+  - 🔴 **상품 정보의 원천은 이 레포가 아니라 `D:\Claude-prj\lecture\latpeed\상품설명-텍스트.md`다.** 가격·회차·환불 규정을 고칠 땐 **두 곳을 같이** 고친다. 스레드 프로필 링크가 `junominu.com` 하나뿐이라(사용자 방침 2026-08-02) **`/contact`가 코칭의 유일한 관문**이고, 여기가 상품과 다른 말을 하면 곧바로 신뢰 문제가 된다.
+  - ⚠️ **0호 3명이 차면** `offers[0].note`에서 "0호 3명 한정 290,000원"을 빼고 정가 단독으로 되돌린다.
 - **Tally 팝업 임베드**: `ME.contact.formId`(예: `b5EKOL`)가 있으면 /contact 오퍼 버튼이 새 탭 대신 **Tally 팝업**으로 사이트 안에서 폼을 연다(`embed.js` 로드 → `Tally.openPopup`). 코칭/외주 구분은 `offers[].typeValue`를 Tally **숨김필드 `type`**로 전달(팝업=hiddenFields, 새 탭 폴백=`?type=`). Tally 스크립트 미로딩 시 새 탭으로 폴백.
 - **유입 경로 추적(숨김필드 `src`)**: `src/attribution.js`가 **첫 진입 때** utm/referrer를 붙잡아 `sessionStorage`에 저장하고(`main.jsx`에서 렌더 전 1회 호출), /contact가 그 값을 Tally 숨김필드 **`src`**로 함께 보낸다 → "어느 스레드 글이 문의를 만들었나"가 응답에 기록된다.
   - 값 형식: `threads/bokjimoa-anchor`(utm_source/utm_campaign) → 없으면 `l.threads.com`(referrer 호스트) → 없으면 `direct`.
