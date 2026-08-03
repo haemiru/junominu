@@ -1,35 +1,42 @@
 /* ────────────────────────────────────────────────────────────────
-   디자인 토큰 — 오늘의집(Ohouse) DESIGN.md 기반 (omd 0.1, 실측 2026-07-13)
-     · 색·타이포·간격·그림자는 문서의 실측 토큰을 따른다.
+   디자인 토큰 — 토스(Toss) DESIGN.md 기반 (omd 0.1, verification v2 2026-07-11)
+     · 색·타이포·간격은 문서의 검증 토큰(tokens.colors / typography / spacing)을 따른다.
      · 형태(카드 라운드 18px, 큰 히어로 타이포)는 junominu 것을 유지한다.
-       ㄴ 문서의 "card radius 0"은 스타일이 없는 바깥 껍데기를 잰 값이고
-          (transparent·padding 0), h1 30px도 오늘의집 목록 제목이지 히어로가 아님.
-     · ※ 표시는 문서에 없어 우리가 정한 값 — 문서는 상태값(hover/focus/pressed)을
-       아예 안 잰다(interactionCount 0). 반응형·모션도 미측정.
+       ㄴ 문서 §7 Don't: "금융앱 관행에서 카드·그림자·탭·다이얼로그를 지어내지 말 것".
+          가져올 것은 색·타이포·평면성이지 TDS 컴포넌트 문법이 아니다.
+     · 🚫 **그림자 토큰 없음.** 문서 §6이 명시 — "No canonical shadow token…
+       Use flat color layering." 깊이는 1px 테두리 + surface 대비로만 낸다.
+     · 🚫 **폰트는 Pretendard 유지.** Toss Product Sans 는 재배포 권한이 없다(문서 §3).
+     · ※ 표시는 문서에 없어 우리가 정한 값 — 문서는 hover/focus/pressed 를
+       marketing CTA 에서 측정하지 않았고(§14 "hover remains unclaimed"),
+       반응형 브레이크포인트·모션도 미측정(§8·§15).
+     · 이전 토큰(오늘의집 #00a1ff 계열)은 2026-08-03 교체. 뉴트럴이 순수 그레이라
+       탁했고, 토스 뉴트럴은 청색기가 있어 같은 흰 배경에서 더 선명하다.
    ──────────────────────────────────────────────────────────────── */
 :root {
-  /* 캔버스·표면 — 문서: canvas #ffffff, hairline #e0e0e0 */
-  --bg: #fbfcfd;                  /* ※ 페이지 바탕(카드가 뜨도록 흰색에 옅은 뉴트럴) */
+  /* 캔버스·표면 — 문서: canvas #ffffff, surface #f2f4f6, border #e5e8eb */
+  --bg: #ffffff;                  /* 문서 canvas — 카드는 테두리로 구분한다(그림자 X) */
   --surface: #ffffff;             /* 카드·패널 */
-  --surface-hover: #ffffff;
-  --surface-sunken: #f4f6f8;      /* ※ 코드블록·플레이스홀더 등 눌린 면 */
-  --border: #e0e0e0;
-  --border-hover: #c8ced4;        /* ※ */
+  --surface-hover: #fafbfc;       /* ※ */
+  --surface-sunken: #f2f4f6;      /* 문서 surface — 코드블록·눌린 면 */
+  --border: #e5e8eb;
+  --border-hover: #d1d6db;        /* ※ */
 
-  /* 글자 — 문서: foreground #2f3438, body #424242, muted #828c94 */
-  --text: #2f3438;
-  --text-soft: #424242;
-  --text-faint: #828c94;
+  /* 글자 — 문서: foreground #191f28, body #4e5968, muted #8b95a1 */
+  --text: #191f28;
+  --text-soft: #4e5968;
+  --text-faint: #8b95a1;
 
-  /* 액션 — 문서: action #00a1ff */
-  --accent: #00a1ff;              /* 채움 배경(흰 글자) */
-  --accent-hover: #0090e6;        /* ※ */
-  --accent-ink: #0077cc;          /* ※ 흰 배경 위 텍스트용(대비 4.6:1 — AA) */
-  --accent-wash: #e8f6ff;         /* ※ 옅은 틴트 */
-  --accent-line: #b8e3ff;         /* ※ 틴트 테두리 */
-  --accent-2: var(--accent-ink);  /* 옛 시안(#22d3ee) 자리 — 흰 배경에선 읽히는 파랑으로 */
+  /* 액션 — 문서: primary #3182f6, hover #2272eb, weak #e8f3ff / #1b64da */
+  --accent: #3182f6;              /* 채움 배경(흰 글자) */
+  --accent-hover: #2272eb;
+  --accent-ink: #1b64da;          /* 흰 배경 위 텍스트용 — 문서 weak-foreground(대비 5.3:1 AA) */
+  --accent-wash: #e8f3ff;         /* 문서 weak-background */
+  --accent-line: #c9e2ff;         /* ※ 틴트 테두리 */
+  --accent-2: var(--accent-ink);
+  --danger: #e42939;              /* 문서 danger */
 
-  /* 상태 — ※ 밝은 배경에서 읽히도록 재조정 */
+  /* 상태 — ※ 문서에 없음. 토스 뉴트럴과 어울리도록 채도 유지 */
   --live: #067647;
   --live-wash: #ecfdf3;
   --live-line: #a6f4c5;
@@ -40,21 +47,28 @@
   --idea-wash: #f2f4f7;
   --idea-line: #d0d5dd;
 
-  /* 그림자 — 문서: floating 0 2px 5px rgba(63,71,77,0.15) */
-  --shadow-float: 0 2px 5px rgba(63, 71, 77, 0.15);
-  --shadow-lift: 0 8px 20px rgba(63, 71, 77, 0.16);   /* ※ hover 상승용 */
-
-  /* 간격 — 문서: xs 6 / sm 12 / md 16 / lg 20 */
-  --sp-xs: 6px;
-  --sp-sm: 12px;
+  /* 간격 — 문서 spacing: 4 / 6 / 8 / 16 / 24 / 32 */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
   --sp-md: 16px;
-  --sp-lg: 20px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+
+  /* 타이포 스케일 — 문서 typography (h1 36 / h2 30 / h3 24 / h4 22 / body 16 / small 14)
+     히어로만 우리 값(88px)을 유지한다. 그 아래는 문서 스케일로 중간 단계를 채웠다. */
+  --fs-h2: 30px;
+  --fs-h3: 24px;
+  --fs-h4: 22px;
+  --fs-body: 16px;
+  --fs-small: 14px;
 
   --radius: 18px;                 /* 형태는 우리 것 유지 */
-  --radius-sm: 4px;               /* 컨트롤 — 문서 rounded.sm */
+  --radius-md: 12px;              /* ※ 컴팩트 카드·패널 */
+  --radius-sm: 6px;               /* 문서 rounded.md — 컨트롤 */
+  --radius-btn: 14px;             /* 문서 rounded.button-large */
   --maxw: 1040px;
 
-  /* 타이포 — 문서와 동일 계열(Pretendard Variable, tracking -0.3px) */
+  /* 폰트 — Toss Product Sans 는 재배포 불가(문서 §3) → Pretendard 유지 */
   --sans: "Pretendard Variable", Pretendard, system-ui, -apple-system,
     "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
 
@@ -76,9 +90,9 @@ html {
 
 body {
   font-family: var(--sans);
-  font-size: 16px;
-  line-height: 1.6;
-  letter-spacing: -0.3px;   /* 문서 tracking */
+  font-size: var(--fs-body);      /* 문서 body 16px */
+  line-height: 1.55;              /* ※ 문서는 24/16=1.5 — 한글 문단이라 살짝 넉넉하게 */
+  letter-spacing: -0.02em;        /* ※ 문서에 tracking 없음. Pretendard 한글 가독 보정 */
   color: var(--text-soft);
   background: var(--bg);
   min-height: 100dvh;

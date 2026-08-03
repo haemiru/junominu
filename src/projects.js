@@ -10,6 +10,12 @@
 //
 //    url 이 없으면 클릭 안 되는 "구상 카드"로 표시됩니다.
 //
+//  [분류 — 프로젝트가 많아지면 이게 중요합니다]
+//    category : 'service' | 'product' | 'kids' | 'lab' | 'etc'  (아래 CATEGORIES 참고)
+//               생략하면 'etc'. 카테고리별로 묶여 컴팩트 카드로 나옵니다.
+//    featured : true 면 홈 맨 위 "대표작"에 큰 카드로 올라갑니다.
+//               🔴 3~4개만 유지하세요. 늘리면 대표작의 의미가 사라집니다.
+//
 //  [카드 미디어 — 선택]
 //    detail.thumb : 홈 카드 상단에 깔리는 썸네일 이미지 경로("/shots/xxx.png").
 //                   없으면 detail.cover 를 대신 쓰고, 그것도 없으면
@@ -132,6 +138,8 @@ export const PROJECTS = [
   {
     name: "짱샘의 책방",
     slug: "jjangsaem",
+    category: "product",
+    featured: true,
     emoji: "📚",
     description: "발달·재활 전자책과 부모를 위한 도구를 파는 온라인 책방.",
     url: "https://jjangsaem.com",
@@ -182,6 +190,7 @@ export const PROJECTS = [
   {
     name: "킁킁메이트",
     slug: "kungkung",
+    category: "kids",
     emoji: "🌿",
     description: "호흡·후각 자가훈련을 매일 기록하면 변화를 자동 리포트로 보여주는 앱.",
     url: "https://kungkung.jjangsaem.com",
@@ -235,6 +244,7 @@ export const PROJECTS = [
   {
     name: "i-talk",
     slug: "italk",
+    category: "kids",
     emoji: "💌",
     description: "아이 일상 영상을 25년차 치료사가 직접 보고, 논문 근거로 분석 리포트를 써주는 서비스.",
     url: "https://italk.jjangsaem.com",
@@ -285,6 +295,7 @@ export const PROJECTS = [
   {
     name: "소리야 놀자!",
     slug: "soriya",
+    category: "kids",
     emoji: "🗣️",
     description: "얼굴 인식으로 입 모양을 따라 하며 노는, 발달장애 아동을 위한 언어치료 앱.",
     url: "https://speech-therapy-nine.vercel.app/home",  // ⚠️ 임시 URL(추후 변경 예정)
@@ -330,6 +341,8 @@ export const PROJECTS = [
   {
     name: "중개프로",
     slug: "jungaepro",
+    category: "service",
+    featured: true,
     emoji: "🏢",
     description: "매물·계약·CRM·문의·AI 도구까지, 공인중개사 업무를 하나로 모은 올인원 플랫폼.",
     // 🔴 제품 랜딩(기능·요금제·가입). 서브도메인(jungae.jungaepro.com 등)은 **입점 사무소의 손님 페이지**라
@@ -409,6 +422,8 @@ export const PROJECTS = [
   {
     name: "아이복지모아",
     slug: "bokjimoa",
+    category: "service",
+    featured: true,
     emoji: "🤲",
     description: "발달장애 아이를 키우는 부모가 흩어진 지원사업·치료실을 한곳에서 찾고, 맞춤 추천·알림까지 받는 서비스.",
     url: "https://bokjimoa.jjangsaem.com",
@@ -461,6 +476,7 @@ export const PROJECTS = [
   {
     name: "트랜스크립토",
     slug: "transcripto",
+    category: "product",
     emoji: "🎙️",
     description: "녹음·영상 파일을 100% 오프라인으로 전사하고 로컬 AI로 회의록까지 만들어 주는 설치형 데스크톱 프로그램.",
     url: "https://kmong.com/gig/795581",
@@ -515,6 +531,7 @@ export const PROJECTS = [
   {
     name: "기억정원",
     slug: "brain",
+    category: "service",
     emoji: "🧠",
     description: "고령층 본인이 하루 10분, 인지 훈련 게임·회상치료·가족 참여로 치매를 예방하는 인지 훈련 플랫폼.",
     url: "https://dementia-prevention.vercel.app",
@@ -566,6 +583,8 @@ export const PROJECTS = [
   {
     name: "PetPhotoAI",
     slug: "petphoto",
+    category: "service",
+    featured: true,
     emoji: "🐾",
     description: "반려동물 사진 한 장을 올리면 AI가 8가지 스타일의 프로필 사진으로 만들어 주는 서비스. 소비자용 웹 + 펫샵·동물병원용 설치형(크몽).",
     url: "https://pet-photo-ai.vercel.app",
@@ -653,6 +672,41 @@ export const STATUS = {
   building: { label: '작업 중', cls: 'status status--building' },
   idea:     { label: '구상',   cls: 'status status--idea' },
 };
+
+// ────────────────────────────────────────────────────────────────
+//  카테고리 (2026-08-03 신설)
+//
+//  프로젝트가 20개를 넘어가면 카드를 한 줄로 나열할 수 없다. 그래서 홈은 2단이다.
+//    ① 대표작(featured: true)  → 2열 큰 카드. 앱 캡처가 주인공.
+//    ② 나머지                  → 카테고리별 컴팩트 카드(3열, 이미지 없음).
+//
+//  프로젝트에 `category: "service"` 를 넣으면 그 묶음으로 들어간다.
+//  category 가 없으면 'etc' 로 떨어지므로 새 프로젝트를 막 추가해도 안 깨진다.
+//  카테고리를 추가하려면 아래 배열에 한 줄만 넣으면 된다(순서 = 화면 순서).
+// ────────────────────────────────────────────────────────────────
+export const CATEGORIES = [
+  { key: 'service', label: '서비스',      desc: '사람들이 실제로 쓰는 웹앱' },
+  { key: 'product', label: '판매 제품',   desc: '사서 쓰는 것 — 전자책·툴' },
+  { key: 'kids',    label: '아이를 위한 도구', desc: '치료실과 발달지연 아이 곁에서' },
+  { key: 'lab',     label: '실험 · 습작', desc: '만들어 보려고 만든 것들' },
+  { key: 'etc',     label: '그 외',       desc: '' },
+];
+
+// 대표작 — 홈 상단에 큰 카드로. featured 표시가 하나도 없으면 live 앞 4개를 자동 승격.
+export function featuredProjects() {
+  const marked = PROJECTS.filter((p) => p.featured);
+  if (marked.length) return marked;
+  return PROJECTS.filter((p) => p.status === 'live').slice(0, 4);
+}
+
+// 대표작을 뺀 나머지를 카테고리 순서대로 묶는다. 빈 묶음은 자동 제외.
+export function projectsByCategory() {
+  const featured = new Set(featuredProjects().map((p) => p.slug ?? p.name));
+  const rest = PROJECTS.filter((p) => !featured.has(p.slug ?? p.name));
+  return CATEGORIES
+    .map((c) => ({ ...c, items: rest.filter((p) => (p.category ?? 'etc') === c.key) }))
+    .filter((c) => c.items.length > 0);
+}
 
 // slug로 프로젝트 찾기 (상세 페이지에서 사용)
 export function findProject(slug) {

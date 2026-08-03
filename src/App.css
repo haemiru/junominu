@@ -5,17 +5,9 @@
   padding: clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px) 72px;
 }
 
-/* ambient glow */
-.page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(60% 50% at 12% -5%, rgba(0, 161, 255, 0.07), transparent 60%),
-    radial-gradient(50% 45% at 105% 8%, rgba(0, 161, 255, 0.04), transparent 55%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* 옛 ambient glow(라디얼 그라데이션 2개)는 2026-08-03 제거.
+   알파 0.04~0.07은 흰 배경에서 보이지 않았고, "흐릿하게 뭔가 있는" 인상만 남겼다.
+   DESIGN.md §6 — 평면 색 레이어링으로 간다. */
 
 .hero,
 .grid,
@@ -38,7 +30,7 @@
 
 .logo {
   flex: none;
-  filter: drop-shadow(0 2px 6px rgba(0, 161, 255, 0.25));
+  filter: drop-shadow(0 1px 3px rgba(49, 130, 246, 0.22));
 }
 
 .hero__kicker {
@@ -71,97 +63,134 @@
   margin-top: 10px;
 }
 
+/* 내비 — 4개만. 알약 대신 밑줄 텍스트로 무게를 뺐다(작품이 주인공). */
 .hero__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 22px;
+  margin-top: 28px;
 }
 
 .hero__nav a {
-  padding: 8px 16px;
-  border: 1px solid var(--border-hover);
-  border-radius: 999px;
-  background: var(--surface);
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--text);
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 .hero__nav a:hover {
-  transform: translateY(-2px);
-  border-color: var(--accent);
-  background: var(--accent-wash);
   color: var(--accent-ink);
+  border-bottom-color: var(--accent);
 }
 
-/* ── Stats ──────────────────────────── */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 12px;
-  margin-bottom: clamp(40px, 7vw, 72px);
-}
-
-.stat {
+/* ── 히어로 지표 스트립 ─────────────────
+   카드 격자가 아니라 얇은 한 줄. 스크롤 전에 "진짜 만들었다"를 끝낸다. */
+.hstats {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
 }
 
-.stat__n {
-  font-size: clamp(26px, 5vw, 34px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  color: var(--accent-ink);
+.hstat {
+  display: flex;
+  flex-direction: column-reverse;   /* dt(라벨)이 마크업상 먼저 → 화면에선 숫자가 위 */
+  gap: 3px;
+  padding: 0 28px;
+  border-left: 1px solid var(--border);
 }
 
-.stat__label {
-  font-size: 12.5px;
-  color: var(--text-soft);
+.hstat:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
-/* ── Section (About / Now / Projects) ── */
-.section {
-  margin-bottom: clamp(44px, 8vw, 80px);
-}
-
-.section__label {
-  font-size: 12px;
-  letter-spacing: 0.16em;
+.hstat__n {
+  font-size: var(--fs-h3);
   font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.hstat__label {
+  font-size: 13px;
   color: var(--text-faint);
-  text-transform: uppercase;
-  margin-bottom: 20px;
+}
+
+/* ── Section ────────────────────────── */
+.section {
+  margin-bottom: clamp(48px, 8vw, 88px);
+}
+
+/* 섹션 제목 — 12px 대문자 라벨을 버리고 한글 제목으로(DESIGN.md h3 24px).
+   라벨이 9번 반복되면 리듬이 아니라 소음이 된다. */
+.section__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.section__sub {
+  margin-top: 8px;
+  color: var(--text-faint);
+  font-size: var(--fs-small);
+}
+
+.section__title + .grid,
+.section__title + .now,
+.section__title + .section__para,
+.section__title + .tl,
+.section__sub + .grid,
+.section__sub + .now,
+.section__sub + .tl {
+  margin-top: 24px;
+}
+
+/* .section__label — 상세(/p/:slug)·함께하기·프롬프트 페이지가 쓰는 섹션 제목.
+   2026-08-03에 옛 "12px 대문자 + 밑줄" 라벨에서 한글 제목 톤으로 승격했다.
+   홈은 .section__title 을 쓴다(같은 계열, 한 단계 큼). */
+.section__label {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 18px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
+}
+
+/* 하위 묶음 — 옛 RÉSUMÉ·STACK 섹션이 여기로 들어왔다(섹션 10개 → 6개) */
+.subsection {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.subsection__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
 }
 
 .section__para {
   color: var(--text-soft);
   max-width: 68ch;
   margin-bottom: 14px;
-  font-size: 15.5px;
+  font-size: var(--fs-body);
 }
 
 .section__para:last-of-type {
   margin-bottom: 0;
-}
-
-.links__lead {
-  margin-top: 26px;
-  margin-bottom: 12px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  font-weight: 700;
-  color: var(--text-faint);
 }
 
 .links {
@@ -278,22 +307,23 @@
   color: var(--text);
 }
 
-/* ── Grid ───────────────────────────── */
+/* ── Grid — 대표작 2열 ─────────────────
+   4열(카드 245px)에서 2열(카드 ~510px)로. 앱 캡처가 주인공이라는 원칙(CLAUDE.md)을
+   레이아웃이 지키게 만든 것. 나머지 프로젝트는 아래 .minigrid 가 받는다. */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
-/* ── Card ───────────────────────────── */
+/* ── Card (대표작) ──────────────────── */
 .card {
   display: flex;
   flex-direction: column;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
-  min-height: 168px;
+  padding: 20px;
   overflow: hidden;
   transition:
     transform 0.18s ease,
@@ -301,24 +331,24 @@
     background 0.18s ease;
 }
 
-/* 카드 상단 미디어 밴드 — 풀블리드(패딩 무시) */
+/* 카드 상단 미디어 밴드 — 풀블리드(패딩 무시).
+   2열이 되면서 96px → 16:9 비율로. 캡처가 잘리지 않고 제대로 보인다. */
 .card__media {
   position: relative;
-  margin: -18px -18px 14px;
-  height: 96px;
+  margin: -20px -20px 16px;
+  aspect-ratio: 16 / 9;
   display: grid;
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(120% 140% at 50% -20%, color-mix(in srgb, var(--tint) 42%, transparent), transparent 70%),
-    linear-gradient(160deg, color-mix(in srgb, var(--tint) 16%, transparent), rgba(255, 255, 255, 0.6));
+    radial-gradient(120% 140% at 50% -20%, color-mix(in srgb, var(--tint) 36%, transparent), transparent 70%),
+    linear-gradient(160deg, color-mix(in srgb, var(--tint) 14%, transparent), var(--surface-sunken));
   border-bottom: 1px solid var(--border);
 }
 
 .card__media-emoji {
-  font-size: 38px;
+  font-size: 48px;
   line-height: 1;
-  filter: drop-shadow(0 2px 5px rgba(63, 71, 77, 0.2));
   opacity: 0.95;
 }
 
@@ -341,10 +371,12 @@
   cursor: pointer;
 }
 
+/* hover — 그림자를 얹지 않는다(DESIGN.md §6 "flat color layering").
+   깊이는 테두리 색과 아주 작은 이동으로만. */
 .card--link:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   background: var(--surface-hover);
-  border-color: var(--border-hover);
+  border-color: var(--accent-line);
 }
 
 .card__top {
@@ -368,14 +400,15 @@
 }
 
 .card__title {
-  font-size: 20px;
+  font-size: var(--fs-h4);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
+  color: var(--text);
 }
 
 .card__desc {
   color: var(--text-soft);
-  font-size: 14.5px;
+  font-size: 15px;
   margin-top: 8px;
   flex: 1;
 }
@@ -411,6 +444,109 @@
 .card--link:hover .card__cta {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* ── 카테고리 묶음 + 컴팩트 카드 ────────
+   프로젝트가 20개를 넘으면 큰 카드로 다 깔 수 없다. 대표작만 위에 크게 두고
+   나머지는 여기서 밀도 높게 받는다. 이미지가 없어 세로 길이를 거의 안 먹는다. */
+.catgroup {
+  margin-top: 44px;
+}
+
+.catgroup__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.catgroup__title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.catgroup__desc {
+  font-size: 13px;
+  color: var(--text-faint);
+  flex: 1;
+}
+
+.catgroup__n {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-faint);
+  background: var(--surface-sunken);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.minigrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.mini {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 15px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.mini--link {
+  cursor: pointer;
+}
+
+.mini--link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-line);
+  background: var(--surface-hover);
+}
+
+.mini__emoji {
+  font-size: 22px;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.mini__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.mini__head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.mini__name {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.mini__desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-faint);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ── Status pill ────────────────────── */
@@ -564,12 +700,11 @@
   font-size: 14.5px;
   color: #fff;
   background: var(--accent);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .dhero__cta:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
+  transform: translateY(-1px);
   background: var(--accent-hover);
 }
 
@@ -816,8 +951,7 @@
   height: auto;
   border-radius: 16px;
   border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: var(--shadow-float);
+  background: var(--surface-sunken);
 }
 
 .dshot__cap {
@@ -841,7 +975,7 @@
 
 .shots .dshot__img {
   border-radius: 18px;
-  box-shadow: var(--shadow-float);
+  border: 1px solid var(--border);
 }
 
 /* ── 블로그 목록 — 썸네일 카드 그리드 ── */
@@ -1211,7 +1345,7 @@
   backdrop-filter: blur(8px);
   color: var(--text);
   cursor: pointer;
-  box-shadow: var(--shadow-lift);
+  border-color: var(--border-hover);
   opacity: 0;
   transform: translateY(12px) scale(0.92);
   pointer-events: none;
@@ -1242,17 +1376,33 @@
 }
 
 @media (max-width: 880px) {
-  .grid {
+  .minigrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  /* 지표 스트립 — 좁아지면 구분선 대신 2열 격자로 */
+  .hstats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 12px;
+  }
+  .hstat {
+    padding: 0;
+    border-left: 0;
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 620px) {
   .grid {
     grid-template-columns: 1fr;
   }
-  .stats {
+  .minigrid {
+    grid-template-columns: 1fr;
+  }
+  .hstats {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .hero__nav {
+    gap: 16px;
   }
   .stack__group {
     grid-template-columns: 1fr;
@@ -1260,6 +1410,13 @@
   }
   .stack__label {
     padding-top: 0;
+  }
+  .catgroup__head {
+    flex-wrap: wrap;
+  }
+  .catgroup__desc {
+    flex-basis: 100%;
+    order: 3;
   }
 }
 
@@ -1271,7 +1428,7 @@
   font-weight: 700;
   font-size: 15px;
   letter-spacing: -0.01em;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease,
+  transition: transform 0.15s ease, border-color 0.15s ease,
     background 0.15s ease, color 0.15s ease;
 }
 
@@ -1281,8 +1438,7 @@
 }
 
 .btn--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift);
+  transform: translateY(-1px);
   background: var(--accent-hover);
 }
 
@@ -1329,6 +1485,9 @@
 }
 
 .band__kicker {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  font-weight: 600;
   color: var(--accent-2);
   margin-bottom: 10px;
 }
@@ -1378,6 +1537,9 @@
 }
 
 .cta__kicker {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  font-weight: 600;
   color: var(--accent-2);
   margin-bottom: 12px;
 }

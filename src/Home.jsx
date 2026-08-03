@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
-import { ME, PROJECTS, STATUS, totalCommits, maxCommits } from './projects'
+import {
+  ME, PROJECTS, STATUS, totalCommits, maxCommits,
+  featuredProjects, projectsByCategory,
+} from './projects'
 
 const LINK_ICONS = {
   github: (
@@ -41,12 +44,29 @@ function CardMedia({ p }) {
   )
 }
 
+// 카드 껍데기 — 상세가 있으면 내부 상세로, 없으면 외부 링크, 둘 다 없으면 정적 div.
+// 대표작 카드(.card)와 컴팩트 카드(.mini)가 같은 분기를 쓴다.
+function CardShell({ p, className, children }) {
+  if (p.detail && p.slug) {
+    return <Link className={`${className} ${className}--link`} to={`/p/${p.slug}`}>{children}</Link>
+  }
+  if (p.url) {
+    return (
+      <a className={`${className} ${className}--link`} href={p.url} target="_blank" rel="noreferrer">
+        {children}
+      </a>
+    )
+  }
+  return <div className={className}>{children}</div>
+}
+
+// 대표작 — 2열 큰 카드. 앱 캡처가 주인공이다(CLAUDE.md 디자인 원칙).
 function ProjectCard({ p }) {
   const status = STATUS[p.status] ?? STATUS.idea
   const hasDetail = Boolean(p.detail && p.slug)
 
-  const inner = (
-    <>
+  return (
+    <CardShell p={p} className="card">
       <CardMedia p={p} />
       <div className="card__top">
         <span className={status.cls}>{status.label}</span>
@@ -54,7 +74,7 @@ function ProjectCard({ p }) {
           <span className="card__commits">{p.detail.commits} commits</span>
         )}
       </div>
-      <h2 className="card__title">{p.name}</h2>
+      <h3 className="card__title">{p.name}</h3>
       <p className="card__desc">{p.description}</p>
       {p.tags?.length > 0 && (
         <ul className="card__tags">
@@ -64,17 +84,58 @@ function ProjectCard({ p }) {
       {hasDetail
         ? <span className="card__cta">메이킹 스토리 →</span>
         : p.url && <span className="card__cta">열기 →</span>}
-    </>
+    </CardShell>
   )
+}
 
-  // 상세가 있으면 내부 상세 페이지로, 없으면 외부 링크, 둘 다 없으면 정적 카드
-  if (hasDetail) {
-    return <Link className="card card--link" to={`/p/${p.slug}`}>{inner}</Link>
-  }
-  if (p.url) {
-    return <a className="card card--link" href={p.url} target="_blank" rel="noreferrer">{inner}</a>
-  }
-  return <div className="card">{inner}</div>
+// 컴팩트 카드 — 카테고리 목록용. 이미지 없이 이모지·이름·한 줄로 밀도를 높인다.
+// 프로젝트가 수십 개가 돼도 페이지가 감당되는 이유가 이 카드다.
+function MiniCard({ p }) {
+  const status = STATUS[p.status] ?? STATUS.idea
+  return (
+    <CardShell p={p} className="mini">
+      <span className="mini__emoji" aria-hidden="true">{p.emoji}</span>
+      <span className="mini__body">
+        <span className="mini__head">
+          <span className="mini__name">{p.name}</span>
+          <span className={status.cls}>{status.label}</span>
+        </span>
+        <span className="mini__desc">{p.description}</span>
+      </span>
+    </CardShell>
+  )
+}
+
+// PROJECTS 섹션 — 대표작 2열 + 카테고리별 컴팩트 3열.
+function Work() {
+  const featured = featuredProjects()
+  const groups = projectsByCategory()
+
+  return (
+    <section id="work" className="section">
+      <h2 className="section__title">바이브 코딩으로 만든 것들</h2>
+      <p className="section__sub">
+        기획부터 배포·운영까지 혼자 했습니다. 카드를 누르면 어떻게 만들었는지 나옵니다.
+      </p>
+
+      <div className="grid">
+        {featured.map((p) => <ProjectCard key={p.name} p={p} />)}
+      </div>
+
+      {groups.map((g) => (
+        <div className="catgroup" key={g.key}>
+          <div className="catgroup__head">
+            <h3 className="catgroup__title">{g.label}</h3>
+            {g.desc && <span className="catgroup__desc">{g.desc}</span>}
+            <span className="catgroup__n">{g.items.length}</span>
+          </div>
+          <div className="minigrid">
+            {g.items.map((p) => <MiniCard key={p.name} p={p} />)}
+          </div>
+        </div>
+      ))}
+    </section>
+  )
 }
 
 function Journey() {
@@ -90,7 +151,8 @@ function Journey() {
 
   return (
     <section id="journey" className="section">
-      <h2 className="section__label">JOURNEY — 시간순 기록</h2>
+      <h2 className="section__title">시간순으로 본 여정</h2>
+      <p className="section__sub">막대는 누적 커밋 수입니다. 최근이 위.</p>
       <ol className="tl tl--journey">
         {items.map((p) => {
           const status = STATUS[p.status] ?? STATUS.idea
@@ -132,11 +194,12 @@ function Journey() {
 }
 
 // RÉSUMÉ — 학력·경력 세로 연표. JOURNEY와 같은 .tl 타임라인 톤을 재사용.
+// 2026-08-03부터 독립 섹션이 아니라 ABOUT 안에 들어간다(섹션 수 줄이기).
 function Resume() {
   if (!ME.resume?.length) return null
   return (
-    <section id="resume" className="section">
-      <h2 className="section__label">RÉSUMÉ — 걸어온 길</h2>
+    <div id="resume" className="subsection">
+      <h3 className="subsection__title">걸어온 길</h3>
       <ol className="tl tl--resume">
         {ME.resume.map((r, i) => (
           <li className="tl__item" key={i}>
@@ -150,7 +213,7 @@ function Resume() {
           </li>
         ))}
       </ol>
-    </section>
+    </div>
   )
 }
 
@@ -160,25 +223,26 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-function Stats() {
+// 지표 — 히어로 안에 붙는다(2026-08-03). 스크롤 전에 "진짜 만들었다"가 끝나야
+// 스레드에서 넘어온 사람의 질문("이 사람한테 배우면 되나?")에 답이 된다.
+// 카드 격자가 아니라 얇은 한 줄 스트립이라 히어로를 밀어내지 않는다.
+function HeroStats() {
   const live = PROJECTS.filter((p) => p.status === 'live').length
-  const building = PROJECTS.filter((p) => p.status === 'building').length
   const stats = [
     { n: PROJECTS.length, label: '프로젝트' },
-    { n: totalCommits().toLocaleString(), label: '누적 커밋' },
     { n: live, label: '운영 중' },
-    { n: building, label: '작업 중' },
-    { n: monthsSince(ME.since), label: '개월째 빌딩' },
+    { n: totalCommits().toLocaleString(), label: '누적 커밋' },
+    { n: monthsSince(ME.since), label: '개월째' },
   ]
   return (
-    <section className="stats" aria-label="작업실 지표">
+    <dl className="hstats" aria-label="작업실 지표">
       {stats.map((s) => (
-        <div className="stat" key={s.label}>
-          <span className="stat__n">{s.n}</span>
-          <span className="stat__label">{s.label}</span>
+        <div className="hstat" key={s.label}>
+          <dt className="hstat__label">{s.label}</dt>
+          <dd className="hstat__n">{s.n}</dd>
         </div>
       ))}
-    </section>
+    </dl>
   )
 }
 
@@ -191,7 +255,7 @@ function PromptsBand() {
   return (
     <section className="band">
       <div className="band__text">
-        <p className="hero__kicker band__kicker">PROMPT NOTE</p>
+        <p className="band__kicker">PROMPT NOTE</p>
         <h2 className="band__title">이 프로젝트들을 만든 실제 프롬프트</h2>
         <p className="band__lead">
           위 {withPrompts.length}개 프로젝트를 만들며 실제로 썼던 핵심 프롬프트 {count}개를
@@ -210,7 +274,7 @@ function ContactCTA() {
   return (
     <section id="contact" className="cta">
       <div className="cta__inner">
-        <p className="hero__kicker cta__kicker">WORK WITH ME</p>
+        <p className="cta__kicker">WORK WITH ME</p>
         <h2 className="cta__title">함께 만들까요?</h2>
         <p className="cta__lead">
           {c.lead.split('\n').map((line, i) => (
@@ -244,32 +308,24 @@ export default function Home() {
           <a className="btn btn--primary" href="#work">프로젝트 둘러보기 ↓</a>
           <Link className="btn btn--ghost" to="/contact">1:1 코칭 · 외주 문의</Link>
         </div>
-        <nav className="hero__nav" aria-label="섹션 바로가기">
-          <a href="#work">PROJECTS</a>
-          <a href="#about">About</a>
-          <a href="#resume">RÉSUMÉ</a>
-          <a href="#now">Now</a>
-          <a href="#stack">STACK</a>
-          <a href="#journey">JOURNEY</a>
-          <Link to="/prompts">프롬프트</Link>
-          <Link to="/blog">BLOG</Link>
+        {/* 내비는 4개까지만. 처음 온 사람에게 선택지를 아홉 개 주면 아무것도 안 누른다
+            (DESIGN.md §10 "Easy to answer"). 나머지 섹션은 스크롤로 만난다. */}
+        <nav className="hero__nav" aria-label="바로가기">
+          <a href="#work">프로젝트</a>
+          <Link to="/blog">블로그</Link>
+          <Link to="/prompts">프롬프트 노트</Link>
           <Link to="/contact">함께하기</Link>
         </nav>
+        <HeroStats />
       </header>
 
-      <Stats />
-
-      <section id="work">
-        <h2 className="section__label">PROJECTS — 바이브 코딩으로 만든 것들</h2>
-        <div className="grid">
-          {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
-        </div>
-      </section>
+      <Work />
 
       <PromptsBand />
 
+      {/* ABOUT — 소개 + 걸어온 길(RÉSUMÉ) + 링크를 한 섹션으로 합쳤다(2026-08-03) */}
       <section id="about" className="section">
-        <h2 className="section__label">ABOUT — 비개발자의 바이브 코딩</h2>
+        <h2 className="section__title">비개발자의 바이브 코딩</h2>
         {ME.about.map((para, i) => (
           <p className="section__para" key={i}>
             {para.split('\n').map((line, j) => (
@@ -277,42 +333,46 @@ export default function Home() {
             ))}
           </p>
         ))}
-        <p className="links__lead">FIND ME</p>
-        <ul className="links">
-          {ME.links.map((l) => (
-            <li key={l.label}>
-              <a className="link" href={l.url} target="_blank" rel="noreferrer">
-                <span className="link__icon">{LINK_ICONS[l.icon]}</span>
-                <span className="link__label">{l.label}</span>
-                {l.hint && <span className="link__hint">{l.hint}</span>}
-              </a>
-            </li>
-          ))}
-        </ul>
+
+        <Resume />
+
+        <div className="subsection">
+          <h3 className="subsection__title">연락처</h3>
+          <ul className="links">
+            {ME.links.map((l) => (
+              <li key={l.label}>
+                <a className="link" href={l.url} target="_blank" rel="noreferrer">
+                  <span className="link__icon">{LINK_ICONS[l.icon]}</span>
+                  <span className="link__label">{l.label}</span>
+                  {l.hint && <span className="link__hint">{l.hint}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <Resume />
-
+      {/* NOW + STACK 을 한 섹션으로 합쳤다(2026-08-03) */}
       <section id="now" className="section">
-        <h2 className="section__label">NOW — 지금 만들고 있는 것</h2>
+        <h2 className="section__title">지금 만들고 있는 것</h2>
         <ul className="now">
           {ME.now.map((item, i) => (
             <li className="now__item" key={i}>{item}</li>
           ))}
         </ul>
-      </section>
 
-      <section id="stack" className="section">
-        <h2 className="section__label">STACK — 내가 쓰는 도구</h2>
-        <div className="stack">
-          {ME.stack.map((g) => (
-            <div className="stack__group" key={g.group}>
-              <span className="stack__label">{g.group}</span>
-              <ul className="stack__items">
-                {g.items.map((it) => <li key={it}>{it}</li>)}
-              </ul>
-            </div>
-          ))}
+        <div className="subsection" id="stack">
+          <h3 className="subsection__title">쓰는 도구</h3>
+          <div className="stack">
+            {ME.stack.map((g) => (
+              <div className="stack__group" key={g.group}>
+                <span className="stack__label">{g.group}</span>
+                <ul className="stack__items">
+                  {g.items.map((it) => <li key={it}>{it}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
