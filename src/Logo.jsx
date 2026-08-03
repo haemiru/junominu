@@ -1,7 +1,7 @@
 // ────────────────────────────────────────────────────────────────
 //  JunoMinu 로고 — 바이브 코딩 마크
 //  둥근 배지 안에 코드 브래킷 </>  + 가운데 번개(에너지)로
-//  "코드 + 바이브"를 표현. 액션 블루(#00a1ff) 계열 그라데이션.
+//  "코드 + 바이브"를 표현. 액션 블루(DESIGN.md primary #3182f6) 계열 그라데이션.
 // ────────────────────────────────────────────────────────────────
 
 export default function Logo({ size = 56 }) {
@@ -18,8 +18,8 @@ export default function Logo({ size = 56 }) {
     >
       <defs>
         <linearGradient id="jm-grad" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#00a1ff" />
-          <stop offset="1" stopColor="#0077cc" />
+          <stop offset="0" stopColor="#3182f6" />
+          <stop offset="1" stopColor="#1b64da" />
         </linearGradient>
       </defs>
 

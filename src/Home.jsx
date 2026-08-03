@@ -44,6 +44,29 @@ function CardMedia({ p }) {
   )
 }
 
+// 섹션 밴드 — 화면 끝까지 배경색을 깔고, 안쪽만 .page 와 같은 max-width 로 잡는다.
+// 순백만 이어지면 눈이 아프고 어디서 뭘 봐야 하는지 길잡이가 없다(사용자 지적 2026-08-03).
+// tone="tint" 가 옅은 뉴트럴(--surface-sunken). 흰색 ↔ 틴트를 번갈아 리듬을 만든다.
+function Band({ tone = 'plain', children }) {
+  return (
+    <div className={`sband sband--${tone}`}>
+      <div className="sband__inner">{children}</div>
+    </div>
+  )
+}
+
+// 섹션 머리 — 작은 영문 eyebrow + 큰 한글 제목.
+// eyebrow 는 스캔용 이정표고, 제목이 실제로 읽히는 문장이다.
+function SectionHead({ eyebrow, title, sub }) {
+  return (
+    <>
+      {eyebrow && <p className="section__eyebrow">{eyebrow}</p>}
+      <h2 className="section__title">{title}</h2>
+      {sub && <p className="section__sub">{sub}</p>}
+    </>
+  )
+}
+
 // 카드 껍데기 — 상세가 있으면 내부 상세로, 없으면 외부 링크, 둘 다 없으면 정적 div.
 // 대표작 카드(.card)와 컴팩트 카드(.mini)가 같은 분기를 쓴다.
 function CardShell({ p, className, children }) {
@@ -113,10 +136,11 @@ function Work() {
 
   return (
     <section id="work" className="section">
-      <h2 className="section__title">바이브 코딩으로 만든 것들</h2>
-      <p className="section__sub">
-        기획부터 배포·운영까지 혼자 했습니다. 카드를 누르면 어떻게 만들었는지 나옵니다.
-      </p>
+      <SectionHead
+        eyebrow="PROJECTS"
+        title="바이브 코딩으로 만든 것들"
+        sub="기획부터 배포·운영까지 혼자 했습니다. 카드를 누르면 어떻게 만들었는지 나옵니다."
+      />
 
       <div className="grid">
         {featured.map((p) => <ProjectCard key={p.name} p={p} />)}
@@ -151,8 +175,7 @@ function Journey() {
 
   return (
     <section id="journey" className="section">
-      <h2 className="section__title">시간순으로 본 여정</h2>
-      <p className="section__sub">막대는 누적 커밋 수입니다. 최근이 위.</p>
+      <SectionHead eyebrow="JOURNEY" title="시간순으로 본 여정" sub="막대는 누적 커밋 수입니다. 최근이 위." />
       <ol className="tl tl--journey">
         {items.map((p) => {
           const status = STATUS[p.status] ?? STATUS.idea
@@ -364,14 +387,17 @@ export default function Home() {
     <WorkStrip />
     <NumbersBand />
 
-    <div className="page page--rest">
+    {/* 아래부터는 밴드가 배경색을 번갈아 깐다 — 흰 → 틴트 → 흰 → 틴트.
+        섹션 경계가 눈에 보여야 "어디서 뭘 보는지"가 잡힌다(사용자 지적 2026-08-03). */}
+    <Band tone="plain">
       <Work />
-
       <PromptsBand />
+    </Band>
 
+    <Band tone="tint">
       {/* ABOUT — 소개 + 걸어온 길(RÉSUMÉ) + 링크를 한 섹션으로 합쳤다(2026-08-03) */}
       <section id="about" className="section">
-        <h2 className="section__title">비개발자의 바이브 코딩</h2>
+        <SectionHead eyebrow="ABOUT" title="비개발자의 바이브 코딩" />
         {ME.about.map((para, i) => (
           <p className="section__para" key={i}>
             {para.split('\n').map((line, j) => (
@@ -397,10 +423,12 @@ export default function Home() {
           </ul>
         </div>
       </section>
+    </Band>
 
+    <Band tone="plain">
       {/* NOW + STACK 을 한 섹션으로 합쳤다(2026-08-03) */}
       <section id="now" className="section">
-        <h2 className="section__title">지금 만들고 있는 것</h2>
+        <SectionHead eyebrow="NOW" title="지금 만들고 있는 것" />
         <ul className="now">
           {ME.now.map((item, i) => (
             <li className="now__item" key={i}>{item}</li>
@@ -421,9 +449,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+    </Band>
 
+    <Band tone="tint">
       <Journey />
+    </Band>
 
+    <div className="page page--rest">
       <ContactCTA />
 
       <footer className="foot">
