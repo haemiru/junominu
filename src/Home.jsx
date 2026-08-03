@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import {
-  ME, PROJECTS, STATUS, maxCommits,
-  featuredProjects, projectsByCategory,
+  ME, PROJECTS, STATUS, DONE_PHRASE, maxCommits,
+  featuredProjects, projectsByCategory, findProject,
 } from './projects'
 
 const LINK_ICONS = {
@@ -352,6 +352,12 @@ function HeroStage() {
 
   const cur = lines[st.i] ?? lines[0]
   const steps = cur.steps ?? []
+  // 완성 줄은 slug 로 PROJECTS 에서 이름·상태를 가져온다(하드코딩하면 상태가 어긋난다).
+  // slug 가 없으면 옛 형식의 done 문자열을 그대로 쓴다.
+  const proj = cur.slug ? findProject(cur.slug) : null
+  const doneText = proj
+    ? `${proj.name} — ${DONE_PHRASE[proj.status] ?? ''}${cur.extra ? ` · ${cur.extra}` : ''}`
+    : cur.done
   // 움직임을 끈 사용자에겐 첫 편을 완성된 상태로 보여준다
   const view = reduced
     ? { ask: cur.ask, reply: cur.reply ?? '', phase: 'done', step: steps.length - 1, done: true }
@@ -391,7 +397,7 @@ function HeroStage() {
           </ul>
 
           <p className={`stage__done${view.done ? ' is-on' : ''}`}>
-            {cur.done && <><span className="stage__badge">완성</span>{cur.done}</>}
+            {doneText && <><span className="stage__badge">완성</span>{doneText}</>}
           </p>
         </div>
       </div>
