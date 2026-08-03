@@ -257,10 +257,12 @@ function monthsSince(ym) {
 // 라이브러리 0 — CSS transform + setTimeout 뿐이라 번들이 안 늘어난다.
 // prefers-reduced-motion 을 존중한다(기울기·타이핑 모두 끔).
 function HeroStage() {
-  const lines = ME.heroLines ?? []
+  // 문자열만 있던 옛 형식(ask 만)도 받아준다
+  const lines = (ME.heroLines ?? []).map((l) => (typeof l === 'string' ? { ask: l } : l))
   const wrapRef = useRef(null)
-  const [text, setText] = useState(lines[0] ?? '')
   const [reduced, setReduced] = useState(false)
+  // phase: ask(지시문 타이핑) → reply(AI 답 타이핑) → build(만드는 중) → done(완료)
+  const [st, setSt] = useState({ i: 0, phase: 'ask', ask: '', reply: '', step: -1, done: false })
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -270,21 +272,59 @@ function HeroStage() {
     return () => mq.removeEventListener('change', on)
   }, [])
 
-  // 타이핑 — 한 줄 치고, 잠깐 두고, 지우고, 다음 줄
+  // 한 편의 짧은 연극. 타이머를 하나만 물고 다음 장면을 예약하는 방식이라
+  // 언마운트 때 clearTimeout 하나로 전부 정리된다.
   useEffect(() => {
-    if (reduced || lines.length === 0) return
-    let li = 0, ch = 0, dir = 1, timer
-    const tick = () => {
-      const line = lines[li]
-      ch += dir
-      setText(line.slice(0, Math.max(0, ch)))
-      let delay = dir > 0 ? 55 : 22
-      if (ch >= line.length) { dir = -1; delay = 2200 }        // 다 치면 읽을 시간을 준다
-      else if (ch <= 0) { dir = 1; li = (li + 1) % lines.length; delay = 500 }
-      timer = setTimeout(tick, delay)
+    if (reduced || !lines.length) return
+    let timer
+    let i = 0
+    const at = (fn, ms) => { timer = setTimeout(fn, ms) }
+
+    const runAsk = () => {
+      const line = lines[i]
+      let n = 0
+      setSt({ i, phase: 'ask', ask: '', reply: '', step: -1, done: false })
+      const type = () => {
+        n += 1
+        setSt((p) => ({ ...p, ask: line.ask.slice(0, n) }))
+        if (n < line.ask.length) at(type, 52)
+        else at(runReply, 520)
+      }
+      at(type, 420)
     }
-    setText('')
-    timer = setTimeout(tick, 700)
+
+    const runReply = () => {
+      const line = lines[i]
+      if (!line.reply) return runBuild()
+      let n = 0
+      setSt((p) => ({ ...p, phase: 'reply', reply: '' }))
+      const type = () => {
+        n += 1
+        setSt((p) => ({ ...p, reply: line.reply.slice(0, n) }))
+        if (n < line.reply.length) at(type, 26)
+        else at(runBuild, 420)
+      }
+      at(type, 260)
+    }
+
+    // 만들어지는 장면 — 한 줄씩 체크되며 쌓인다
+    const runBuild = () => {
+      const steps = lines[i].steps ?? []
+      let k = 0
+      setSt((p) => ({ ...p, phase: 'build', step: -1 }))
+      const next = () => {
+        setSt((p) => ({ ...p, step: k }))
+        k += 1
+        if (k < steps.length) at(next, 620)
+        else at(() => {
+          setSt((p) => ({ ...p, phase: 'done', done: true }))
+          at(() => { i = (i + 1) % lines.length; runAsk() }, 2600)   // 결과를 읽을 시간
+        }, 700)
+      }
+      at(next, 300)
+    }
+
+    runAsk()
     return () => clearTimeout(timer)
   }, [reduced, lines.length])
 
@@ -300,7 +340,7 @@ function HeroStage() {
       el.style.setProperty('--ry', `${(mx * 11).toFixed(2)}deg`)
     }
     const onMove = (e) => {
-      mx = e.clientX / window.innerWidth - 0.5     // -0.5 ~ 0.5
+      mx = e.clientX / window.innerWidth - 0.5
       my = e.clientY / window.innerHeight - 0.5
       if (!raf) raf = requestAnimationFrame(apply)
     }
@@ -309,6 +349,13 @@ function HeroStage() {
   }, [reduced])
 
   if (!lines.length) return null
+
+  const cur = lines[st.i] ?? lines[0]
+  const steps = cur.steps ?? []
+  // 움직임을 끈 사용자에겐 첫 편을 완성된 상태로 보여준다
+  const view = reduced
+    ? { ask: cur.ask, reply: cur.reply ?? '', phase: 'done', step: steps.length - 1, done: true }
+    : st
 
   return (
     <div className="stage" ref={wrapRef}>
@@ -319,17 +366,38 @@ function HeroStage() {
         </div>
         <div className="stage__body">
           <p className="stage__who">나</p>
-          <p className="stage__say" aria-live="off">
-            {text}
-            {!reduced && <span className="stage__caret" aria-hidden="true" />}
+          <p className="stage__say">
+            {view.ask}
+            {view.phase === 'ask' && !reduced && <span className="stage__caret" aria-hidden="true" />}
           </p>
+
           <p className="stage__who stage__who--ai">AI</p>
-          <p className="stage__done">알겠습니다. 만들어 드릴게요.</p>
+          <p className="stage__reply">
+            {view.reply}
+            {view.phase === 'reply' && !reduced && <span className="stage__caret" aria-hidden="true" />}
+          </p>
+
+          {/* 만들어지는 장면 — 개발자 용어 없이 "지금 뭘 하고 있나"만 */}
+          <ul className="stage__steps">
+            {steps.map((label, k) => {
+              const state = view.step > k || view.done ? 'ok' : view.step === k ? 'now' : 'wait'
+              return (
+                <li className={`stage__step stage__step--${state}`} key={label}>
+                  <span className="stage__tick" aria-hidden="true">{state === 'ok' ? '✓' : ''}</span>
+                  <span>{label}{state === 'now' ? '…' : ''}</span>
+                </li>
+              )
+            })}
+          </ul>
+
+          <p className={`stage__done${view.done ? ' is-on' : ''}`}>
+            {cur.done && <><span className="stage__badge">완성</span>{cur.done}</>}
+          </p>
         </div>
       </div>
       {/* 스크린리더에는 애니메이션 대신 요지만 한 번 읽힌다 */}
       <p className="sr-only">
-        AI에게 한국어로 이렇게 시켜서 서비스를 만듭니다. 예: {lines[0]}
+        AI에게 한국어로 이렇게 시켜서 서비스를 만듭니다. 예: {lines[0].ask}
       </p>
     </div>
   )
@@ -500,9 +568,10 @@ export default function Home() {
       <Journey />
     </Band>
 
-    <div className="page page--rest">
-      <ContactCTA />
+    {/* CTA 는 먹색 풀블리드 — .page 밖으로 빼야 좌우가 꽉 찬다 */}
+    <ContactCTA />
 
+    <div className="page page--rest">
       <footer className="foot">
         <span>© {new Date().getFullYear()} {ME.name}</span>
         <span className="foot__sep">·</span>

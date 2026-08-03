@@ -288,10 +288,91 @@
   50% { opacity: 0; }
 }
 
-.stage__done {
+.stage__reply {
   margin-top: 5px;
   font-size: 15px;
+  line-height: 1.5;
   color: var(--text-soft);
+  min-height: 1.5em;
+}
+
+/* 만들어지는 장면 — 한 줄씩 체크되며 쌓인다.
+   🔴 라벨에 개발자 용어를 쓰지 않는다("배포" X, "인터넷에 올리는 중" O). */
+.stage__steps {
+  list-style: none;
+  margin-top: 14px;
+  padding-left: 2px;
+  display: grid;
+  gap: 7px;
+}
+
+.stage__step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--text-faint);
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.stage__step--wait { opacity: 0.32; }
+.stage__step--now  { color: var(--accent-ink); font-weight: 600; }
+.stage__step--ok   { color: var(--text-soft); }
+
+/* 체크 자리 — 항상 자리를 잡아둬야 체크가 켜질 때 줄이 밀리지 않는다 */
+.stage__tick {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 999px;
+  border: 1px solid var(--border-hover);
+  color: #fff;
+}
+
+.stage__step--now .stage__tick {
+  border-color: var(--accent);
+  animation: tickpulse 0.9s ease-in-out infinite;
+}
+
+.stage__step--ok .stage__tick {
+  background: var(--live);
+  border-color: var(--live);
+}
+
+@keyframes tickpulse {
+  50% { box-shadow: 0 0 0 4px var(--accent-wash); }
+}
+
+.stage__done {
+  margin-top: 14px;
+  min-height: 1.6em;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.stage__done.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.stage__badge {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--live);
+  background: var(--live-wash);
+  border: 1px solid var(--live-line);
 }
 
 /* 접근성 — 화면에는 안 보이고 스크린리더만 읽는다 */
@@ -307,10 +388,14 @@
   border: 0;
 }
 
-/* 움직임을 줄여달라고 한 사용자에게는 기울기·깜박임을 끈다 */
+/* 움직임을 줄여달라고 한 사용자에게는 기울기·깜박임·펄스를 끈다
+   (컴포넌트는 이때 첫 편을 완성 상태로 정적 렌더한다) */
 @media (prefers-reduced-motion: reduce) {
   .stage__win { transform: none; transition: none; }
   .stage__caret { animation: none; }
+  .stage__step,
+  .stage__done { transition: none; }
+  .stage__step--now .stage__tick { animation: none; }
 }
 
 @media (max-width: 560px) {
@@ -1684,11 +1769,11 @@
   gap: 24px;
   margin: 30px 0 clamp(44px, 8vw, 80px);
   padding: clamp(22px, 3.4vw, 30px) clamp(22px, 3.4vw, 32px);
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent-line);
   border-radius: var(--radius);
-  background:
-    radial-gradient(70% 160% at 0% 50%, rgba(49, 130, 246, 0.09), transparent 62%),
-    var(--surface);
+  /* 라디얼 그라데이션은 얼룩져 보였다 — 옅은 파랑 단색 면으로(2026-08-03).
+     흰↔그레이만 반복하던 색 리듬에 파랑을 한 칸 넣는 자리이기도 하다. */
+  background: var(--accent-wash);
 }
 
 .band__kicker {
@@ -1725,43 +1810,52 @@
   }
 }
 
-/* ── 홈 하단 CTA 밴드 ────────────────── */
+/* ── 홈 하단 CTA 밴드 ──────────────────
+   🔴 페이지 전체가 흰색↔그레이만 반복해서 밋밋하다는 지적(2026-08-03).
+      여기 하나를 진한 색으로 채워 리듬을 깬다. 마지막 전환 지점이라
+      시선이 가야 하는 자리이기도 하다 — 색을 쓸 거면 여기다.
+      먹색은 DESIGN.md §4 toss.im marketing-dark `rgba(0,12,30,.8)` 계열.
+   옛 버전은 흰 카드 + 라디얼 그라데이션 두 겹이었는데 얼룩져 보였다. */
 .cta {
   position: relative;
   z-index: 1;
-  margin-bottom: clamp(44px, 8vw, 80px);
+  /* .page 밖(형제)이라 좌우가 화면 끝까지 간다. 안쪽만 본문 폭으로 잡는다. */
+  padding: 0 clamp(20px, 5vw, 40px) clamp(48px, 8vw, 80px);
+  max-width: calc(var(--maxw) + 0px);
+  margin: 0 auto;
 }
 
 .cta__inner {
-  border: 1px solid var(--border-hover);
   border-radius: var(--radius);
-  padding: clamp(30px, 5vw, 52px);
+  padding: clamp(36px, 6vw, 64px) clamp(24px, 5vw, 52px);
   text-align: center;
+  color: #fff;
   background:
-    radial-gradient(80% 130% at 0% 0%, rgba(49, 130, 246, 0.13), transparent 58%),
-    radial-gradient(80% 130% at 100% 100%, rgba(49, 130, 246, 0.07), transparent 58%),
-    var(--surface);
+    radial-gradient(90% 120% at 12% 0%, rgba(49, 130, 246, 0.45), transparent 62%),
+    #0c1626;
 }
 
 .cta__kicker {
   font-size: 12px;
   letter-spacing: 0.22em;
   font-weight: 600;
-  color: var(--accent-2);
+  color: #7db4ff;
   margin-bottom: 12px;
 }
 
 .cta__title {
-  font-size: clamp(24px, 4vw, 34px);
+  font-size: clamp(26px, 4.2vw, 38px);
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  color: #fff;
 }
 
 .cta__lead {
-  color: var(--text-soft);
-  max-width: 54ch;
-  margin: 12px auto 0;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 56ch;
+  margin: 14px auto 0;
   font-size: 15.5px;
+  line-height: 1.65;
 }
 
 .cta__offers {
@@ -1769,17 +1863,28 @@
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  margin: 22px 0 26px;
+  margin: 24px 0 28px;
 }
 
 .cta__chip {
   font-size: 13.5px;
   font-weight: 700;
-  color: var(--text);
-  border: 1px solid var(--border-hover);
-  background: var(--surface);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.07);
   padding: 7px 14px;
   border-radius: 999px;
+}
+
+/* 먹색 위에서는 파란 버튼보다 흰 버튼이 세다 */
+.cta .btn--primary {
+  background: #fff;
+  color: #0c1626;
+}
+
+.cta .btn--primary:hover {
+  background: #e8f3ff;
+  color: #0c1626;
 }
 
 /* ── /contact — 오퍼 카드 (1:1 코칭 · 외주) ── */
