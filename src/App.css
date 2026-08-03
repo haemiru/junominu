@@ -8,7 +8,11 @@
 /* 홈은 히어로 / 풀블리드 / 나머지 세 덩어리로 쪼개져 있다(풀블리드 스크롤바 문제 회피).
    위 조각은 아래 패딩을, 아래 조각은 위 패딩을 뺀다 — 합치면 원래 한 덩어리와 같다. */
 .page--top  { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; }
-.page--rest { padding-top: 0; }
+.page--rest {
+  /* 섹션이 각자 카드(.sband)라 좌우 패딩은 카드가 갖는다. 여기선 폭 제한도 푼다. */
+  max-width: none;
+  padding: 0 0 72px;
+}
 
 /* 옛 ambient glow(라디얼 그라데이션 2개)는 2026-08-03 제거.
    알파 0.04~0.07은 흰 배경에서 보이지 않았고, "흐릿하게 뭔가 있는" 인상만 남겼다.
@@ -27,7 +31,7 @@
    내비가 위로 올라가면 히어로는 배지·이름·한 줄·CTA 네 단으로 끝난다. */
 .topbar {
   border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--surface);
 }
 
 .topbar__inner {
@@ -182,7 +186,7 @@
   border-bottom: 1px solid var(--border);
   background:
     radial-gradient(70% 55% at 50% -10%, rgba(49, 130, 246, 0.10), transparent 70%),
-    var(--bg);
+    var(--surface);   /* 히어로는 카드가 아니라 전면이라 흰색 */
 }
 
 /* 점 격자 — 작업실 바닥 같은 질감. 가장자리로 갈수록 사라진다. */
@@ -315,9 +319,23 @@
   transition: color 0.25s ease, opacity 0.25s ease;
 }
 
-.stage__step--wait { opacity: 0.32; }
+/* 🔴 아직 시작 안 한 줄은 아예 안 보이게(2026-08-03). 흐리게 미리 깔아두면
+   "무슨 내용이 올지" 스포일러가 되고 지저분하다. 자리(높이)는 잡아 두되
+   보이지만 않게 해서 줄이 나타날 때 창이 덜컹거리지 않는다. */
+.stage__step--wait { opacity: 0; }
 .stage__step--now  { color: var(--accent-ink); font-weight: 600; }
 .stage__step--ok   { color: var(--text-soft); }
+
+/* 나타날 때 살짝 올라오며 */
+.stage__step--now,
+.stage__step--ok {
+  animation: stepin 0.32s ease-out;
+}
+
+@keyframes stepin {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* 체크 자리 — 항상 자리를 잡아둬야 체크가 켜질 때 줄이 밀리지 않는다 */
 .stage__tick {
@@ -395,6 +413,8 @@
   .stage__caret { animation: none; }
   .stage__step,
   .stage__done { transition: none; }
+  .stage__step--now,
+  .stage__step--ok { animation: none; }
   .stage__step--now .stage__tick { animation: none; }
 }
 
@@ -402,38 +422,36 @@
   .stage__say { font-size: 15px; min-height: 4.5em; }
 }
 
-/* ── 섹션 밴드 ─────────────────────────
-   순백만 이어지면 눈이 아프고 섹션 경계가 안 보인다(사용자 지적 2026-08-03).
-   화면 끝까지 배경을 깔고 안쪽만 .page 와 같은 폭으로 잡는다.
-   리듬: 히어로(흰) → 대비 밴드(틴트) → PROJECTS(흰) → ABOUT(틴트) → NOW(흰) → JOURNEY(틴트).
-   🔴 .sband__inner 의 max-width 가 본문 전체의 폭을 잡는다. 이 규칙이 사라지면
-      PROJECTS·ABOUT·NOW·JOURNEY 가 전부 화면 끝까지 퍼진다(2026-08-03 실제로 한 번 날렸다).
-   ⚠️ 밴드는 .page 의 형제여야 한다. .page 안에 넣고 음수 마진으로 빼면
-      50vw 가 스크롤바 폭을 포함해 가로 스크롤이 생긴다. */
-.sband--tint {
-  background: var(--surface-sunken);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+/* ── 섹션 카드 ─────────────────────────
+   2026-08-03 3차 개편. 앞선 두 번:
+     ① 전부 순백 → 밋밋하고 섹션 경계가 안 보였다
+     ② 화면 끝까지 깔리는 회색 밴드 → **좌우가 꽉 차서 어색**했다(사용자 지적)
+   → 네이버 홈처럼 **옅은 캔버스 위에 흰 테두리 카드**를 얹는다.
+     좌우가 비고, 카드 경계가 곧 섹션 구분이라 "어디서 뭘 보는지"가 잡힌다.
+
+   🔴 .sband__inner 의 max-width 가 본문 폭을 잡는다. 이 규칙이 사라지면
+      PROJECTS·ABOUT·NOW·JOURNEY 가 전부 화면 끝까지 퍼진다(한 번 날려봤다). */
+.sband {
+  max-width: var(--maxw);
+  margin: 0 auto 18px;
+  padding: 0 clamp(20px, 5vw, 40px);
 }
 
 .sband__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: clamp(52px, 8vw, 84px) clamp(20px, 5vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(28px, 4vw, 44px) clamp(20px, 3.4vw, 36px);
 }
 
-/* 밴드가 위아래 여백을 맡으므로 안쪽 섹션의 마지막 margin 은 없앤다 */
+/* tone="tint" 는 이제 아무 색도 안 쓴다. 카드 경계와 옅은 캔버스가 이미 구분을 하고,
+   파란 프롬프트 밴드 바로 아래 파란 카드가 오면 파랑이 겹쳐 무거웠다(2026-08-03).
+   색은 프롬프트 밴드(옅은 파랑)와 CTA(먹색) 두 곳에만 준다. */
+
+/* 카드가 위아래 여백을 맡으므로 안쪽 섹션의 마지막 margin 은 없앤다 */
 .sband__inner > .section:last-child,
 .sband__inner > *:last-child {
   margin-bottom: 0;
-}
-
-/* 틴트 밴드 위에서는 카드가 흰색이라 저절로 떠 보인다 — 테두리를 한 톤 낮춘다 */
-.sband--tint .card,
-.sband--tint .mini,
-.sband--tint .link,
-.sband--tint .stack__items li {
-  border-color: #dde1e6;
 }
 
 /* ── Section ────────────────────────── */
@@ -884,12 +902,15 @@
 
 /* ── Footer ─────────────────────────── */
 .foot {
-  margin-top: 64px;
-  padding-top: 24px;
+  /* .page--rest 가 폭 제한을 풀었으므로(섹션이 각자 카드) 풋터가 직접 폭을 잡는다 */
+  max-width: var(--maxw);
+  margin: 40px auto 0;
+  padding: 24px clamp(20px, 5vw, 40px) 0;
   border-top: 1px solid var(--border);
   color: var(--text-faint);
   font-size: 13px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
 }
@@ -1767,8 +1788,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin: 30px 0 clamp(44px, 8vw, 80px);
-  padding: clamp(22px, 3.4vw, 30px) clamp(22px, 3.4vw, 32px);
+  margin: 28px 0 0;
+  padding: clamp(20px, 3vw, 26px) clamp(20px, 3vw, 28px);
   border: 1px solid var(--accent-line);
   border-radius: var(--radius);
   /* 라디얼 그라데이션은 얼룩져 보였다 — 옅은 파랑 단색 면으로(2026-08-03).
