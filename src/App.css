@@ -248,6 +248,40 @@
   }
 }
 
+/* ── 섹션 밴드 ─────────────────────────
+   순백만 이어지면 눈이 아프고 섹션 경계가 안 보인다(사용자 지적 2026-08-03).
+   화면 끝까지 배경을 깔고 안쪽만 .page 와 같은 폭으로 잡는다.
+   리듬: 히어로(흰) → 대비 밴드(틴트) → PROJECTS(흰) → ABOUT(틴트) → NOW(흰) → JOURNEY(틴트).
+   🔴 .sband__inner 의 max-width 가 본문 전체의 폭을 잡는다. 이 규칙이 사라지면
+      PROJECTS·ABOUT·NOW·JOURNEY 가 전부 화면 끝까지 퍼진다(2026-08-03 실제로 한 번 날렸다).
+   ⚠️ 밴드는 .page 의 형제여야 한다. .page 안에 넣고 음수 마진으로 빼면
+      50vw 가 스크롤바 폭을 포함해 가로 스크롤이 생긴다. */
+.sband--tint {
+  background: var(--surface-sunken);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.sband__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(52px, 8vw, 84px) clamp(20px, 5vw, 40px);
+}
+
+/* 밴드가 위아래 여백을 맡으므로 안쪽 섹션의 마지막 margin 은 없앤다 */
+.sband__inner > .section:last-child,
+.sband__inner > *:last-child {
+  margin-bottom: 0;
+}
+
+/* 틴트 밴드 위에서는 카드가 흰색이라 저절로 떠 보인다 — 테두리를 한 톤 낮춘다 */
+.sband--tint .card,
+.sband--tint .mini,
+.sband--tint .link,
+.sband--tint .stack__items li {
+  border-color: #dde1e6;
+}
+
 /* ── Section ────────────────────────── */
 .section {
   margin-bottom: clamp(48px, 8vw, 88px);
