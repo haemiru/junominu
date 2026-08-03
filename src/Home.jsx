@@ -223,26 +223,54 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 지표 — 히어로 안에 붙는다(2026-08-03). 스크롤 전에 "진짜 만들었다"가 끝나야
-// 스레드에서 넘어온 사람의 질문("이 사람한테 배우면 되나?")에 답이 된다.
-// 카드 격자가 아니라 얇은 한 줄 스트립이라 히어로를 밀어내지 않는다.
-function HeroStats() {
-  const live = PROJECTS.filter((p) => p.status === 'live').length
-  const stats = [
-    { n: PROJECTS.length, label: '프로젝트' },
-    { n: live, label: '운영 중' },
-    { n: totalCommits().toLocaleString(), label: '누적 커밋' },
-    { n: monthsSince(ME.since), label: '개월째' },
-  ]
+// 히어로 아래 작업물 스트립 (2026-08-03) — Dribbble 히어로 패턴.
+// SaaS 랜딩 950개가 예외 없이 하는 단 하나가 "히어로 바로 아래 제품 화면"인데
+// 이 사이트엔 첫 화면에 이미지가 한 장도 없었다. 스크롤 전에 만든 것이 보여야 한다.
+// 양옆이 잘려 나가면서 "더 있다"는 신호가 되고, 그게 스크롤을 부른다.
+function WorkStrip() {
+  const items = PROJECTS.filter((p) => p.detail?.thumb || p.detail?.cover)
+  if (!items.length) return null
   return (
-    <dl className="hstats" aria-label="작업실 지표">
-      {stats.map((s) => (
-        <div className="hstat" key={s.label}>
-          <dt className="hstat__label">{s.label}</dt>
-          <dd className="hstat__n">{s.n}</dd>
-        </div>
-      ))}
-    </dl>
+    <div className="strip">
+      <div className="strip__row">
+        {items.map((p) => {
+          const img = p.detail.thumb ?? p.detail.cover
+          const inner = (
+            <img src={img} alt={p.name} loading="lazy"
+                 onError={(e) => { e.currentTarget.closest('.strip__item')?.remove() }} />
+          )
+          return p.slug
+            ? <Link className="strip__item" key={p.name} to={`/p/${p.slug}`} title={p.name}>{inner}</Link>
+            : <span className="strip__item" key={p.name} title={p.name}>{inner}</span>
+        })}
+      </div>
+    </div>
+  )
+}
+
+// 숫자 밴드 (2026-08-03) — Mobbin 랜딩의 "A growing library of / 1,150 apps …" 패턴.
+// 지표를 얇은 줄로 흘리지 않고 화면 한 장을 통째로 쓰는 자랑으로 만든다.
+// 숫자 주위에 프로젝트 이모지가 떠 있다(모빈은 앱 아이콘을 띄운다).
+function NumbersBand() {
+  const live = PROJECTS.filter((p) => p.status === 'live').length
+  const floats = PROJECTS.filter((p) => p.emoji).slice(0, 8)
+  return (
+    <section className="nums" aria-label="작업실 지표">
+      <div className="nums__floats" aria-hidden="true">
+        {floats.map((p, i) => (
+          <span className={`nums__float nums__float--${i + 1}`} key={p.name}>{p.emoji}</span>
+        ))}
+      </div>
+      <p className="nums__kicker">혼자 기획하고, 만들고, 운영합니다</p>
+      <p className="nums__line">{PROJECTS.length}개 프로젝트</p>
+      <p className="nums__line">{totalCommits().toLocaleString()}번의 커밋</p>
+      <p className="nums__line">{live}개 운영 중</p>
+      {/* monthsSince 는 "경과한 개월 수"다(2026-01 시작 → 2026-08 이면 7).
+          "N개월째"로 쓰면 한 달 어긋나 보이므로 "시작한 지 N개월"로 적는다. */}
+      <p className="nums__foot">
+        시작한 지 {monthsSince(ME.since)}개월 · 전부 AI 바이브 코딩으로
+      </p>
+    </section>
   )
 }
 
@@ -294,19 +322,25 @@ function ContactCTA() {
 
 export default function Home() {
   return (
-    <div className="page">
+    // 🔴 풀블리드(.strip·.nums)를 .page 안에 넣고 `margin: 0 calc(50% - 50vw)` 로 빼면
+    //    50vw 가 스크롤바 폭을 포함해서 가로 스크롤이 생긴다. 그래서 아예 형제로 쪼갰다.
+    //    .page 가 max-width 를 맡고, 그 사이 구간은 자연스럽게 화면 전체를 쓴다.
+    <>
+    <div className="page page--top">
       <header className="hero">
         <div className="hero__brand">
-          <Logo size={56} />
+          <Logo size={44} />
           <p className="hero__kicker">VIBE CODING WORKSHOP</p>
         </div>
+        {ME.badge && <p className="hero__badge">{ME.badge}</p>}
         <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
         <p className="hero__tagline">{ME.tagline}</p>
         <p className="hero__intro">{ME.intro}</p>
-        {/* 첫 버튼은 "둘러보기"(낮은 문턱). 문의는 보조 버튼 + 하단 ContactCTA 밴드가 받는다. */}
+        {/* CTA는 하나만. 둘이면 고민하고, 고민하면 안 누른다(Granola 랜딩 참고).
+            코칭 전환은 내비 "함께하기" + 하단 ContactCTA 밴드가 받는다 —
+            요구보다 가치가 먼저다(DESIGN.md §10 "Value first, cost later"). */}
         <div className="hero__actions">
-          <a className="btn btn--primary" href="#work">프로젝트 둘러보기 ↓</a>
-          <Link className="btn btn--ghost" to="/contact">1:1 코칭 · 외주 문의</Link>
+          <a className="btn btn--primary" href="#work">만든 것들 보기 ↓</a>
         </div>
         {/* 내비는 4개까지만. 처음 온 사람에게 선택지를 아홉 개 주면 아무것도 안 누른다
             (DESIGN.md §10 "Easy to answer"). 나머지 섹션은 스크롤로 만난다. */}
@@ -316,9 +350,13 @@ export default function Home() {
           <Link to="/prompts">프롬프트 노트</Link>
           <Link to="/contact">함께하기</Link>
         </nav>
-        <HeroStats />
       </header>
+    </div>
 
+    <WorkStrip />
+    <NumbersBand />
+
+    <div className="page page--rest">
       <Work />
 
       <PromptsBand />
@@ -392,5 +430,6 @@ export default function Home() {
         <span>made with vibe coding</span>
       </footer>
     </div>
+    </>
   )
 }

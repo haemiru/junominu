@@ -5,6 +5,11 @@
   padding: clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px) 72px;
 }
 
+/* 홈은 히어로 / 풀블리드 / 나머지 세 덩어리로 쪼개져 있다(풀블리드 스크롤바 문제 회피).
+   위 조각은 아래 패딩을, 아래 조각은 위 패딩을 뺀다 — 합치면 원래 한 덩어리와 같다. */
+.page--top  { padding-bottom: 0; }
+.page--rest { padding-top: 0; }
+
 /* 옛 ambient glow(라디얼 그라데이션 2개)는 2026-08-03 제거.
    알파 0.04~0.07은 흰 배경에서 보이지 않았고, "흐릿하게 뭔가 있는" 인상만 남겼다.
    DESIGN.md §6 — 평면 색 레이어링으로 간다. */
@@ -16,15 +21,33 @@
   z-index: 1;
 }
 
-/* ── Hero ───────────────────────────── */
+/* ── Hero ─────────────────────────────
+   2026-08-03 Dribbble 랜딩 구조로 재편: 가운데 정렬 · 배지 pill · 큰 이름 ·
+   CTA 하나 · 바로 아래 작업물 스트립. 950개 SaaS 랜딩이 예외 없이 하는 단 하나가
+   "히어로 바로 아래 제품 화면"인데 이 사이트엔 첫 화면에 이미지가 없었다. */
 .hero {
-  margin-bottom: clamp(40px, 7vw, 76px);
+  margin-bottom: 36px;
+  text-align: center;
 }
 
 .hero__brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+/* 배지 — 정체성을 한 줄로. 반전 훅이 첫 문장이 된다. */
+.hero__badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+  padding: 6px 14px;
   margin-bottom: 22px;
 }
 
@@ -58,17 +81,18 @@
 }
 
 .hero__intro {
-  color: var(--text-soft);
+  color: var(--text-faint);
   max-width: 46ch;
-  margin-top: 10px;
+  margin: 10px auto 0;
 }
 
 /* 내비 — 4개만. 알약 대신 밑줄 텍스트로 무게를 뺐다(작품이 주인공). */
 .hero__nav {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 22px;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 
 .hero__nav a {
@@ -85,42 +109,123 @@
   border-bottom-color: var(--accent);
 }
 
-/* ── 히어로 지표 스트립 ─────────────────
-   카드 격자가 아니라 얇은 한 줄. 스크롤 전에 "진짜 만들었다"를 끝낸다. */
-.hstats {
+/* ── 작업물 스트립 ─────────────────────
+   히어로 바로 아래 가로 한 줄. .page 패딩을 넘어 화면 끝까지 흘려서 양옆이 잘리게
+   두는 게 핵심 — "더 있다"는 신호가 되고 그게 스크롤을 부른다(Dribbble 랜딩). */
+.strip {
+  position: relative;
+  margin-bottom: clamp(48px, 8vw, 84px);
+  /* 🔴 hidden 이 아니라 auto — 좁은 화면에선 카드가 화면을 넘치는데
+     hidden 이면 뒤쪽 프로젝트를 영영 못 본다. 스와이프로 넘길 수 있게 둔다.
+     스크롤바는 감춘다(장식용 줄이라 막대가 보이면 지저분하다). */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  /* 양 끝을 페이드아웃 — 잘린 게 실수가 아니라 의도로 보이게 */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.strip__row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  margin-top: 32px;
-  padding-top: 22px;
+  gap: 14px;
+  justify-content: center;
+  min-width: min-content;
+  padding: 2px 20px;
+}
+
+.strip__item {
+  flex: 0 0 216px;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-sunken);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+a.strip__item:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-line);
+}
+
+.strip__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* ── 숫자 밴드 ─────────────────────────
+   Mobbin 랜딩의 "A growing library of / 1,150 apps …" 패턴.
+   지표를 얇은 줄로 흘리지 않고 화면 한 장을 통째로 쓰는 자랑으로. */
+.nums {
+  position: relative;
+  text-align: center;
+  padding: clamp(56px, 9vw, 96px) 20px;
+  margin-bottom: clamp(48px, 8vw, 88px);
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-sunken);
+  overflow: hidden;
 }
 
-.hstat {
-  display: flex;
-  flex-direction: column-reverse;   /* dt(라벨)이 마크업상 먼저 → 화면에선 숫자가 위 */
-  gap: 3px;
-  padding: 0 28px;
-  border-left: 1px solid var(--border);
+.nums__kicker {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text-faint);
+  margin-bottom: 18px;
 }
 
-.hstat:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.hstat__n {
-  font-size: var(--fs-h3);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+.nums__line {
+  font-size: clamp(32px, 6.5vw, 56px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
 
-.hstat__label {
-  font-size: 13px;
+.nums__foot {
+  margin-top: 20px;
+  font-size: var(--fs-small);
   color: var(--text-faint);
+}
+
+/* 떠 있는 프로젝트 이모지 — 모빈은 앱 아이콘을 띄운다.
+   숫자 뒤로 깔리되 글자를 가리지 않도록 좌우 가장자리에만 배치. */
+.nums__floats {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nums__float {
+  position: absolute;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.nums__float--1 { left: 3%;  top: 16%; }
+.nums__float--2 { left: 9%;  top: 62%; }
+.nums__float--3 { left: 16%; top: 30%; }
+.nums__float--4 { left: 21%; top: 82%; }
+.nums__float--5 { right: 3%;  top: 22%; }
+.nums__float--6 { right: 10%; top: 70%; }
+.nums__float--7 { right: 17%; top: 14%; }
+.nums__float--8 { right: 22%; top: 84%; }
+
+/* 좁은 화면에선 이모지가 숫자와 겹친다 — 숨긴다 */
+@media (max-width: 900px) {
+  .nums__floats { display: none; }
 }
 
 /* ── Section ────────────────────────── */
@@ -1379,15 +1484,9 @@
   .minigrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* 지표 스트립 — 좁아지면 구분선 대신 2열 격자로 */
-  .hstats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px 12px;
-  }
-  .hstat {
-    padding: 0;
-    border-left: 0;
+  /* 스트립이 화면보다 넓어지면 가운데 정렬을 풀고 왼쪽부터 흐르게 둔다 */
+  .strip__row {
+    justify-content: flex-start;
   }
 }
 
@@ -1398,8 +1497,8 @@
   .minigrid {
     grid-template-columns: 1fr;
   }
-  .hstats {
-    grid-template-columns: repeat(2, 1fr);
+  .strip__item {
+    flex-basis: 168px;
   }
   .hero__nav {
     gap: 16px;
@@ -1459,8 +1558,9 @@
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;   /* 히어로가 가운데 정렬이 됐다(2026-08-03) */
   gap: 12px;
-  margin-top: 26px;
+  margin-top: 30px;
 }
 
 /* lazy 라우트 로딩 자리 — 조각이 작아 대개 순식간이라 스피너 대신 높이만 잡는다 */
