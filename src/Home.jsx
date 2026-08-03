@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import {
@@ -242,47 +243,95 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 히어로 아래 대비 밴드 (2026-08-03 5차) — 프로젝트 화면 진열을 걷어낸 자리.
+// 히어로 무대 (2026-08-03 6차) — 마우스 따라 기울어지는 창 + 한국어 지시문 타이핑.
 //
-// 히어로에 뭘 놓을지 네 번 갈아엎었다.
-//   ① 썸네일 9개 가로 스트립  → PC 폭에서 줄줄이 늘어서 나빴다
-//   ② 화면 한 장만 크게       → "junominu.com 이 중개프로 랜딩"처럼 보였다
-//   ③ 큰 것 하나 + 작은 것 둘 → 나아졌지만 여전히 특정 프로젝트 진열이었다
-//   ④ 🔴 아예 뺐다 — "간판은 상품 진열장이 아니다"(사용자 지적).
-//        프로젝트는 바로 아래 PROJECTS 에서 본다. 히어로에서 미리 보여줄 이유가 없다.
+// 히어로에 뭘 놓을지의 마지막 답이다. 앞선 시도들:
+//   ① 썸네일 9개 스트립 → PC 폭에서 줄줄이 늘어서 나쁨
+//   ② 화면 한 장만 크게 → "중개프로 랜딩"처럼 보임
+//   ③ 큰 것 1 + 작은 것 2 → 여전히 특정 프로젝트 진열
+//   ④ 0 → 9 대비 밴드 → 진열은 없앴지만 정적이고 밋밋
+//   ⑤ 🔴 지금: 움직이는 창. 프로젝트를 진열하지 않으면서 "여기가 뭐 하는 곳인지"를 보여준다.
 //
-// 대신 이 사이트에만 있는 걸 놓는다: 「예전 0개 / 지금 N개」의 낙차.
-// 스레드 계정 고정글의 반전 훅과 같은 메시지라, 글 보고 온 사람이 같은 이야기를 다시 만난다.
-// 숫자는 ME.since 와 PROJECTS 길이로 자동 계산 — 프로젝트를 추가하면 알아서 커진다.
-function ContrastBand() {
-  const c = ME.contrast
-  if (!c) return null
-  const live = PROJECTS.filter((p) => p.status === 'live').length
-  const after = (c.afterLabel ?? '').replace('{n}', monthsSince(ME.since))
+// 🔴 타이핑되는 건 코드가 아니라 **한국어 지시문**이다. 코드를 흘리면 개발자 사이트가
+//    되고 이 사이트의 정체성("비개발자가 말로 만든다")이 정반대로 뒤집힌다.
+// 라이브러리 0 — CSS transform + setTimeout 뿐이라 번들이 안 늘어난다.
+// prefers-reduced-motion 을 존중한다(기울기·타이핑 모두 끔).
+function HeroStage() {
+  const lines = ME.heroLines ?? []
+  const wrapRef = useRef(null)
+  const [text, setText] = useState(lines[0] ?? '')
+  const [reduced, setReduced] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mq.matches)
+    const on = () => setReduced(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+
+  // 타이핑 — 한 줄 치고, 잠깐 두고, 지우고, 다음 줄
+  useEffect(() => {
+    if (reduced || lines.length === 0) return
+    let li = 0, ch = 0, dir = 1, timer
+    const tick = () => {
+      const line = lines[li]
+      ch += dir
+      setText(line.slice(0, Math.max(0, ch)))
+      let delay = dir > 0 ? 55 : 22
+      if (ch >= line.length) { dir = -1; delay = 2200 }        // 다 치면 읽을 시간을 준다
+      else if (ch <= 0) { dir = 1; li = (li + 1) % lines.length; delay = 500 }
+      timer = setTimeout(tick, delay)
+    }
+    setText('')
+    timer = setTimeout(tick, 700)
+    return () => clearTimeout(timer)
+  }, [reduced, lines.length])
+
+  // 마우스 따라 기울기 — 창이 사용자를 향해 돌아본다. rAF 로 한 프레임에 한 번만.
+  useEffect(() => {
+    if (reduced) return
+    const el = wrapRef.current
+    if (!el) return
+    let raf = 0, mx = 0, my = 0
+    const apply = () => {
+      raf = 0
+      el.style.setProperty('--rx', `${(-my * 7).toFixed(2)}deg`)
+      el.style.setProperty('--ry', `${(mx * 11).toFixed(2)}deg`)
+    }
+    const onMove = (e) => {
+      mx = e.clientX / window.innerWidth - 0.5     // -0.5 ~ 0.5
+      my = e.clientY / window.innerHeight - 0.5
+      if (!raf) raf = requestAnimationFrame(apply)
+    }
+    window.addEventListener('mousemove', onMove, { passive: true })
+    return () => { window.removeEventListener('mousemove', onMove); if (raf) cancelAnimationFrame(raf) }
+  }, [reduced])
+
+  if (!lines.length) return null
+
   return (
-    <section className="cmp" aria-label="예전과 지금">
-      <div className="cmp__row">
-        <div className="cmp__side">
-          <p className="cmp__label">{c.beforeLabel}</p>
-          <p className="cmp__n cmp__n--zero">{c.beforeN}</p>
-          <p className="cmp__note">{c.note}</p>
+    <div className="stage" ref={wrapRef}>
+      <div className="stage__win">
+        <div className="stage__bar" aria-hidden="true">
+          <span className="stage__dot" /><span className="stage__dot" /><span className="stage__dot" />
+          <span className="stage__title">AI 코딩 도구</span>
         </div>
-        <div className="cmp__arrow" aria-hidden="true">
-          <svg viewBox="0 0 40 24" width="40" height="24" fill="none"
-               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 12h34M28 4l8 8-8 8" />
-          </svg>
-        </div>
-        <div className="cmp__side cmp__side--now">
-          <p className="cmp__label">{after}</p>
-          <p className="cmp__n">{PROJECTS.length}</p>
-          <p className="cmp__note">{c.note}</p>
+        <div className="stage__body">
+          <p className="stage__who">나</p>
+          <p className="stage__say" aria-live="off">
+            {text}
+            {!reduced && <span className="stage__caret" aria-hidden="true" />}
+          </p>
+          <p className="stage__who stage__who--ai">AI</p>
+          <p className="stage__done">알겠습니다. 만들어 드릴게요.</p>
         </div>
       </div>
-      <p className="cmp__foot">
-        그중 {live}개는 지금도 사람들이 쓰고 있습니다 · 전부 AI 바이브 코딩으로
+      {/* 스크린리더에는 애니메이션 대신 요지만 한 번 읽힌다 */}
+      <p className="sr-only">
+        AI에게 한국어로 이렇게 시켜서 서비스를 만듭니다. 예: {lines[0]}
       </p>
-    </section>
+    </div>
   )
 }
 
@@ -356,10 +405,12 @@ export default function Home() {
       </div>
     </div>
 
+    {/* 히어로 전체를 감싸는 배경 층 — 은은한 점 격자 + 파란 광.
+        순백 위에 글자만 있으면 밋밋하다는 지적(2026-08-03). .page 의 형제라
+        화면 끝까지 깔린다(음수 마진·50vw 안 씀 → 가로 스크롤 안 생김). */}
+    <div className="herowrap">
     <div className="page page--top" id="top">
-      {/* 히어로는 4단만 — 배지 · 이름 · 한 줄 · CTA (Dribbble 구조).
-          예전엔 태그라인과 소개문이 둘 다 있었는데 배지까지 합쳐 "바이브 코딩"을
-          세 번, "혼자"를 두 번 말하고 있었다. 한 줄로 합쳤다. */}
+      {/* 히어로 = 배지 · 헤드라인 · 한 줄 · CTA · 움직이는 창. */}
       <header className="hero">
         {ME.badge && <p className="hero__badge">{ME.badge}</p>}
         {/* 🔴 헤드라인은 이름이 아니라 문장이다(2026-08-03).
@@ -376,10 +427,10 @@ export default function Home() {
         <div className="hero__actions">
           <a className="btn btn--primary" href="#work">만든 것들 보기 ↓</a>
         </div>
+        <HeroStage />
       </header>
     </div>
-
-    <ContrastBand />
+    </div>
 
     {/* 아래부터는 밴드가 배경색을 번갈아 깐다 — 흰 → 틴트 → 흰 → 틴트.
         섹션 경계가 눈에 보여야 "어디서 뭘 보는지"가 잡힌다(사용자 지적 2026-08-03). */}
