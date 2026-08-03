@@ -87,7 +87,7 @@ export default function ProjectDetail() {
           {d.started && (
             <div className="dmeta__item">
               <span className="dmeta__n">{fmtDate(d.started)}</span>
-              <span className="dmeta__label">첫 커밋</span>
+              <span className="dmeta__label">시작한 날</span>
             </div>
           )}
         </section>

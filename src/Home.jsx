@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 import {
-  ME, PROJECTS, STATUS, totalCommits, maxCommits,
+  ME, PROJECTS, STATUS, maxCommits,
   featuredProjects, projectsByCategory,
 } from './projects'
 
@@ -91,22 +91,18 @@ function ProjectCard({ p }) {
   return (
     <CardShell p={p} className="card">
       <CardMedia p={p} />
+      {/* 카드를 낮게 유지한다 — 대표작 4개가 한 화면에 들어와야 그 아래 카테고리까지
+          스크롤 한 번에 닿는다(사용자 지적 2026-08-03).
+          그래서 commits 와 기술 태그(React·Next.js)를 뺐다. 둘 다 개발자 용어라
+          이 사이트 독자에겐 의미가 없고, 높이만 먹고 있었다. 스택은 상세에서 본다. */}
       <div className="card__top">
         <span className={status.cls}>{status.label}</span>
-        {p.detail?.commits && (
-          <span className="card__commits">{p.detail.commits} commits</span>
-        )}
+        <span className="card__more">
+          {hasDetail ? '메이킹 스토리 →' : p.url ? '열기 →' : ''}
+        </span>
       </div>
       <h3 className="card__title">{p.name}</h3>
       <p className="card__desc">{p.description}</p>
-      {p.tags?.length > 0 && (
-        <ul className="card__tags">
-          {p.tags.map((t) => <li key={t}>{t}</li>)}
-        </ul>
-      )}
-      {hasDetail
-        ? <span className="card__cta">메이킹 스토리 →</span>
-        : p.url && <span className="card__cta">열기 →</span>}
     </CardShell>
   )
 }
@@ -175,7 +171,7 @@ function Journey() {
 
   return (
     <section id="journey" className="section">
-      <SectionHead eyebrow="JOURNEY" title="시간순으로 본 여정" sub="막대는 누적 커밋 수입니다. 최근이 위." />
+      <SectionHead eyebrow="JOURNEY" title="시간순으로 본 여정" sub="막대는 그 프로젝트에 들인 작업량입니다. 최근이 위." />
       <ol className="tl tl--journey">
         {items.map((p) => {
           const status = STATUS[p.status] ?? STATUS.idea
@@ -191,12 +187,12 @@ function Journey() {
               </span>
               <span className="tl__label">{p.description}</span>
               {commits && (
-                <span className="jbar" title={`${commits} commits`}>
+                <span className="jbar" title={`작업 ${commits}회`}>
                   <span
                     className="jbar__fill"
                     style={{ width: `${Math.round((commits / max) * 100)}%`, '--tint': tint }}
                   />
-                  <span className="jbar__n">{commits} commits</span>
+                  <span className="jbar__n">작업 {commits}회</span>
                 </span>
               )}
             </>
@@ -246,26 +242,25 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 히어로 아래 작업물 스트립 (2026-08-03) — Dribbble 히어로 패턴.
-// SaaS 랜딩 950개가 예외 없이 하는 단 하나가 "히어로 바로 아래 제품 화면"인데
-// 이 사이트엔 첫 화면에 이미지가 한 장도 없었다. 스크롤 전에 만든 것이 보여야 한다.
-// 양옆이 잘려 나가면서 "더 있다"는 신호가 되고, 그게 스크롤을 부른다.
-function WorkStrip() {
-  const items = PROJECTS.filter((p) => p.detail?.thumb || p.detail?.cover)
-  if (!items.length) return null
+// 히어로 아래 대표 화면 한 장 (2026-08-03 3차).
+// 처음엔 프로젝트 썸네일을 가로로 쭉 늘어놓았는데(Dribbble 패턴), 모바일은 괜찮아도
+// PC 폭에서는 작은 카드가 줄줄이 늘어서 보기 안 좋았다(사용자 지적).
+// → SaaS 랜딩 950개가 하는 방식대로 "제품 화면 한 장을 크게"로 교체.
+//   여러 개라는 사실은 바로 아래 숫자 밴드가 말해주므로 역할이 겹치지 않는다.
+// 어느 화면을 쓸지는 ME.heroShot 으로 지정하고, 없으면 대표작 첫 번째를 쓴다.
+function HeroShot() {
+  const fallback = featuredProjects()[0]
+  const src = ME.heroShot ?? fallback?.detail?.cover ?? fallback?.detail?.thumb
+  if (!src) return null
+  const slug = ME.heroShotSlug ?? fallback?.slug
+  const img = (
+    <img className="shot__img" src={src} alt={ME.heroShotAlt ?? '직접 만든 서비스 화면'}
+         onError={(e) => { e.currentTarget.closest('.shot')?.remove() }} />
+  )
   return (
-    <div className="strip">
-      <div className="strip__row">
-        {items.map((p) => {
-          const img = p.detail.thumb ?? p.detail.cover
-          const inner = (
-            <img src={img} alt={p.name} loading="lazy"
-                 onError={(e) => { e.currentTarget.closest('.strip__item')?.remove() }} />
-          )
-          return p.slug
-            ? <Link className="strip__item" key={p.name} to={`/p/${p.slug}`} title={p.name}>{inner}</Link>
-            : <span className="strip__item" key={p.name} title={p.name}>{inner}</span>
-        })}
+    <div className="shot">
+      <div className="shot__frame">
+        {slug ? <Link to={`/p/${slug}`} aria-label="이 프로젝트 자세히 보기">{img}</Link> : img}
       </div>
     </div>
   )
@@ -285,13 +280,17 @@ function NumbersBand() {
         ))}
       </div>
       <p className="nums__kicker">혼자 기획하고, 만들고, 운영합니다</p>
-      <p className="nums__line">{PROJECTS.length}개 프로젝트</p>
-      <p className="nums__line">{totalCommits().toLocaleString()}번의 커밋</p>
-      <p className="nums__line">{live}개 운영 중</p>
-      {/* monthsSince 는 "경과한 개월 수"다(2026-01 시작 → 2026-08 이면 7).
-          "N개월째"로 쓰면 한 달 어긋나 보이므로 "시작한 지 N개월"로 적는다. */}
+      {/* 🔴 "커밋"을 뺐다(사용자 지적 2026-08-03). 이 사이트는 "IT 용어를 모르는
+          사람에게 우리 말로 설명한다"를 파는 곳인데 정작 첫 화면이 개발자 말을
+          쓰고 있었다. 게다가 몇 번 커밋했는지는 읽는 사람에게 의미가 없다.
+          남긴 건 그 사람이 실제로 궁금해할 것 — 얼마 만에, 몇 개를, 몇 개가 살아 있나.
+          monthsSince 는 "경과 개월 수"다(2026-01 시작 → 2026-08 이면 7). */}
+      <p className="nums__line">
+        <span className="nums__hl">{monthsSince(ME.since)}개월</span> 만에{' '}
+        <span className="nums__hl">{PROJECTS.length}개</span>를 만들었습니다
+      </p>
       <p className="nums__foot">
-        시작한 지 {monthsSince(ME.since)}개월 · 전부 AI 바이브 코딩으로
+        그중 {live}개는 지금도 사람들이 쓰고 있습니다 · 전부 AI 바이브 코딩으로
       </p>
     </section>
   )
@@ -384,7 +383,7 @@ export default function Home() {
       </header>
     </div>
 
-    <WorkStrip />
+    <HeroShot />
     <NumbersBand />
 
     {/* 아래부터는 밴드가 배경색을 번갈아 깐다 — 흰 → 틴트 → 흰 → 틴트.

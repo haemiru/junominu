@@ -167,58 +167,32 @@
   border-bottom-color: var(--accent);
 }
 
-/* ── 작업물 스트립 ─────────────────────
-   히어로 바로 아래 가로 한 줄. .page 패딩을 넘어 화면 끝까지 흘려서 양옆이 잘리게
-   두는 게 핵심 — "더 있다"는 신호가 되고 그게 스크롤을 부른다(Dribbble 랜딩). */
-.strip {
-  position: relative;
-  margin-bottom: clamp(48px, 8vw, 84px);
-  /* 🔴 hidden 이 아니라 auto — 좁은 화면에선 카드가 화면을 넘치는데
-     hidden 이면 뒤쪽 프로젝트를 영영 못 본다. 스와이프로 넘길 수 있게 둔다.
-     스크롤바는 감춘다(장식용 줄이라 막대가 보이면 지저분하다). */
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  /* 양 끝을 페이드아웃 — 잘린 게 실수가 아니라 의도로 보이게 */
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+/* ── 히어로 대표 화면 ───────────────────
+   처음엔 썸네일을 가로로 쭉 늘어놓았는데(.strip) PC 폭에서 작은 카드가 줄줄이
+   늘어서 보기 안 좋았다(사용자 지적 2026-08-03). 화면 한 장을 크게 놓는 쪽으로 교체.
+   그림자 없이 테두리와 눌린 배경으로만 띄운다(DESIGN.md §6). */
+.shot {
+  max-width: 900px;
+  margin: 0 auto clamp(48px, 8vw, 84px);
+  padding: 0 clamp(20px, 5vw, 40px);
 }
 
-.strip::-webkit-scrollbar {
-  display: none;
-}
-
-.strip__row {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  min-width: min-content;
-  padding: 2px 20px;
-}
-
-.strip__item {
-  flex: 0 0 216px;
-  aspect-ratio: 16 / 10;
+.shot__frame {
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface-sunken);
-  transition: transform 0.18s ease, border-color 0.18s ease;
+  transition: border-color 0.18s ease;
 }
 
-a.strip__item:hover {
-  transform: translateY(-3px);
+.shot__frame:hover {
   border-color: var(--accent-line);
 }
 
-.strip__item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
+.shot__img {
   display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ── 숫자 밴드 ─────────────────────────
@@ -243,17 +217,26 @@ a.strip__item:hover {
 }
 
 .nums__line {
-  text-wrap: nowrap;
-  font-size: clamp(32px, 6.5vw, 56px);
+  /* 한 줄로, 더 크게(사용자 지적 2026-08-03). 좁은 화면에선 두 줄까지 허용하되
+     balance 로 길이를 고르게 나눈다. */
+  font-size: clamp(30px, 5.6vw, 68px);
   font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.035em;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
   color: var(--text);
   font-variant-numeric: tabular-nums;
+  text-wrap: balance;
+  max-width: 22ch;
+  margin: 0 auto;
+}
+
+/* 숫자만 액션색으로 — 문장 안에서 눈이 먼저 가는 자리 */
+.nums__hl {
+  color: var(--accent-ink);
 }
 
 .nums__foot {
-  margin-top: 20px;
+  margin-top: 22px;
   font-size: var(--fs-small);
   color: var(--text-faint);
 }
@@ -530,7 +513,7 @@ a.strip__item:hover {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 18px;
   overflow: hidden;
   transition:
     transform 0.18s ease,
@@ -539,11 +522,13 @@ a.strip__item:hover {
 }
 
 /* 카드 상단 미디어 밴드 — 풀블리드(패딩 무시).
-   2열이 되면서 96px → 16:9 비율로. 캡처가 잘리지 않고 제대로 보인다. */
+   🔴 16:9 는 너무 높았다. 대표작 4개가 한 화면에 안 들어와 스크롤이 한 번 더
+      필요했다(사용자 지적 2026-08-03). 2.4:1 로 납작하게 — 캡처는 상단 정렬이라
+      제품의 첫 화면이 그대로 보인다. */
 .card__media {
   position: relative;
-  margin: -20px -20px 16px;
-  aspect-ratio: 16 / 9;
+  margin: -18px -18px 14px;
+  aspect-ratio: 2.4 / 1;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -554,7 +539,7 @@ a.strip__item:hover {
 }
 
 .card__media-emoji {
-  font-size: 48px;
+  font-size: 36px;
   line-height: 1;
   opacity: 0.95;
 }
@@ -590,20 +575,27 @@ a.strip__item:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* 옛 .card__cta(hover 때만 보이는 줄)를 대체 — 그 줄은 안 보여도 높이를 먹었다.
+   상태 pill 과 같은 줄에 두면 공짜다. */
+.card__more {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.card--link:hover .card__more {
+  color: var(--accent-ink);
 }
 
 .card__emoji {
   font-size: 30px;
   line-height: 1;
-}
-
-.card__commits {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
 }
 
 .card__title {
@@ -615,42 +607,13 @@ a.strip__item:hover {
 
 .card__desc {
   color: var(--text-soft);
-  font-size: 15px;
-  margin-top: 8px;
-  flex: 1;
-}
-
-.card__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  list-style: none;
-  margin-top: 16px;
-}
-
-.card__tags li {
-  font-size: 11.5px;
-  color: var(--text-faint);
-  border: 1px solid var(--border);
-  padding: 3px 9px;
-  border-radius: 999px;
-}
-
-.card__cta {
-  margin-top: 16px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--accent-2);
-  opacity: 0;
-  transform: translateX(-4px);
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
-}
-
-.card--link:hover .card__cta {
-  opacity: 1;
-  transform: translateX(0);
+  font-size: 14.5px;
+  line-height: 1.5;
+  margin-top: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;      /* 설명이 길어도 카드 높이가 안 흔들린다 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ── 카테고리 묶음 + 컴팩트 카드 ────────
@@ -1586,10 +1549,6 @@ a.strip__item:hover {
   .minigrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* 스트립이 화면보다 넓어지면 가운데 정렬을 풀고 왼쪽부터 흐르게 둔다 */
-  .strip__row {
-    justify-content: flex-start;
-  }
 }
 
 @media (max-width: 620px) {
@@ -1598,9 +1557,6 @@ a.strip__item:hover {
   }
   .minigrid {
     grid-template-columns: 1fr;
-  }
-  .strip__item {
-    flex-basis: 168px;
   }
   .hero__nav {
     gap: 16px;

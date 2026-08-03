@@ -97,7 +97,8 @@ export default function Contact() {
   const live = PROJECTS.filter((p) => p.status === 'live').length
   const stats = [
     { n: PROJECTS.length, label: '개 프로젝트' },
-    { n: totalCommits().toLocaleString(), label: '누적 커밋' },
+    // '커밋'은 개발자 용어라 안 쓴다(2026-08-03). 이 사이트 독자는 비개발자다.
+    { n: totalCommits().toLocaleString(), label: '번의 작업' },
     { n: monthsSince(ME.since), label: '개월째 빌딩' },
     { n: live, label: '운영 중' },
   ]
