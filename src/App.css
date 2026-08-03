@@ -7,7 +7,7 @@
 
 /* 홈은 히어로 / 풀블리드 / 나머지 세 덩어리로 쪼개져 있다(풀블리드 스크롤바 문제 회피).
    위 조각은 아래 패딩을, 아래 조각은 위 패딩을 뺀다 — 합치면 원래 한 덩어리와 같다. */
-.page--top  { padding-bottom: 0; }
+.page--top  { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; }
 .page--rest { padding-top: 0; }
 
 /* 옛 ambient glow(라디얼 그라데이션 2개)는 2026-08-03 제거.
@@ -21,34 +21,89 @@
   z-index: 1;
 }
 
+/* ── 상단 바 ───────────────────────────
+   로고와 내비를 히어로 밖으로 뺐다(2026-08-03 2차). 히어로 안에 쌓아두니
+   PC 폭에서 요소가 세로로 7단이 되어 양옆이 텅 비고 어색했다.
+   내비가 위로 올라가면 히어로는 배지·이름·한 줄·CTA 네 단으로 끝난다. */
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.topbar__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 14px clamp(20px, 5vw, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.topbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.topbar__name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.topbar__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.topbar__nav a {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.topbar__nav a:hover {
+  color: var(--accent-ink);
+  border-bottom-color: var(--accent);
+}
+
+@media (max-width: 620px) {
+  .topbar__inner {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .topbar__nav {
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
 /* ── Hero ─────────────────────────────
    2026-08-03 Dribbble 랜딩 구조로 재편: 가운데 정렬 · 배지 pill · 큰 이름 ·
    CTA 하나 · 바로 아래 작업물 스트립. 950개 SaaS 랜딩이 예외 없이 하는 단 하나가
    "히어로 바로 아래 제품 화면"인데 이 사이트엔 첫 화면에 이미지가 없었다. */
 .hero {
-  margin-bottom: 36px;
+  margin-bottom: 40px;
   text-align: center;
-}
-
-.hero__brand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 26px;
 }
 
 /* 배지 — 정체성을 한 줄로. 반전 훅이 첫 문장이 된다. */
 .hero__badge {
   display: inline-block;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--accent-ink);
   background: var(--accent-wash);
   border: 1px solid var(--accent-line);
   border-radius: 999px;
-  padding: 6px 14px;
-  margin-bottom: 22px;
+  padding: 6px 15px;
+  margin-bottom: 18px;
 }
 
 .logo {
@@ -75,9 +130,12 @@
 }
 
 .hero__tagline {
-  font-size: clamp(18px, 3vw, 24px);
+  font-size: clamp(17px, 2.4vw, 22px);   /* 문서 h4 22px */
   font-weight: 600;
-  margin-top: 20px;
+  color: var(--text-soft);
+  max-width: 34ch;
+  margin: 16px auto 0;
+  text-wrap: balance;   /* 두 줄이 되면 길이를 고르게 — 한쪽만 짧게 남지 않는다 */
 }
 
 .hero__intro {
@@ -185,6 +243,7 @@ a.strip__item:hover {
 }
 
 .nums__line {
+  text-wrap: nowrap;
   font-size: clamp(32px, 6.5vw, 56px);
   font-weight: 800;
   line-height: 1.15;
@@ -236,6 +295,7 @@ a.strip__item:hover {
 /* 섹션 제목 — 12px 대문자 라벨을 버리고 한글 제목으로(DESIGN.md h3 24px).
    라벨이 9번 반복되면 리듬이 아니라 소음이 된다. */
 .section__title {
+  text-wrap: balance;
   font-size: var(--fs-h3);
   font-weight: 700;
   letter-spacing: -0.025em;
@@ -1560,7 +1620,7 @@ a.strip__item:hover {
   flex-wrap: wrap;
   justify-content: center;   /* 히어로가 가운데 정렬이 됐다(2026-08-03) */
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 26px;
 }
 
 /* lazy 라우트 로딩 자리 — 조각이 작아 대개 순식간이라 스피너 대신 높이만 잡는다 */

@@ -326,30 +326,38 @@ export default function Home() {
     //    50vw 가 스크롤바 폭을 포함해서 가로 스크롤이 생긴다. 그래서 아예 형제로 쪼갰다.
     //    .page 가 max-width 를 맡고, 그 사이 구간은 자연스럽게 화면 전체를 쓴다.
     <>
-    <div className="page page--top">
-      <header className="hero">
-        <div className="hero__brand">
-          <Logo size={44} />
-          <p className="hero__kicker">VIBE CODING WORKSHOP</p>
-        </div>
-        {ME.badge && <p className="hero__badge">{ME.badge}</p>}
-        <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
-        <p className="hero__tagline">{ME.tagline}</p>
-        <p className="hero__intro">{ME.intro}</p>
-        {/* CTA는 하나만. 둘이면 고민하고, 고민하면 안 누른다(Granola 랜딩 참고).
-            코칭 전환은 내비 "함께하기" + 하단 ContactCTA 밴드가 받는다 —
-            요구보다 가치가 먼저다(DESIGN.md §10 "Value first, cost later"). */}
-        <div className="hero__actions">
-          <a className="btn btn--primary" href="#work">만든 것들 보기 ↓</a>
-        </div>
-        {/* 내비는 4개까지만. 처음 온 사람에게 선택지를 아홉 개 주면 아무것도 안 누른다
-            (DESIGN.md §10 "Easy to answer"). 나머지 섹션은 스크롤로 만난다. */}
-        <nav className="hero__nav" aria-label="바로가기">
+    {/* 상단 바 — 로고와 내비를 히어로 밖으로 뺐다(2026-08-03 2차).
+        히어로 안에 쌓아두니 PC 폭에서 7단이 세로로 늘어져 어색했다.
+        내비는 4개까지만(DESIGN.md §10 "Easy to answer"). */}
+    <div className="topbar">
+      <div className="topbar__inner">
+        <a className="topbar__brand" href="#top" aria-label={ME.name}>
+          <Logo size={30} />
+          <span className="topbar__name">{ME.name}</span>
+        </a>
+        <nav className="topbar__nav" aria-label="바로가기">
           <a href="#work">프로젝트</a>
           <Link to="/blog">블로그</Link>
           <Link to="/prompts">프롬프트 노트</Link>
           <Link to="/contact">함께하기</Link>
         </nav>
+      </div>
+    </div>
+
+    <div className="page page--top" id="top">
+      {/* 히어로는 4단만 — 배지 · 이름 · 한 줄 · CTA (Dribbble 구조).
+          예전엔 태그라인과 소개문이 둘 다 있었는데 배지까지 합쳐 "바이브 코딩"을
+          세 번, "혼자"를 두 번 말하고 있었다. 한 줄로 합쳤다. */}
+      <header className="hero">
+        {ME.badge && <p className="hero__badge">{ME.badge}</p>}
+        <h1 className="hero__name">{ME.name}<span className="hero__dot">.</span></h1>
+        <p className="hero__tagline">{ME.tagline}</p>
+        {/* CTA는 하나만. 둘이면 고민하고, 고민하면 안 누른다(Granola 랜딩 참고).
+            코칭 전환은 상단 내비 "함께하기" + 하단 ContactCTA 밴드가 받는다 —
+            요구보다 가치가 먼저다(DESIGN.md §10 "Value first, cost later"). */}
+        <div className="hero__actions">
+          <a className="btn btn--primary" href="#work">만든 것들 보기 ↓</a>
+        </div>
       </header>
     </div>
 

@@ -96,6 +96,10 @@ body {
   color: var(--text-soft);
   background: var(--bg);
   min-height: 100dvh;
+  /* 🔴 한글 줄바꿈 — 기본값은 음절 단위로 끊어서 "운영합/니다" 처럼 단어가 쪼개진다.
+     keep-all 로 어절을 지키고, 긴 URL·영문은 overflow-wrap 이 받아준다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
