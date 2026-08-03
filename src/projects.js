@@ -427,10 +427,11 @@ export const PROJECTS = [
     featured: true,
     emoji: "🏢",
     description: "매물·계약·CRM·문의·AI 도구까지, 공인중개사 업무를 하나로 모은 올인원 플랫폼.",
-    // 🔴 제품 랜딩(기능·요금제·가입). 서브도메인(jungae.jungaepro.com 등)은 **입점 사무소의 손님 페이지**라
-    //    콜드 방문자를 보내면 안 된다 — 그쪽 상단 메뉴는 목업이라 8개 중 7개가 404다(2026-08-02 확인).
+    // 🔴 링크는 **www.jungaepro.com 하나뿐**이다(제품 랜딩 — 기능·요금제·가입).
+    //    서브도메인(jungae.jungaepro.com 등)은 입점 사무소의 손님 페이지라 절대 여기 쓰지 않는다.
+    //    apex(jungaepro.com)도 쓰지 말 것 — www 로 리다이렉트되므로 처음부터 www 로 적는다.
     //    옛 주소 smart-sjhome.vercel.app 은 폐기.
-    url: "https://jungaepro.com/",
+    url: "https://www.jungaepro.com/",
     status: "building",
     tags: ["SaaS", "멀티테넌트", "React"],
 
