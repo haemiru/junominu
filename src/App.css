@@ -167,32 +167,86 @@
   border-bottom-color: var(--accent);
 }
 
-/* ── 히어로 대표 화면 ───────────────────
-   처음엔 썸네일을 가로로 쭉 늘어놓았는데(.strip) PC 폭에서 작은 카드가 줄줄이
-   늘어서 보기 안 좋았다(사용자 지적 2026-08-03). 화면 한 장을 크게 놓는 쪽으로 교체.
-   그림자 없이 테두리와 눌린 배경으로만 띄운다(DESIGN.md §6). */
+/* ── 히어로 대표 화면 (비대칭 3분할) ─────
+   큰 것 하나 + 작은 것 둘. 하나만 크게 두면 "그 제품의 랜딩"으로 읽히고(2026-08-03 지적),
+   썸네일을 아홉 개 늘어놓으면 잡동사니가 된다. 셋이 그 사이다.
+   높이는 그리드의 aspect-ratio 가 결정하고 행이 그걸 반씩 나눈다(순환 계산 회피).
+   그림자 없이 테두리로만 띄운다(DESIGN.md §6). */
 .shot {
-  max-width: 900px;
+  max-width: 980px;
   margin: 0 auto clamp(48px, 8vw, 84px);
   padding: 0 clamp(20px, 5vw, 40px);
 }
 
-.shot__frame {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--surface-sunken);
-  transition: border-color 0.18s ease;
+.shot__grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1.62fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  aspect-ratio: 2.35 / 1;
 }
 
-.shot__frame:hover {
+/* 화면이 하나뿐이면(대표작에 이미지가 하나일 때) 그냥 한 장으로 */
+.shot__grid--1 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  aspect-ratio: 16 / 10;
+}
+
+.shot__grid--2 {
+  grid-template-rows: 1fr;
+  aspect-ratio: 2.6 / 1;
+}
+
+.shot__frame {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+/* 큰 자리 — 왼쪽 열 전체 */
+.shot__grid--3 .shot__frame--lead {
+  grid-row: 1 / span 2;
+  border-radius: var(--radius);
+}
+
+a.shot__frame:hover {
   border-color: var(--accent-line);
+  transform: translateY(-2px);
 }
 
 .shot__img {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  /* 웹 화면 캡처는 좌상단(로고·내비)이 정보다. center 로 두면 로고가 잘린다. */
+  object-position: left top;
+  display: block;
+}
+
+/* 좁은 화면 — 큰 것 위, 작은 것 둘 아래 나란히 */
+@media (max-width: 620px) {
+  .shot__grid,
+  .shot__grid--3 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    aspect-ratio: auto;
+  }
+  .shot__grid--3 .shot__frame--lead {
+    grid-column: 1 / span 2;
+    grid-row: auto;
+    aspect-ratio: 16 / 10;
+  }
+  .shot__grid .shot__frame:not(.shot__frame--lead) {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 /* ── 숫자 밴드 ─────────────────────────

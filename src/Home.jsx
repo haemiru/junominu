@@ -242,25 +242,45 @@ function monthsSince(ym) {
   return Math.max(1, (now.getFullYear() - y) * 12 + (now.getMonth() + 1 - m))
 }
 
-// 히어로 아래 대표 화면 한 장 (2026-08-03 3차).
-// 처음엔 프로젝트 썸네일을 가로로 쭉 늘어놓았는데(Dribbble 패턴), 모바일은 괜찮아도
-// PC 폭에서는 작은 카드가 줄줄이 늘어서 보기 안 좋았다(사용자 지적).
-// → SaaS 랜딩 950개가 하는 방식대로 "제품 화면 한 장을 크게"로 교체.
-//   여러 개라는 사실은 바로 아래 숫자 밴드가 말해주므로 역할이 겹치지 않는다.
-// 어느 화면을 쓸지는 ME.heroShot 으로 지정하고, 없으면 대표작 첫 번째를 쓴다.
+// 히어로 아래 대표 화면 — 큰 것 하나 + 작은 것 둘, 비대칭 3분할 (2026-08-03 4차).
+//
+// 두 번 갈아엎고 나온 답이다.
+//   1차) 썸네일 9개를 가로로 쭉 → 모바일은 괜찮은데 PC 폭에서 작은 카드가 줄줄이 늘어서 나빴다.
+//   2차) 한 장만 크게 → 이번엔 "junominu.com 이 중개프로 랜딩 페이지"처럼 보였다.
+//   3차) 🔴 셋. 하나면 그 제품 사이트가 되고, 아홉이면 잡동사니가 된다.
+//        셋이면 "이 사람이 여러 개를 만들었구나"가 한눈에 읽히면서 각각도 충분히 크다.
+//
+// 큰 자리는 ME.heroShot 으로 지정한다(없으면 대표작 첫 번째). 나머지 둘은 대표작에서 자동.
+function heroShots() {
+  const picked = []
+  const push = (src, slug, alt) => {
+    if (!src || picked.length >= 3 || picked.some((x) => x.src === src)) return
+    picked.push({ src, slug, alt })
+  }
+  // ME.heroShot 이 있으면 그게 큰 자리(첫 번째)
+  push(ME.heroShot, ME.heroShotSlug, ME.heroShotAlt)
+  for (const p of featuredProjects()) {
+    push(p.detail?.cover ?? p.detail?.thumb, p.slug, `${p.name} 화면`)
+  }
+  return picked
+}
+
 function HeroShot() {
-  const fallback = featuredProjects()[0]
-  const src = ME.heroShot ?? fallback?.detail?.cover ?? fallback?.detail?.thumb
-  if (!src) return null
-  const slug = ME.heroShotSlug ?? fallback?.slug
-  const img = (
-    <img className="shot__img" src={src} alt={ME.heroShotAlt ?? '직접 만든 서비스 화면'}
-         onError={(e) => { e.currentTarget.closest('.shot')?.remove() }} />
-  )
+  const shots = heroShots()
+  if (!shots.length) return null
   return (
     <div className="shot">
-      <div className="shot__frame">
-        {slug ? <Link to={`/p/${slug}`} aria-label="이 프로젝트 자세히 보기">{img}</Link> : img}
+      <div className={`shot__grid shot__grid--${shots.length}`}>
+        {shots.map((s, i) => {
+          const img = (
+            <img className="shot__img" src={s.src} alt={s.alt ?? '직접 만든 서비스 화면'}
+                 onError={(e) => { e.currentTarget.closest('.shot__frame')?.remove() }} />
+          )
+          const cls = `shot__frame${i === 0 ? ' shot__frame--lead' : ''}`
+          return s.slug
+            ? <Link className={cls} key={s.src} to={`/p/${s.slug}`} aria-label={s.alt}>{img}</Link>
+            : <div className={cls} key={s.src}>{img}</div>
+        })}
       </div>
     </div>
   )
