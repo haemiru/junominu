@@ -7,7 +7,8 @@
 
 /* 홈은 히어로 / 풀블리드 / 나머지 세 덩어리로 쪼개져 있다(풀블리드 스크롤바 문제 회피).
    위 조각은 아래 패딩을, 아래 조각은 위 패딩을 뺀다 — 합치면 원래 한 덩어리와 같다. */
-.page--top  { padding-top: clamp(44px, 6vw, 76px); padding-bottom: 0; }
+/* 히어로는 이제 카드라(2026-08-05) 아래 여백도 카드가 갖는다 — .hero 의 margin 은 0. */
+.page--top  { padding-top: clamp(44px, 6vw, 76px); padding-bottom: clamp(36px, 5vw, 56px); }
 .page--rest {
   /* 섹션이 각자 카드(.sband)라 좌우 패딩은 카드가 갖는다. 여기선 폭 제한도 푼다. */
   max-width: none;
@@ -28,16 +29,22 @@
 /* ── 상단 바 ───────────────────────────
    로고와 내비를 히어로 밖으로 뺐다(2026-08-03 2차). 히어로 안에 쌓아두니
    PC 폭에서 요소가 세로로 7단이 되어 양옆이 텅 비고 어색했다.
-   내비가 위로 올라가면 히어로는 배지·이름·한 줄·CTA 네 단으로 끝난다. */
+   내비가 위로 올라가면 히어로는 배지·이름·한 줄·CTA 네 단으로 끝난다.
+
+   🔴 2026-08-05: 상단 바도 카드다. 예전엔 배경이 화면 끝까지 깔렸는데, 아래 섹션은
+   전부 좌우 여백(캔버스)을 두고 있어서 맨 위만 폭이 다르게 보였다(사용자 지적).
+   바깥(.topbar)이 폭·좌우 여백을 잡고, 안쪽(.topbar__inner)이 흰 카드다 — .sband 와 같은 구조. */
 .topbar {
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  max-width: var(--maxw);
+  margin: 14px auto 10px;
+  padding: 0 clamp(20px, 5vw, 40px);
 }
 
 .topbar__inner {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 14px clamp(20px, 5vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px clamp(18px, 2.8vw, 30px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,7 +100,7 @@
    CTA 하나 · 바로 아래 작업물 스트립. 950개 SaaS 랜딩이 예외 없이 하는 단 하나가
    "히어로 바로 아래 제품 화면"인데 이 사이트엔 첫 화면에 이미지가 없었다. */
 .hero {
-  margin-bottom: 40px;
+  margin-bottom: 0;   /* 아래 여백은 .page--top 의 padding-bottom 이 갖는다 */
   text-align: center;
 }
 
@@ -179,18 +186,30 @@
 
 /* ── 히어로 배경 층 ─────────────────────
    순백 위에 글자만 있으면 밋밋하다는 지적(2026-08-03). 은은한 점 격자 + 파란 광.
-   .page 의 형제라 화면 끝까지 깔린다(음수 마진·50vw 를 안 써서 가로 스크롤이 안 생긴다). */
+
+   🔴 2026-08-05: 히어로도 카드다. 예전엔 이 층이 화면 끝까지 깔렸는데(전면 흰색),
+      아래 섹션은 전부 좌우 여백을 두고 있어서 **맨 위만 좌우가 꽉 찬** 상태였다.
+      바깥(.herowrap)이 폭·좌우 여백만 잡고, 흰 면·점 격자·파란 광은 안쪽 카드가 갖는다. */
 .herowrap {
+  max-width: var(--maxw);
+  margin: 0 auto 18px;
+  padding: 0 clamp(20px, 5vw, 40px);
+}
+
+.herowrap > .page {
   position: relative;
-  overflow: hidden;
-  border-bottom: 1px solid var(--border);
+  z-index: 1;
+  max-width: none;
+  overflow: hidden;              /* 점 격자를 카드 라운드 안으로 자른다 */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   background:
     radial-gradient(70% 55% at 50% -10%, rgba(49, 130, 246, 0.10), transparent 70%),
-    var(--surface);   /* 히어로는 카드가 아니라 전면이라 흰색 */
+    var(--surface);
 }
 
 /* 점 격자 — 작업실 바닥 같은 질감. 가장자리로 갈수록 사라진다. */
-.herowrap::before {
+.herowrap > .page::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -199,11 +218,6 @@
   -webkit-mask-image: radial-gradient(75% 65% at 50% 25%, #000, transparent 78%);
   mask-image: radial-gradient(75% 65% at 50% 25%, #000, transparent 78%);
   pointer-events: none;
-}
-
-.herowrap > .page {
-  position: relative;
-  z-index: 1;
 }
 
 /* ── 히어로 무대 (움직이는 창) ────────────

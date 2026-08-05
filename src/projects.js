@@ -739,14 +739,76 @@ export const PROJECTS = [
       ],
     },
   },
-  // 예시) 구상 단계 카드 — url 없이 추가:
-  // {
-  //   name: "다음 프로젝트",
-  //   emoji: "✨",
-  //   description: "여기에 한 줄 설명.",
-  //   status: "idea",
-  //   tags: ["아이디어"],
-  // },
+  // ── 2026-08-05 추가 ─────────────────────────────────────────────
+  //  아직 detail(메이킹 스토리)이 없어서 카드만 나온다. url 이 있으면 카드 클릭 시
+  //  바로 그 주소로 가고, 없으면 클릭 안 되는 카드가 된다.
+  //  detail 을 채우면 자동으로 /p/<slug> 상세 페이지가 생긴다(slug 도 같이 넣을 것).
+  {
+    name: "상세페이지 메이커",
+    category: "service",
+    emoji: "🧾",
+    description: "상품번호를 넣거나 사진을 올리면 쇼핑몰 상세페이지를 알아서 만들어 주는 서비스.",
+    url: "https://detai-page-maker.vercel.app",
+    status: "building",
+    tags: ["커머스", "자동 생성", "SaaS"],
+  },
+  {
+    name: "센스트랙",
+    category: "kids",
+    emoji: "👃",
+    description: "발달장애 아이의 후각·청각 반응을 기록하고, 쌓인 기록에서 변화를 찾아 주는 서비스.",
+    url: "https://sensetrack.jjangsaem.com",
+    status: "building",
+    tags: ["감각", "기록", "분석"],
+  },
+  {
+    name: "아이다이어리",
+    category: "kids",
+    emoji: "📔",
+    description: "발달장애 아이를 키우는 부모가 아이의 상태와 반응을 몇 초 만에 남기는 육아 기록장.",
+    status: "building",
+    tags: ["육아", "기록"],
+  },
+  {
+    name: "브랜드커넥트 도우미",
+    category: "product",
+    emoji: "🔗",
+    description: "네이버 브랜드커넥트 제휴 글의 초안을 대신 써 주는 윈도우 프로그램. 쇼핑커넥트까지 마쳤고 캠페인 제휴를 붙이는 중.",
+    status: "building",
+    tags: ["윈도우 프로그램", "크몽 판매", "블로그"],
+  },
+  {
+    name: "서이추 도우미",
+    category: "etc",
+    emoji: "🤝",
+    description: "내 블로그 최근 글에서 관심사를 뽑아, 비슷한 블로그를 찾아 서로이웃을 신청해 주는 개인용 프로그램.",
+    status: "live",
+    tags: ["블로그", "개인용"],
+  },
+  {
+    name: "무궁화 꽃이 피었습니다",
+    category: "lab",
+    emoji: "🌺",
+    description: "영희가 뒤돌아보면 멈춰야 하는 웹 게임. 시간 안에 결승선까지 — 생각보다 어렵습니다.",
+    status: "live",
+    tags: ["게임", "3D"],
+  },
+  {
+    name: "슬라이딩 퍼즐",
+    category: "lab",
+    emoji: "🧩",
+    description: "그림이 매번 새로 만들어지는 조각 맞추기 게임. 같은 판이 두 번 나오지 않습니다.",
+    status: "live",
+    tags: ["게임", "퍼즐"],
+  },
+  {
+    name: "오델로",
+    category: "lab",
+    emoji: "⚫",
+    description: "흑백 돌을 뒤집는 오델로 한 판. 규칙은 단순한데 꽤 오래 붙잡게 됩니다.",
+    status: "live",
+    tags: ["게임", "보드게임"],
+  },
 ];
 
 // 상태 표기 (홈 카드 · 상세 페이지 공용)
