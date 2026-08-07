@@ -119,6 +119,33 @@ JSON.stringify({ ok: t.includes('<본문 마지막 문장 일부>'), imgs })
 - 이미지를 넣었으면 `alt` 가 `Photo by ...` 인 img 가 있어야 한다.
 - ⚠️ 프로필 첫 화면은 글이 잘려 있다 — 본문 **앞부분**으로 검사하거나 스크롤한 뒤 검사한다.
 
+## 5-B. 🔴 게시 후 작성창을 반드시 비운다 (2026-08-07 [3]·[4] 실측)
+
+**발행에 성공해도 작성창이 안 닫히고 본문이 그대로 남는 경우가 잦다.**
+그대로 두면 **다음 슬롯에서 `openComposer()` 가 `already` 를 반환하고, 그 남은 글을 또 올릴 뻔한다.**
+
+게시 클릭 → 8초 대기 후 이렇게 확인한다:
+
+```js
+const dlg = document.querySelector('[role="dialog"]');
+const ce  = dlg ? dlg.querySelector('[contenteditable="true"]') : null;
+// 다이얼로그 '밖'에서만 세야 발행 여부가 정확하다
+const outside = [...document.querySelectorAll('body *')]
+  .filter(e => e.children.length === 0 && (!dlg || !dlg.contains(e)))
+  .map(e => e.textContent || '').filter(t => t.includes('<본문 첫 문장>'));
+JSON.stringify({ published: outside.length, leftover: (ce ? ce.innerText : '').slice(0, 60) })
+```
+
+- `published >= 1` 이면 **발행된 것**이다.
+- `leftover` 가 비어 있지 않으면 → **취소 → `임시 저장하시겠어요?` → `저장 안 함`**(find + `computer.left_click`)으로 비운다.
+- 🔴 **비우기 전에 반드시 `published` 를 먼저 확인한다.** 발행이 안 됐는데 비우면 글이 날아간다.
+
+### 다음 슬롯 시작 때도 방어한다
+
+`openComposer()` 가 **`already`** 를 반환하면 남은 작성창이 있다는 뜻이다.
+바로 쓰지 말고 ① 안에 든 글이 뭔지 확인 ② **그 글이 이미 발행됐는지 `PUBLISHED.md` 와 피드로 대조**
+③ 발행됐으면 위 절차로 비우고 새로 연다.
+
 ## 6. 기록
 
 `queue/PUBLISHED.md` 에 한 줄 추가한다:
