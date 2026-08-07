@@ -93,6 +93,19 @@ window.postBtn()?.click();
 ⚠️ **게시 직후 `dialogs` 를 세면 아직 1로 나온다** — 닫히는 중이라 그렇다.
 **그 값으로 실패 판정하지 말 것**(2026-08-07 실측: 5초 뒤에도 1이었는데 실제로는 발행됨).
 
+⚠️ 🔴 **발행 직후 `navigate` 가 "Leave site?" 로 막혀도 실패가 아니다.**
+스레드의 beforeunload 핸들러가 작성창이 닫힌 뒤에도 잠깐 남아 있다(2026-08-07 [2] 실측 — 막혔지만 이미 발행돼 있었다).
+**막히면 force navigate 하지 말고, 먼저 지금 페이지에서 발행 여부를 확인한다:**
+
+```js
+const t = document.body.innerText; const i = t.indexOf('<본문 첫 문장>');
+JSON.stringify({ found: i > -1, dialogs: document.querySelectorAll('[role="dialog"]').length,
+                 ctx: t.slice(Math.max(0, i-45), i+60) })
+```
+
+`dialogs: 0` 이고 `found: true` 면 **이미 발행된 것이다**(홈 우측 프로필 패널에도 뜬다). 그대로 기록하고 끝낸다.
+`dialogs` 가 1 이상이고 작성창에 글이 그대로면 그때가 진짜 실패다.
+
 확인은 **프로필에서** 한다. `https://www.threads.com/@solopreneur.jm` 로 가서:
 
 ```js
