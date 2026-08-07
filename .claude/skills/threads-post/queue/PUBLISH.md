@@ -90,8 +90,21 @@ window.postBtn = () => {
 window.postBtn()?.click();
 ```
 
-3초 대기 후 작성창이 닫혔는지 확인 → `https://www.threads.com/@solopreneur.jm` 로 가서
-**맨 위 글이 방금 그 본문인지 눈으로 확인**한다.
+⚠️ **게시 직후 `dialogs` 를 세면 아직 1로 나온다** — 닫히는 중이라 그렇다.
+**그 값으로 실패 판정하지 말 것**(2026-08-07 실측: 5초 뒤에도 1이었는데 실제로는 발행됨).
+
+확인은 **프로필에서** 한다. `https://www.threads.com/@solopreneur.jm` 로 가서:
+
+```js
+const t = document.body.innerText;
+const imgs = [...document.querySelectorAll('img')].filter(i => i.naturalWidth > 250)
+  .map(i => ({ w: i.naturalWidth, alt: (i.alt||'').slice(0,40) }));
+JSON.stringify({ ok: t.includes('<본문 마지막 문장 일부>'), imgs })
+```
+
+- 맨 위 글이 방금 그 본문이고 `solopreneur.jm › <토픽>` 이 붙어 있으면 성공.
+- 이미지를 넣었으면 `alt` 가 `Photo by ...` 인 img 가 있어야 한다.
+- ⚠️ 프로필 첫 화면은 글이 잘려 있다 — 본문 **앞부분**으로 검사하거나 스크롤한 뒤 검사한다.
 
 ## 6. 기록
 
