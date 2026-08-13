@@ -170,6 +170,10 @@ export const ME = {
     formUrl: "https://tally.so/r/b5EKOL",   // Tally — 1:1 코칭·외주 문의 폼(새 탭 폴백용)
     formId: "b5EKOL",                        // Tally 폼 ID — /contact에서 팝업 임베드(Tally.openPopup)
     email: "junominu@gmail.com",
+    // 카카오톡 오픈채팅 — 블로그 글 하단 문의 블록(AskBox.jsx)이 쓴다.
+    //   백엔드가 없어 댓글을 저장할 곳이 없다 → 글에 대한 질문은 카톡·이메일로 받는다(2026-08-14).
+    //   비워 두면 AskBox 가 카톡 버튼 없이 이메일만 보여준다(죽은 링크 안 생김).
+    kakao: "https://open.kakao.com/o/gbROeLIi",
     // 🔴 개발자 용어를 쓰지 않는다 — 옛 문구엔 "시스템 아키텍트·정보보안 기획·배포"가 있었다.
     //    여기 오는 사람은 코딩을 한 번도 안 해본 분이다(2026-08-03).
     lead: "IT 회사에 22년 있었지만 개발은 한 번도 안 해봤습니다.\n지금은 AI에게 말로 시켜서 혼자 만들고, 인터넷에 올려 운영합니다.\n그 방법을 알려드리거나(코칭), 대신 만들어 드립니다(외주).",
@@ -748,7 +752,11 @@ export const PROJECTS = [
     category: "service",
     emoji: "🧾",
     description: "상품번호를 넣거나 사진을 올리면 쇼핑몰 상세페이지를 알아서 만들어 주는 서비스.",
-    url: "https://detai-page-maker.vercel.app",
+    // 🔴 url 을 일부러 비워 뒀다 — detai-page-maker.vercel.app 은 앱 자체 접근 자물쇠
+    //    (Detai-Page-Maker/src/proxy.ts, APP_ACCESS_TOKEN + detai_access 쿠키)로 잠겨 있어
+    //    쿠키 없는 방문자는 401 "접근 권한이 없습니다."를 본다. 한 번 돌 때마다 도매꾹 한도와
+    //    Anthropic 크레딧이 운영자 돈으로 나가서 의도적으로 잠근 것이다(자물쇠는 그대로 둔다).
+    //    ⚠️ 링크를 다시 넣으려면 먼저 자물쇠를 풀 것 — 안 그러면 방문자가 벽을 만난다.
     status: "building",
     tags: ["커머스", "자동 생성", "SaaS"],
   },
