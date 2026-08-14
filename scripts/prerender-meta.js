@@ -300,6 +300,56 @@ for (const r of ROUTES) {
   writeFileSync(join(outDir, 'index.html'), render(template, r), 'utf8')
 }
 
+/* ── RSS 2.0 피드 (dist/rss.xml) ──────────────────────────────────
+   네이버 서치어드바이저는 「요청 → RSS 제출」을 받는다. 한 번 제출해 두면
+   글을 올릴 때마다 "웹 페이지 수집"에 URL을 손으로 넣지 않아도 알아서 물어간다.
+   데이터는 위와 같은 src/posts/*.md 라 글을 추가하면 자동으로 늘어난다. ── */
+
+/** RFC 822 — RSS pubDate 규격. frontmatter 는 날짜만 있어 KST 09:00 으로 고정한다. */
+function rfc822(d) {
+  const t = new Date(`${d}T09:00:00+09:00`)
+  return Number.isNaN(t.getTime()) ? '' : t.toUTCString()
+}
+
+function buildRss(list) {
+  const items = list
+    .slice()
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .map((p) => {
+      const url = `${SITE}/blog/${p.slug}`
+      return [
+        '    <item>',
+        `      <title>${esc(p.title)}</title>`,
+        `      <link>${url}</link>`,
+        `      <guid isPermaLink="true">${url}</guid>`,
+        `      <description>${esc(p.summary || stripMd(p.body).slice(0, 150))}</description>`,
+        p.date && `      <pubDate>${rfc822(p.date)}</pubDate>`,
+        ...p.tags.map((t) => `      <category>${esc(t)}</category>`),
+        '    </item>',
+      ]
+        .filter(Boolean)
+        .join('\n')
+    })
+    .join('\n')
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>${esc(BRAND)} 블로그</title>
+    <link>${SITE}/blog</link>
+    <description>바이브 코딩으로 만들면서 배운 것들 — 삽질과 우회, 실제로 쓴 방법을 기록합니다.</description>
+    <language>ko</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml" />
+${items}
+  </channel>
+</rss>
+`
+}
+
+writeFileSync(join(DIST, 'rss.xml'), buildRss(posts), 'utf8')
+
 console.log(
-  `✓ 메타 프리렌더 ${ROUTES.length}개 — 프로젝트 ${projectRoutes().length} · 글 ${posts.length} · 고정 3`,
+  `✓ 메타 프리렌더 ${ROUTES.length}개 — 프로젝트 ${projectRoutes().length} · 글 ${posts.length} · 고정 3` +
+    `\n✓ RSS ${posts.length}개 → dist/rss.xml`,
 )
