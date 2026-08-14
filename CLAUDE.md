@@ -91,7 +91,8 @@ junominu/
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
 │   ├── Contact.jsx     # 함께하기 (/contact) — ME.contact 로 1:1 코칭·외주 오퍼 카드 자동 렌더. 버튼은 외부 폼(formUrl)→없으면 Gmail 폴백
 │   ├── Blog.jsx        # 블로그 목록 (/blog)
-│   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더
+│   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더 + 하단 AskBox
+│   ├── AskBox.jsx      # 글 하단 문의 블록 — 카톡 오픈채팅 + 이메일(ME.contact). 댓글 자리를 대신한다
 │   ├── Prompts.jsx     # 프롬프트 노트 (/prompts) — 전 프로젝트 detail.prompts 자동 집계
 │   ├── blogData.js     # src/posts/*.md 로딩 + frontmatter 파싱 → POSTS + findPost
 │   │                   #   ⚠️ 파일명 주의: 컴포넌트 Blog.jsx와 대소문자 충돌(Windows) 피하려 blogData.js
@@ -166,6 +167,18 @@ updated: 2026-08-01    # (선택) 나중에 고쳤을 때만 — JSON-LD dateMod
 `blogData.js`가 `import.meta.glob`로 전부 읽어 frontmatter를 파싱하고 `marked`로 HTML 변환, 날짜 내림차순 정렬. 새 글·프로젝트를 추가하면 **`public/sitemap.xml`에도 URL 한 줄 추가**할 것.
 
 **글 쓰는 건 `/blog-post` 스킬이 한다** (`.claude/skills/blog-post/`) — 프로젝트 slug 하나를 주면 `src/projects.js`의 `detail` 실데이터로 2,000~3,000자 SEO 글을 쓰고, 이미지는 `public/shots/`의 실제 앱 캡처를 재사용(모자라면 라이브 URL을 헤드리스로 캡처)한다. 사이트맵 갱신·자수·빌드 검증까지 포함.
+**한 프로젝트로 2편을 몰아서** 쓰려면 `/add-blogs-to-project` (`.claude/skills/add-blogs-to-project/`) — 재료를 먼저 2등분해 각도가 겹치지 않는 두 편을 만들고 서로 링크한다.
+
+#### 글 하단 문의 블록 (댓글 자리) — `AskBox.jsx`
+
+**댓글 기능은 없다. 백엔드가 없어 저장할 곳이 없기 때문이다**(2026-08-14 사용자 판단으로 보류). 대신 모든 글 맨 아래에 `Post.jsx`가 `AskBox`를 자동으로 붙인다 — **카카오톡 오픈채팅 버튼 + 이메일 버튼**.
+
+- 데이터 원천은 `ME.contact` 하나다 — `email` · `kakao`. **주소를 고칠 땐 `src/projects.js`만 고친다.**
+- `ME.contact.kakao`가 비어 있으면 카톡 버튼은 안 그려진다(죽은 링크 방지).
+- 이메일은 `mailto`가 아니라 **Gmail 웹 작성창**이다(PC에 기본 메일 앱이 없으면 `mailto`가 먹통 — `ME.links`·`Contact.jsx`와 같은 패턴). 제목에 글 제목이 `[블로그] <제목>`으로 미리 채워진다.
+- 🔴 **본문(.md)에 연락처나 "문의 주세요" 문구를 쓰지 말 것** — 바로 아래 블록과 두 번 말하게 된다.
+- 스타일은 `App.css`의 `.askbox*` — 흰 카드 + 1px 테두리, **그림자 없음**(DESIGN.md §6). 480px 이하에서는 버튼이 한 줄씩 꽉 찬다.
+- 진짜 댓글(방문자가 직접 남기는 것)이 필요해지면 저장소(Supabase 등)를 붙이거나 Giscus 같은 외부 위젯을 얹는 게 선택지다. 지금은 둘 다 안 한다.
 
 **본문에서 쓸 수 있는 것** (`.prose` 스타일이 `App.css`에 있음):
 - `<div class="byline">` 글쓴이(E-E-A-T) · `<div class="answer">` 한 줄 답(AI 검색 인용용) · `<div class="post-cta">` 끝 CTA 버튼
@@ -365,6 +378,7 @@ npm run preview  # 빌드 결과 로컬 확인
     - **그 안의 「🙋 답을 기다리는 3건」을 제일 먼저 그대로 보여줄 것**(사용자 지시 2026-08-03). 작업 순서 안내는 그다음이다.
   - 이어 작업할 땐 **여기부터** 읽고, 마치면 「▶ 지금 할 차례」를 갱신한 뒤 새 날짜 섹션을 추가할 것.
 - **블로그 글쓰기**: `.claude/skills/blog-post/SKILL.md` — 프로젝트 1개 → 글 1편. 분량·이미지·FAQ·검증 규약이 전부 여기 있다. 짱샘의 책방 `/add-blog-and-reviews-to-ebook`을 이 사이트(정적 md·앱 캡처·짧은 분량)에 맞게 옮긴 것.
+- **블로그 2편 묶음**: `.claude/skills/add-blogs-to-project/SKILL.md` — 프로젝트 1개 → 글 **2편**. 같은 원본 스킬(책방 3편+후기)에서 나왔지만 핵심이 다르다: **글을 쓰기 전에 `detail` 재료를 2등분하는 단계**가 있고, 두 글의 각도·주 키워드·첫 이미지·hook 패턴이 겹치지 않게 강제하며 서로를 링크한다. 재료가 2편을 못 채우면 1편만 쓰고 그렇게 보고한다. 후기·댓글 생성은 없다.
 - **스레드 채널 운영**: `.claude/skills/threads-post/` 3단 구조 — `SKILL.md`(글 한 편) / `threads-strategy.md`(채널 운영·플랫폼 팩트·KPI) / `threads-log.md`(발행 이력·월간 KPI). 플랫폼 사실이 어긋나면 **전략 §1이 우선**(기준일·출처 있음).
 - **스레드 답글(남의 글에 댓글)**: `.claude/skills/threads-reply/` — 타깃 글 검색 → 공감 답글 초안 → **AI 티 자가검증**(`ai-tell-checklist.md`) → **글래스모피즘 승인 카드**를 브라우저에 띄워(`card-ui.md`) 사용자가 편집·완료 토글·발행 → Claude-in-Chrome으로 실제 발행. 가드레일: 애스트로터핑 금지(앱은 밝혀서만·10 중 1개)·발달장애 육아는 순수 공감·휴먼인더루프 발행. 근거는 `threads-strategy.md` §5.
 - 사업자 정보(강남상회) 풋터는 옛 허브에 있었으나 개인 작업실로 전환하며 제거함. 직접 판매(통신판매) 페이지가 아니면 표시 의무 없음. 필요 시 풋터에 다시 추가 가능.

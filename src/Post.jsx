@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { findPost } from './blogData'
+import AskBox from './AskBox'
 
 function fmtDate(iso) {
   return iso ? iso.replaceAll('-', '.') : ''
@@ -28,6 +29,9 @@ export default function Post() {
 
       {/* 본문은 내가 직접 쓴 로컬 .md → 신뢰 가능한 출처 */}
       <article className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+
+      {/* 댓글 대신 — 백엔드가 없어 저장할 곳이 없다(AskBox.jsx 주석) */}
+      <AskBox subject={post.title} />
 
       <footer className="foot">
         <Link to="/blog" className="back">← 블로그로 돌아가기</Link>
