@@ -273,16 +273,15 @@ CDP `Emulation.setDeviceMetricsOverride` 를 쓰거나 **실제 폰으로** 볼 
 | `c583f67` | 짱샘의 책방 `detail` 최신화 + `SKILL.md` 단계 9 에 색인 URL 자동 출력 |
 | `aa24fd9` | 할 일 마감 기록 |
 
-### 🔴 다음 세션이 이어서 할 것
+### ✅ 이 회차의 할 일 → **전부 처리됨. 열려 있는 항목 없음**
 
-1. **색인 요청 7편이 밀려 있다.** 8/14에 4편 넣은 뒤로 안 했다. 구글 서치콘솔 `URL 검사 →
-   색인 생성 요청` / 네이버 서치어드바이저 `웹 페이지 수집`:
+1. ✅ **색인 요청 7편 완료**(사용자, 08-20). 8/14에 4편 넣은 뒤 밀려 있던 것:
    ```
    bokjimoa-verdict-limits · jungaepro-ai-quota · petphoto-toss-key-mixup
    jjangsaem-53-to-6-books · ax-onsite-diagnosis · work-automation-build · brandconnect-helper
    ```
-   사이트맵은 8/14에 제출해 뒀고 25편 전부 등재돼 있으니 **재제출은 불필요**하다.
-   ⚠️ **앞으로는 글 쓸 때마다 바로 넣을 것.** 밀리면 "어디까지 했더라"를 매번 다시 계산하게 된다.
+   🆕 **다시 밀릴 일이 없다** — `/blog-post` 단계 9가 「색인 요청할 URL」을 자동으로 뱉는다(`c583f67`).
+   사이트맵은 8/14에 제출해 뒀고 25편 전부 등재돼 있어 **재제출은 불필요**하다.
 2. ✅ **짱샘의 책방 `detail` 최신화 완료** (`c583f67`) — 커밋 616→**840**, cover 를 44권 시절 화면에서
    지금 카탈로그로 교체, timeline 9줄(7/30 신간 ~ 8/19) 추가, summary·features·retro 에 6권 전환 반영.
    🔴 **옛 `jjangsaem-cover.png` 는 지우지 말 것** — 블로그 글의 before 이미지로 쓰이고 있다(주석으로도 박아 뒀다).
