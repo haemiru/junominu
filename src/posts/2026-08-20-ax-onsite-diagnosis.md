@@ -104,6 +104,7 @@ cover: /shots/ax-diagnosis-steps.png
 **함께 보기**
 
 - [(AX 현장 진단) 전국 출장 업무 자동화 로드맵 — 크몽](https://kmong.com/gig/804972) — 패키지 선택과 결제
+- [엑셀 반복 작업, 사람 없이 도는 프로그램으로](/blog/work-automation-build) — 진단 다음 단계인 제작은 이쪽입니다
 - [제가 만든 프로젝트들](/) — 지금 운영 중인 서비스 목록
 
 <div class="post-cta">
