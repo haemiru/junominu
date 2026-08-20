@@ -167,7 +167,7 @@ description: >-
 | `italk` | `i-talk` | `jjangsaem` | `ebook/jjangsaem-bookshop` |
 | `transcripto` | `LLM-Service-Transcripto` | 센스트랙 | `SenseTrack` |
 | 아이다이어리 | `i-diary` | 상세페이지 메이커 | `Detai-Page-Maker` |
-| 브랜드커넥트 도우미 | `BrandConnect` | 서이추 도우미 | `naver-blog-seoichoo` |
+| 브랜드커넥트 도우미 | `BrandConnect` | 서이추 도우미 | `Blog-mgr/tools/naver-blog-seoichoo` |
 | 무궁화 | `squid-game-mugunghwa` | 슬라이딩 퍼즐 | `Sliding-Puzzle` |
 | 오델로 | `othello` | | |
 
@@ -516,6 +516,16 @@ FAQ가 2개 미만이면 `FAQPage` 는 생성되지 않는다(잘못된 스키�
 - 내부 링크 목록 · 🔵 [2편] 상호 링크 확인 결과
 - 빌드·lint 결과 · sitemap 반영 여부
 - 확인 URL: `/blog/<slug>` · 리치 결과 테스트 `https://search.google.com/test/rich-results?url=https://www.junominu.com/blog/<slug>`
+- 🔴 **「색인 요청할 URL」을 항상 마지막에 따로 출력한다**(사용자 요청 2026-08-20).
+  글을 쓸 때마다 바로 넣으실 수 있게 **복사 가능한 형태**로:
+
+  ```
+  https://www.junominu.com/blog/<slug>
+  ```
+
+  덧붙일 안내: 구글 서치콘솔 `URL 검사 → 색인 생성 요청` / 네이버 서치어드바이저 `요청 → 웹 페이지 수집`.
+  ⚠️ **배포가 끝난 뒤에** 넣어야 한다 — 배포 전에 요청하면 크롤러가 404를 본 걸로 기록한다.
+  사이트맵은 이미 제출돼 있으므로 **재제출은 불필요**하다(글 추가는 `sitemap.xml` 갱신으로 충분).
 
 ---
 
