@@ -463,9 +463,11 @@ export const PROJECTS = [
     // 요약·기능·스택·타임라인 = 로컬 레포(jungaepro) git 이력에서 추출한 실데이터
     detail: {
       // 스크린샷: 실제 랜딩 화면 캡처(public/shots/). 파일 없으면 자동 숨김.
-      cover: "/shots/jungaepro-cover.png",
-      coverCaption: "중개프로 — 랜딩(지역 지도 검색)",
-      thumb: "/shots/jungaepro-cover.png",
+      // 🔴 옛 jungaepro-cover.png(2026-06-04)·landing/pricing/features/ai-tools/steps(2026-08-14)는
+      //    지우거나 덮어쓰지 말 것 — 이미 나간 블로그 글 4편이 쓰고 있다.
+      cover: "/shots/jungaepro-hero.png",
+      coverCaption: "중개프로 — 랜딩(매물·계약·고객 관리에 사무소 홈페이지까지)",
+      thumb: "/shots/jungaepro-hero.png",
       // shots: ["/shots/jungaepro-1.png", { src: "/shots/jungaepro-2.png", caption: "계약서 PDF" }],
 
       // 시작일 → "0 → 작업 N일" 자동 계산용 (베타 운영 중 → launched 생략)
@@ -484,7 +486,7 @@ export const PROJECTS = [
         //    라이브 랜딩과 `blog-content/context/product-facts.md` 도 같은 값을 들고 있다.
         //    값이 바뀌면 여기와 블로그 글(jungaepro-office-homepage 등)을 같이 고칠 것.
         "매물 관리 — 부동산 10개 종목별 동적 폼(아파트·오피스텔·빌라·주택·원룸·상가·사무실·토지·지식산업센터·공장/창고)·상태 자동 전환·상세 검색",
-        "국토부 실거래가 — 11개 API로 단지별 실거래 실데이터, 주변 시세·ROI·입지분석(캐싱·출처 표시)",
+        "데이터 분석(Pro) — 국토부 실거래가로 시세·수익률, 읍면동 입지 브리핑, 거래량·미분양·금리 추이. 공장·창고는 산업단지·나들목·항만까지 거리도 함께",
         "계약 — 12종 계약서 양식 자동 추천 + 확인설명서·등기부등본 PDF, 계약금/잔금 영수증, 임시저장·유효성 검사",
         "AI 업무 도우미 — 매물설명 생성·법률검토·고객분석·문의 자동응답·입주 가이드(Claude 탑재)",
         "CRM — 파이프라인 단계별 고객 추적 + 상담일지 + 매칭매물 태그",
