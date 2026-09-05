@@ -456,7 +456,9 @@ export const PROJECTS = [
     //    apex(jungaepro.com)도 쓰지 말 것 — www 로 리다이렉트되므로 처음부터 www 로 적는다.
     //    옛 주소 smart-sjhome.vercel.app 은 폐기.
     url: "https://www.jungaepro.com/",
-    status: "building",
+    // 2026-09 정식 오픈(사용자 확인). 랜딩에 베타 표기 없고 요금제·토스 결제가 열려 있다.
+    // ⚠️ `launched` 는 비워 뒀다 — 정확한 오픈일이 확인되면 넣을 것(넣으면 "0 → 배포 N일"이 계산된다).
+    status: "live",
     tags: ["SaaS", "멀티테넌트", "React"],
 
     // 상세(메이킹 스토리) — 이 필드가 있으면 카드 클릭 시 내부 상세 페이지로 이동
@@ -470,7 +472,7 @@ export const PROJECTS = [
       thumb: "/shots/jungaepro-hero.png",
       // shots: ["/shots/jungaepro-1.png", { src: "/shots/jungaepro-2.png", caption: "계약서 PDF" }],
 
-      // 시작일 → "0 → 작업 N일" 자동 계산용 (베타 운영 중 → launched 생략)
+      // 시작일 → "0 → 작업 N일" 자동 계산용 (launched 미기입 → 오늘까지로 계산)
       started: "2026-02-18",      // 첫 커밋(실데이터)
       commits: 610,               // git 이력(실데이터)
       tint: "#7c5cff",            // 카드 미디어 밴드 색조
