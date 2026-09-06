@@ -135,9 +135,12 @@ detail: {
 
 - 데이터는 `projects.js`의 `ME.contact` 하나에 모여 있고, `Contact.jsx`가 자동 렌더한다(오퍼 카드 = `ME.contact.offers[]`).
 - **폼 연결**: 구글폼/Tally로 폼을 만든 뒤 `ME.contact.formUrl`에 링크만 붙이면 모든 "신청/문의" 버튼이 그 폼으로 연결된다. 코칭·외주를 다른 폼으로 받으려면 각 `offers[].formUrl`로 개별 지정.
-- **외부 판매 페이지로 직행**(`offers[].href`): 오퍼에 `href`가 있으면 **폼을 안 거치고 그 URL로 새 탭 이동**한다(Tally 팝업으로 가로채지 않음). 지금 **1:1 대면 코칭 → 래피드 상품 `latpeed.com/products/V8Kxm`** 이 이 방식이다. 숨김필드를 못 쓰므로 귀속은 **utm으로만** 남는다(`utm_source=junominu&utm_medium=contact&utm_content=<typeValue>&utm_campaign=<유입경로>`).
-  - 🔴 **상품 정보의 원천은 이 레포가 아니라 `D:\Claude-prj\lecture\latpeed\상품설명-텍스트.md`다.** 가격·회차·환불 규정을 고칠 땐 **두 곳을 같이** 고친다. 스레드 프로필 링크가 `junominu.com` 하나뿐이라(사용자 방침 2026-08-02) **`/contact`가 코칭의 유일한 관문**이고, 여기가 상품과 다른 말을 하면 곧바로 신뢰 문제가 된다.
-  - ⚠️ **0호 3명이 차면** `offers[0].note`에서 "0호 3명 한정 290,000원"을 빼고 정가 단독으로 되돌린다.
+- **외부 링크로 직행**(`offers[].href`): 오퍼에 `href`가 있으면 **폼을 안 거치고 그 URL로 새 탭 이동**한다(Tally 팝업으로 가로채지 않음). 지금 **1:1 대면 코칭 → 카카오톡 1:1 오픈채팅 `open.kakao.com/o/s7lVriMi`** 가 이 방식이다. 숨김필드를 못 쓰므로 귀속은 **utm으로만** 남는다(`utm_source=junominu&utm_medium=contact&utm_content=<typeValue>&utm_campaign=<유입경로>`).
+  - 🔴 **2026-09-06 래피드 폐기.** 예전엔 래피드 상품(`latpeed.com/products/V8Kxm`)으로 직행했는데 접었다. 같이 사라진 것: **0호 3명 프로모션(290,000원)**, **결제 후 3일 전액 환불**(래피드 취소 규정에 기댄 문구).
+  - 🔴 **결제 흐름이 뒤집혔다.** 래피드는 「구매하기」가 유일한 버튼이라 15분 통화를 **결제 뒤**에 둘 수밖에 없었는데(lecture 레포 §5 C안), 카톡으로 받으면 **통화가 앞으로 온다.** 맞는지를 결제 전에 거르므로 환불 안전장치가 필요 없어졌다 — 문구를 되돌릴 때 이 순서를 다시 뒤집지 말 것.
+  - 유지되는 값: **3회 7시간 590,000원 · 2:1 동반 1인당 390,000원 · 종료 후 2주 질문 응답**. 상품 자체의 조건이다. 원본 설명은 `D:\Claude-prj\lecture\latpeed\상품설명-텍스트.md`에 있지만 **그 문서의 래피드 전제(0호·구매하기 직결·3일 취소)는 이제 유효하지 않다.**
+  - ⚠️ 코칭용 카톡방(`offers[].href`)과 블로그 `AskBox`용 `ME.contact.kakao`는 **다른 방**이다. 한쪽을 고칠 때 다른 쪽을 같이 바꾸지 말 것.
+  - 스레드 프로필 링크가 `junominu.com` 하나뿐이라(사용자 방침 2026-08-02) **`/contact`가 코칭의 유일한 관문**이고, 여기가 실제 조건과 다른 말을 하면 곧바로 신뢰 문제가 된다.
 - **Tally 팝업 임베드**: `ME.contact.formId`(예: `b5EKOL`)가 있으면 /contact 오퍼 버튼이 새 탭 대신 **Tally 팝업**으로 사이트 안에서 폼을 연다(`embed.js` 로드 → `Tally.openPopup`). 코칭/외주 구분은 `offers[].typeValue`를 Tally **숨김필드 `type`**로 전달(팝업=hiddenFields, 새 탭 폴백=`?type=`). Tally 스크립트 미로딩 시 새 탭으로 폴백.
 - **유입 경로 추적(숨김필드 `src`)**: `src/attribution.js`가 **첫 진입 때** utm/referrer를 붙잡아 `sessionStorage`에 저장하고(`main.jsx`에서 렌더 전 1회 호출), /contact가 그 값을 Tally 숨김필드 **`src`**로 함께 보낸다 → "어느 스레드 글이 문의를 만들었나"가 응답에 기록된다.
   - 값 형식: `threads/bokjimoa-anchor`(utm_source/utm_campaign) → 없으면 `l.threads.com`(referrer 호스트) → 없으면 `direct`.
