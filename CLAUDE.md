@@ -86,10 +86,11 @@ junominu/
 ├── src/
 │   ├── main.jsx        # 진입점 (렌더 전 captureAttribution() 1회 호출)
 │   ├── attribution.js  # 유입 경로(utm/referrer)를 첫 진입 때 sessionStorage에 first-touch 저장 → /contact가 Tally 숨김필드 src로 전달
-│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact) + ScrollToTop + BackToTop
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact, /courses) + ScrollToTop + BackToTop
 │   ├── Home.jsx        # 홈: Hero(코칭·외주 CTA 버튼)·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·ContactCTA 밴드·풋터 + ProjectCard (내비 BLOG·함께하기, 풋터 프롬프트노트·블로그·코칭외주 링크)
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
 │   ├── Contact.jsx     # 함께하기 (/contact) — ME.contact 로 1:1 코칭·외주 오퍼 카드 자동 렌더. 버튼은 외부 폼(formUrl)→없으면 Gmail 폴백
+│   ├── Courses.jsx     # 강의 소개 (/courses) — ME.courses 세 과정을 탭으로. 탭은 ?c=basic|oneday|regular 로 주소에 남는다
 │   ├── Blog.jsx        # 블로그 목록 (/blog)
 │   ├── Post.jsx        # 블로그 글 (/blog/:slug) — marked로 .md 렌더 + 하단 AskBox
 │   ├── AskBox.jsx      # 글 하단 문의 블록 — 카톡 오픈채팅 + 이메일(ME.contact). 댓글 자리를 대신한다
@@ -157,6 +158,21 @@ detail: {
   - ⚠️ 폼이 없어 Gmail 폴백으로 갈 때는 `src`가 전달되지 않는다(제목만 채움).
 - **폴백**: `formUrl`·`formId`가 비어 있으면 버튼이 `subject`가 채워진 Gmail 작성창(`ME.contact.email`)으로 열린다 → 폼이 없어도 죽은 링크가 안 생김.
 - 홈 진입점: 히어로 CTA 버튼 + 내비 "함께하기" + 하단 `ContactCTA` 밴드(`#contact`) + 풋터 "코칭·외주". 문안(오퍼·소개)은 전부 `ME.contact`에서 수정.
+- **강의 카드 안 보조 링크**(`offers[].more`): `{ to, label }` 을 적으면 카드 본문 아래에 사이트 **안쪽**으로 가는 라우터 링크가 생긴다(새 탭 아님). 지금은 강의 오퍼 → `/courses` 하나뿐이다. 다른 오퍼에도 쓸 수 있다.
+
+### 강의 소개 페이지 (/courses) — 세 과정 탭
+
+`/contact` 의 강의 카드에는 과정마다 **한 줄씩**만 적혀 있어 "무엇을 배우는지"가 안 보였다. 그 답이 `/courses` 다.
+
+- **들어오는 문은 하나** — `/contact` 강의 카드의 **"어떤걸 배우나요? →"**(`offers[0].more`). 상단 내비에는 넣지 않았다(내비 4개 원칙, DESIGN.md 개편표).
+- **데이터는 `ME.courses` · `ME.courseCommon`** (`projects.js`). `Courses.jsx` 는 그걸 그대로 렌더하기만 한다.
+- 🔴 **커리큘럼의 원천은 이 레포가 아니라 `D:/Claude-prj/lecture` 다.** 부·단원·분(min)은 그 레포 `basic|oneday/chapters/*.html` 의 `data-part`·`data-title`·`data-min`, 정규는 `guide/chapters/*.html` 에서 그대로 옮겼다. 저쪽 원고가 바뀌면 여기도 바뀐다 — **값을 지어내지 말고 그 파일을 다시 읽을 것.**
+  - 합계 검증: 기초 **180분** · 원데이 **250분**(쉬는 시간 20분 별도). 페이지가 `min` 을 더해 "합계 N분"으로 보여주므로 **틀리면 화면에 바로 드러난다.**
+- 🔴 **가격은 두 곳에 적혀 있다** — `ME.courses[].price` 와 `ME.contact.offers[0].note`. **같이 고칠 것.**
+- **탭은 주소에 남는다** — `?c=basic|oneday|regular`(`useSearchParams`). 카톡으로 "원데이는 이거예요" 하고 링크를 보낼 수 있어야 해서다. 값이 이상하면 첫 과정으로 떨어진다.
+- **탭 순서 = 난이도 순서** — 기초(까만 창 없이) → 원데이(하루에 배포) → 정규(1:1 대면). `ME.courses` 배열 순서가 곧 화면 순서다.
+- 신청 버튼은 `ME.contact.offers[0].href`(카톡)를 **가져다 쓴다** — 카톡 주소를 이 페이지에 또 적지 않는다.
+- 프리렌더(`scripts/prerender-meta.js`)의 **고정 라우트 4개** 중 하나이고, `public/sitemap.xml` 에도 들어 있다.
 
 ### 블로그 글 추가 (Phase 3)
 

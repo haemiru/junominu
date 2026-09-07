@@ -226,6 +226,14 @@ const ROUTES = [
     image: OG_FALLBACK,
     imageAlt: '1:1 코칭 · 외주 문의',
   },
+  {
+    path: '/courses',
+    title: `바이브 코딩 강의 · 기초 · 원데이 · 정규 · ${BRAND}`,
+    description:
+      '코딩을 한 번도 안 해본 분을 위한 세 과정 — 기초과정(4시간) · 원데이 클래스(하루) · 1:1 정규과정(3회 7시간). 커리큘럼과 수강료를 공개합니다.',
+    image: OG_FALLBACK,
+    imageAlt: '바이브 코딩 강의',
+  },
   ...projectRoutes(),
   ...postRoutes(posts),
 ]
@@ -350,6 +358,6 @@ ${items}
 writeFileSync(join(DIST, 'rss.xml'), buildRss(posts), 'utf8')
 
 console.log(
-  `✓ 메타 프리렌더 ${ROUTES.length}개 — 프로젝트 ${projectRoutes().length} · 글 ${posts.length} · 고정 3` +
+  `✓ 메타 프리렌더 ${ROUTES.length}개 — 프로젝트 ${projectRoutes().length} · 글 ${posts.length} · 고정 4` +
     `\n✓ RSS ${posts.length}개 → dist/rss.xml`,
 )

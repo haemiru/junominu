@@ -50,6 +50,7 @@ const Blog = lazy(() => import('./Blog'))
 const Post = lazy(() => import('./Post'))
 const Prompts = lazy(() => import('./Prompts'))
 const Contact = lazy(() => import('./Contact'))
+const Courses = lazy(() => import('./Courses'))
 
 // 라우트가 바뀌면(홈↔상세) 맨 위에서 시작 — 단, #앵커 이동은 건드리지 않음
 function ScrollToTop() {
@@ -78,6 +79,7 @@ export default function App() {
           <Route path="/blog/:slug" element={<Post />} />
           <Route path="/prompts" element={<Prompts />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Suspense>

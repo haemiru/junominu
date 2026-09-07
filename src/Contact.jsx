@@ -71,6 +71,10 @@ function OfferCard({ o, contact }) {
           {o.points.map((pt, i) => <li className="now__item" key={i}>{pt}</li>)}
         </ul>
         {o.note && <p className="offer__note">{o.note}</p>}
+        {/* 사이트 안쪽으로 보내는 보조 링크(예: 강의 → /courses). 새 탭이 아니라 라우터 이동이다. */}
+        {o.more && (
+          <Link className="offer__more" to={o.more.to}>{o.more.label} →</Link>
+        )}
       </div>
       <a className="btn btn--primary offer__cta" href={url} target="_blank" rel="noreferrer" onClick={openForm}>
         {o.cta} →

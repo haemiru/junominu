@@ -20,6 +20,8 @@
 >
 > 🆕 **블로그 25 → 27편**이고 목록이 **프로젝트별로 묶여** 있다. 상세 하단에 관련 글도 나온다.
 > 🆕 **강의는 세 과정** — 기초 49,000 / 원데이 190,000 / 정규 590,000. 신청은 **카카오톡 1:1**.
+> 🆕 **강의 소개 페이지 `/courses` 신설** — 세 과정을 탭으로. 커리큘럼·수강료·"안 맞는 분"까지.
+>    들어오는 문은 `/contact` 강의 카드의 **"어떤걸 배우나요? →"** 하나다.
 > 🆕 풋터에 **사업자 정보**(주식회사 짱샘에듀). 값은 `ME.biz` 한 곳, 컴포넌트는 `BizInfo.jsx`.
 > 🆕 **중개프로가 live** 로 바뀌었다(2026-09 정식 오픈).
 >
@@ -204,6 +206,53 @@ CDP `Emulation.setDeviceMetricsOverride` 를 쓰거나 **실제 폰으로** 볼 
 - 스레드 글 링크에 **UTM** 붙이기: `?utm_source=threads&utm_campaign=<글슬러그>`
   - 예: `https://www.junominu.com/p/petphoto?utm_source=threads&utm_campaign=petphoto-anchor`
   - 이걸 해야 Tally `src`와 Vercel Analytics **UTM Parameters** 탭이 글 단위로 쪼개진다. 안 붙이면 전부 `l.threads.com` 한 덩어리.
+
+---
+
+## 2026-09-08 (2) — 🎓 강의 소개 페이지 `/courses` 신설
+
+### 왜
+
+`/contact` 의 「바이브 코딩 강의」 카드에는 세 과정이 **한 줄씩**만 적혀 있었다.
+가격과 시간은 보이는데 **"무엇을 배우는지"가 안 보인다.** 카톡으로 문의가 와도
+그때부터 커리큘럼을 말로 설명해야 했다. 그 답을 놓을 자리가 필요했다.
+
+참고한 것: codeit 10x `vibe-coding` 판매 페이지(18개 섹션). **그대로 옮기지 않았다** —
+이 사이트는 미니멀 톤이라 핵심만 추렸다(비교 카드 → 탭 → 커리큘럼 → 공통 안내 → CTA).
+
+### 만든 것
+
+| 파일 | 무엇 |
+|---|---|
+| `src/Courses.jsx` | 새 페이지. 데이터를 그대로 렌더만 한다 |
+| `src/projects.js` | `ME.courses`(세 과정) · `ME.courseCommon`(준비물·안 맞는 분) 신설 |
+| `src/projects.js` | 강의 오퍼에 `more: { to, label }` — 카드 안 보조 링크 |
+| `src/Contact.jsx` | `offers[].more` 를 렌더(`.offer__more`) |
+| `src/App.jsx` | `/courses` lazy 라우트 |
+| `scripts/prerender-meta.js` | 고정 라우트 3 → **4** |
+| `public/sitemap.xml` | `/courses` 한 줄 |
+| `src/App.css` | 탭·비교 카드·커리큘럼 스타일(그림자 없음) |
+
+### 결정과 함정
+
+- 🔴 **커리큘럼의 원천은 `D:/Claude-prj/lecture` 레포다.** 부·단원·분을
+  `basic|oneday/chapters/*.html` 의 `data-part`·`data-title`·`data-min`,
+  정규는 `guide/chapters/*.html` 에서 그대로 옮겼다. **지어내지 말 것.**
+  - 합계가 화면에 찍힌다(기초 **180분** · 원데이 **250분**) → 틀리면 바로 드러난다.
+- 🔴 **가격은 두 곳에 있다** — `ME.courses[].price` 와 `ME.contact.offers[0].note`. 같이 고칠 것.
+- **탭을 주소에 남겼다**(`?c=basic|oneday|regular`). 카톡으로 "원데이는 이거예요" 하고
+  링크를 보낼 수 있어야 해서다. 이상한 값이면 첫 과정으로 떨어진다.
+- **내비에는 안 넣었다.** 상단 바 4개 원칙(DESIGN.md 개편표)을 깨지 않으려고
+  진입점을 `/contact` 카드 안 링크 하나로 뒀다.
+- **카톡 주소를 이 페이지에 다시 적지 않았다** — `ME.contact.offers[0].href` 를 가져다 쓴다.
+- ⚠️ eslint `react-hooks/immutability` 에 걸렸다 — 커리큘럼 회차 머리글을 렌더 중
+  변수 재할당으로 계산했더니 막혔다. `heads` 배열을 **먼저 한 번에** 계산하는 것으로 바꿨다.
+
+### 확인
+
+- `npm run build` ✅ — 프리렌더 **40개**(고정 4 · 프로젝트 9 · 글 27)
+- `npx eslint` ✅ 0
+- 헤드리스 캡처로 세 탭 + 폭 600px(모바일 분기) 확인 — 넘침 없음
 
 ---
 

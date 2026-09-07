@@ -2186,3 +2186,292 @@ a.pgroup__name:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── 강의 소개 (/courses) ──────────────────────────────────────────
+   /contact 의 「바이브 코딩 강의」 카드 → "어떤걸 배우나요?" 로 들어온다.
+   🚫 그림자 없음(DESIGN.md §6) — 깊이는 1px 테두리 + surface 대비로만 낸다. */
+
+/* /contact 오퍼 카드 안의 보조 링크 */
+.offer__more {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+.offer__more:hover {
+  text-decoration: underline;
+}
+
+/* 세 과정 한눈에 — 카드 자체가 탭 버튼이다(누르면 아래 패널이 바뀐다) */
+.ctable {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.ccard {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 18px 20px;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ccard:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-hover);
+}
+
+/* 선택된 과정 — 파란 테두리 + 옅은 틴트. 채움 파랑은 CTA 버튼에만 쓴다. */
+.ccard--on {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+}
+
+.ccard__emoji {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.ccard__tab {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.ccard__title {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.ccard__price {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--accent-ink);
+}
+
+.ccard__len {
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+/* 탭 줄 */
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tab {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.tab:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.tab--on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.tab--on:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+}
+
+.tabpanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.course__name {
+  font-size: var(--fs-h4);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.course__lead {
+  margin-top: 10px;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* 수강료·시간·진행 — 세 칸 요약 */
+.course__meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 22px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.course__metaitem {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  background: var(--surface-sunken);
+  padding: 16px 18px;
+}
+
+.course__metalabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-faint);
+}
+
+.course__metavalue {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.course__metanote {
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.course__sec {
+  margin-top: 30px;
+}
+
+.course__h {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+
+.course__hnote {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+/* 원데이 트랙 셋 */
+.tracks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.track {
+  display: grid;
+  gap: 4px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.track__name {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.track__desc {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+/* 커리큘럼 — 왼쪽 부(회차) / 제목 / 오른쪽 분.
+   정규과정은 분이 없고 같은 회차가 이어져서, 회차 칸은 바뀔 때만 글자가 찍힌다. */
+.curri {
+  list-style: none;
+  display: grid;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.curri__item {
+  display: grid;
+  grid-template-columns: 88px 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.curri__item:first-child {
+  border-top: 0;
+}
+
+.curri__part {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--accent-ink);
+}
+
+.curri__part--dim {
+  color: transparent;
+}
+
+.curri__title {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.curri__min {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .ctable,
+  .tracks,
+  .course__meta {
+    grid-template-columns: 1fr;
+  }
+
+  /* 좁은 화면에서는 회차를 제목 위에 한 줄로 올린다 — 88px 칸이 제목을 짓눌러서 */
+  .curri__item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .curri__part {
+    grid-column: 1 / -1;
+  }
+
+  .curri__part--dim {
+    display: none;
+  }
+}
