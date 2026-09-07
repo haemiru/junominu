@@ -4,6 +4,7 @@ date: 2026-08-20
 summary: 매일·매주 손으로 하던 엑셀 정리, 자료 수집, 알림 발송을 정해진 시각에 알아서 도는 프로그램으로 만들어 드립니다. 개발 지식은 필요 없습니다.
 tags: [업무자동화, 엑셀, 크몽, 바이브코딩]
 slug: work-automation-build
+project: 크몽 서비스
 cover: /shots/automation-build-what.png
 ---
 

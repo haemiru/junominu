@@ -4,6 +4,7 @@ date: 2026-08-20
 summary: 어디서부터 손댈지 모르겠다면 개발 견적보다 진단이 먼저입니다. 사업장에 직접 찾아가 반복 업무를 보고 우선순위와 로드맵을 드립니다. 전국 출장비 무료.
 tags: [업무자동화, 컨설팅, 크몽, 바이브코딩]
 slug: ax-onsite-diagnosis
+project: 크몽 서비스
 cover: /shots/ax-diagnosis-steps.png
 ---
 

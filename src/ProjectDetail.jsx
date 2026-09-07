@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { findProject, STATUS } from './projects'
+import { postsOfProject } from './blogData'
 import BizInfo from './BizInfo'
 
 function fmtDate(iso) {
@@ -50,6 +51,7 @@ export default function ProjectDetail() {
   const status = STATUS[p.status] ?? STATUS.idea
   const isBeta = p.status !== 'live'
   const days = d.started ? daysBetween(d.started, d.launched) : null
+  const relatedPosts = postsOfProject(p.slug)
 
   return (
     <div className="page">
@@ -179,6 +181,30 @@ export default function ProjectDetail() {
           {d.retro.map((r, i) => (
             <p className="section__para" key={i}>{r}</p>
           ))}
+        </section>
+      )}
+
+      {/* 🔴 이 프로젝트로 쓴 블로그 글(2026-09-07 신설).
+          연결은 글 slug 의 접두사(`jungaepro-…`)나 frontmatter 의 `project:` 로 자동이다 —
+          blogData.js 의 postsOfProject 참고. 글이 없으면 이 블록은 그려지지 않는다. */}
+      {relatedPosts.length > 0 && (
+        <section className="dsection">
+          <h2 className="section__label">이 프로젝트로 쓴 글</h2>
+          <ul className="relposts">
+            {relatedPosts.map((post) => (
+              <li key={post.slug}>
+                <Link className="relpost" to={`/blog/${post.slug}`}>
+                  <span className="relpost__title">{post.title}</span>
+                  {post.summary && <span className="relpost__sum">{post.summary}</span>}
+                  <span className="relpost__meta">
+                    {post.date && <span>{fmtDate(post.date)}</span>}
+                    <span>·</span>
+                    <span>{post.readMin}분 읽기</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

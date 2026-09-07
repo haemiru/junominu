@@ -4,6 +4,7 @@ date: 2026-08-20
 summary: 제휴 상품마다 원고가 밀리는데 자동 발행은 계정이 걱정되신다면. 상품 주소만 넣으면 초안·사진·정보카드까지 만들고 발행은 직접 하시는 윈도우 프로그램입니다.
 tags: [브랜드커넥트, 블로그, 크몽, 업무자동화]
 slug: brandconnect-helper
+project: 크몽 서비스
 cover: /shots/brandconnect-app.png
 ---
 

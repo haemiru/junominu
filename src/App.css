@@ -929,6 +929,96 @@
   align-items: center;
 }
 
+/* ── 블로그 프로젝트 묶음 (Blog.jsx) ───────────────────────
+   글이 27편을 넘기면서 날짜순 한 줄로는 "무엇에 대한 글인지"가 안 보였다.
+   묶음 머리는 프로젝트 상세로 가는 링크이기도 하다. */
+.pgroup {
+  margin-top: 44px;
+}
+
+.pgroup:first-of-type {
+  margin-top: 28px;
+}
+
+.pgroup__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-h4);
+  font-weight: 800;
+  color: var(--text);
+}
+
+.pgroup__emoji {
+  font-size: 20px;
+}
+
+.pgroup__name {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.pgroup__name:hover {
+  color: var(--accent-ink);
+}
+
+.pgroup__count {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-faint);
+}
+
+/* ── 프로젝트 상세의 「이 프로젝트로 쓴 글」 ─────────────── */
+.relposts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.relpost {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-decoration: none;
+}
+
+.relpost:hover {
+  border-color: var(--accent);
+}
+
+.relpost__title {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.relpost__sum {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
+.relpost__meta {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
 /* ── 사업자 정보 (BizInfo.jsx) ───────────────────────────
    풋터 링크 줄 아래에 한 덩이로 붙는다. .foot 이 flex 라서
    flex-basis:100% 로 스스로 줄을 차지하게 했다.

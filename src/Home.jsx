@@ -475,7 +475,7 @@ export default function Home() {
           <a href="#work">프로젝트</a>
           <Link to="/blog">블로그</Link>
           <Link to="/prompts">프롬프트 노트</Link>
-          <Link to="/contact">함께하기</Link>
+          <Link to="/contact">문의하기</Link>
         </nav>
       </div>
     </div>
