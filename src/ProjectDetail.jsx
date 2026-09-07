@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { findProject, STATUS } from './projects'
+import BizInfo from './BizInfo'
 
 function fmtDate(iso) {
   return iso.replaceAll('-', '.')
@@ -183,6 +184,7 @@ export default function ProjectDetail() {
 
       <footer className="foot">
         <Link to="/" className="back">← 작업실로 돌아가기</Link>
+        <BizInfo />
       </footer>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
+import BizInfo from './BizInfo'
 import {
   ME, PROJECTS, STATUS, DONE_PHRASE, maxCommits,
   featuredProjects, projectsByCategory, findProject,
@@ -588,6 +589,7 @@ export default function Home() {
         <Link to="/contact" className="foot__link">코칭·외주</Link>
         <span className="foot__sep">·</span>
         <span>made with vibe coding</span>
+        <BizInfo />
       </footer>
     </div>
     </>

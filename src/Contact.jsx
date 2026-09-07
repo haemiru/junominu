@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { ME, PROJECTS, totalCommits } from './projects'
 import { getAttribution } from './attribution'
+import BizInfo from './BizInfo'
 
 // 폼 URL 이 없을 때의 폴백 — 성함/문의유형이 subject 로 채워진 Gmail 작성창을 연다.
 // (PC에 기본 메일 앱이 없어도 열리도록 mailto 대신 Gmail 웹 작성창 사용 — ME.links 와 동일 패턴)
@@ -149,6 +150,7 @@ export default function Contact() {
 
       <footer className="foot">
         <Link to="/" className="back">← 작업실로 돌아가기</Link>
+        <BizInfo />
       </footer>
     </div>
   )

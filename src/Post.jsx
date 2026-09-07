@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { findPost } from './blogData'
 import AskBox from './AskBox'
+import BizInfo from './BizInfo'
 
 function fmtDate(iso) {
   return iso ? iso.replaceAll('-', '.') : ''
@@ -35,6 +36,7 @@ export default function Post() {
 
       <footer className="foot">
         <Link to="/blog" className="back">← 블로그로 돌아가기</Link>
+        <BizInfo />
       </footer>
     </div>
   )

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { PROJECTS } from './projects'
+import BizInfo from './BizInfo'
 
 // 모든 프로젝트의 detail.prompts 를 모아 보여주는 "프롬프트 노트" 페이지.
 // projects.js의 데이터를 그대로 읽으므로, (초안)을 실제 프롬프트로 채우면 자동 반영된다.
@@ -65,6 +66,7 @@ export default function Prompts() {
 
       <footer className="foot">
         <Link to="/" className="back">← 작업실로 돌아가기</Link>
+        <BizInfo />
       </footer>
     </div>
   )
