@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Analytics } from '@vercel/analytics/react'
 import './App.css'
 import Home from './Home'
+import TopBar from './TopBar'
 import BackToTop from './BackToTop'
 
 // ────────────────────────────────────────────────────────────────
@@ -52,12 +53,43 @@ const Prompts = lazy(() => import('./Prompts'))
 const Contact = lazy(() => import('./Contact'))
 const Courses = lazy(() => import('./Courses'))
 
-// 라우트가 바뀌면(홈↔상세) 맨 위에서 시작 — 단, #앵커 이동은 건드리지 않음
+// 라우트가 바뀌면(홈↔상세) 맨 위에서 시작. #앵커가 붙어 있으면 그 자리로 간다.
+//
+// 🔴 SPA 라 브라우저가 해시 스크롤을 대신 해 주지 않는다 — 주소가 바뀌는 시점에
+//    대상 요소가 아직 안 그려져 있기 때문이다(라우트가 lazy 면 더 늦다).
+//    그래서 없으면 몇 프레임 더 기다렸다가 찾는다. 이게 없으면
+//    다른 페이지에서 온 `/#work`·`/courses#faq` 같은 링크가 조용히 맨 위에 떨어진다.
+// 약 3초. 라우트가 lazy 라 조각을 받아오는 데 0.5초로는 모자랐다(2026-09-08 실측 —
+// /courses#faq 가 조용히 맨 위에 떨어졌다). 찾는 즉시 멈추므로 넉넉해도 손해가 없다.
+const HASH_TRIES = 180
+
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
-    if (hash) return
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    if (!hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      return
+    }
+    const id = decodeURIComponent(hash.slice(1))
+    let raf = 0
+    let timer = 0
+    let left = HASH_TRIES
+    const seek = () => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView()
+        // ⚠️ 한 번으로는 부족하다 — 그 아래 이미지가 늦게 도착하면 자리가 밀린다.
+        //    비율을 미리 잡아 두긴 했지만(폰트 로딩 등 남은 변수가 있다) 한 번 더 맞춘다.
+        timer = setTimeout(() => document.getElementById(id)?.scrollIntoView(), 300)
+        return
+      }
+      if (left-- > 0) raf = requestAnimationFrame(seek)
+    }
+    seek()
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(timer)
+    }
   }, [pathname, hash])
   return null
 }
@@ -71,6 +103,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      {/* 상단 바는 라우트 밖에 있다 — 어느 페이지에서도 같은 자리에 그대로 있고,
+          로고를 누르면 홈으로 간다(2026-09-08). */}
+      <TopBar />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/" element={<Home />} />

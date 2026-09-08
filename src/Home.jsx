@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from './Logo'
 import BizInfo from './BizInfo'
 import {
   ME, PROJECTS, STATUS, DONE_PHRASE, maxCommits,
@@ -462,23 +461,8 @@ export default function Home() {
     //    50vw 가 스크롤바 폭을 포함해서 가로 스크롤이 생긴다. 그래서 아예 형제로 쪼갰다.
     //    .page 가 max-width 를 맡고, 그 사이 구간은 자연스럽게 화면 전체를 쓴다.
     <>
-    {/* 상단 바 — 로고와 내비를 히어로 밖으로 뺐다(2026-08-03 2차).
-        히어로 안에 쌓아두니 PC 폭에서 7단이 세로로 늘어져 어색했다.
-        내비는 4개까지만(DESIGN.md §10 "Easy to answer"). */}
-    <div className="topbar">
-      <div className="topbar__inner">
-        <a className="topbar__brand" href="#top" aria-label={ME.name}>
-          <Logo size={30} />
-          <span className="topbar__name">{ME.name}</span>
-        </a>
-        <nav className="topbar__nav" aria-label="바로가기">
-          <a href="#work">프로젝트</a>
-          <Link to="/blog">블로그</Link>
-          <Link to="/prompts">프롬프트 노트</Link>
-          <Link to="/contact">문의하기</Link>
-        </nav>
-      </div>
-    </div>
+    {/* 상단 바는 App.jsx 가 라우트 위에 그린다(2026-09-08) — 전 페이지 공통.
+        원래 여기 있어서 /blog·/p/:slug 로 들어가면 사라졌다. → src/TopBar.jsx */}
 
     {/* 히어로 전체를 감싸는 배경 층 — 은은한 점 격자 + 파란 광.
         순백 위에 글자만 있으면 밋밋하다는 지적(2026-08-03). .page 의 형제라

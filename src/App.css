@@ -2,7 +2,10 @@
   position: relative;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: clamp(48px, 9vw, 120px) clamp(20px, 5vw, 40px) 72px;
+  /* 위 여백이 예전엔 120px 이었다 — 그때는 이 위에 아무것도 없었기 때문이다.
+     2026-09-08 부터 상단 바가 전 페이지에 깔리므로, 그만큼 줄이지 않으면
+     바와 본문 사이가 텅 빈다. */
+  padding: clamp(28px, 3.5vw, 48px) clamp(20px, 5vw, 40px) 72px;
 }
 
 /* 홈은 히어로 / 풀블리드 / 나머지 세 덩어리로 쪼개져 있다(풀블리드 스크롤바 문제 회피).
@@ -2539,6 +2542,9 @@ a.pgroup__name:hover {
 .course__demoimg {
   display: block;
   width: 100%;
+  /* 🔴 비율을 미리 잡아 둔다. 안 그러면 이미지가 도착할 때 페이지가 630px 밀리고,
+     #faq 같은 해시 링크가 엉뚱한 자리에 떨어진다(2026-09-08 실측). */
+  aspect-ratio: 40 / 21;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }

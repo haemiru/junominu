@@ -86,7 +86,8 @@ junominu/
 ├── src/
 │   ├── main.jsx        # 진입점 (렌더 전 captureAttribution() 1회 호출)
 │   ├── attribution.js  # 유입 경로(utm/referrer)를 첫 진입 때 sessionStorage에 first-touch 저장 → /contact가 Tally 숨김필드 src로 전달
-│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact, /courses) + ScrollToTop + BackToTop
+│   ├── App.jsx         # 라우터 셸: BrowserRouter + Routes(/, /p/:slug, /blog, /blog/:slug, /prompts, /contact, /courses) + TopBar + ScrollToTop(해시 이동 포함) + BackToTop
+│   ├── TopBar.jsx      # 상단 바 — 전 페이지 공통. 로고→홈, 내비 4개(프로젝트·블로그·프롬프트 노트·문의하기)
 │   ├── Home.jsx        # 홈: Hero(코칭·외주 CTA 버튼)·지표·About·Now·STACK·JOURNEY(시간순)·PROJECTS·ContactCTA 밴드·풋터 + ProjectCard (내비 BLOG·함께하기, 풋터 프롬프트노트·블로그·코칭외주 링크)
 │   ├── ProjectDetail.jsx # 상세 페이지 — detail 데이터로 자동 렌더(/p/:slug). cover/shots 이미지 지원
 │   ├── Contact.jsx     # 함께하기 (/contact) — ME.contact 로 1:1 코칭·외주 오퍼 카드 자동 렌더. 버튼은 외부 폼(formUrl)→없으면 Gmail 폴백
@@ -355,6 +356,32 @@ SPA라 모든 경로가 같은 `index.html`을 받는데, **스레드·카카오
 - 먹색은 `DESIGN.md` §4 `marketing-dark rgba(0,12,30,.8)` 계열. 마지막 전환 지점이라 시선이 가야 하는 자리다. 먹색 위에선 **파란 버튼보다 흰 버튼이 세다**.
 - 🚫 **파랑을 연달아 쓰지 말 것** — 프롬프트 밴드(파랑) 바로 아래 ABOUT 카드도 파랗게 했다가 무거워서 걷어냈다.
 - 🚫 **라디얼 그라데이션을 카드 배경에 겹치지 말 것** — `.band`·`.cta` 가 그랬는데 **얼룩져 보였다.**
+
+#### 상단 바는 전 페이지 공통이다 (2026-09-08)
+
+원래 `Home.jsx` 안에만 있어서 `/blog` · `/p/:slug` · `/courses` 로 들어가면 **사라졌다.**
+"어느 사이트인지"와 "다른 데로 가는 길"이 같이 없어지는 셈이라 `src/TopBar.jsx` 로 빼고
+**`App.jsx` 가 `<Routes>` 밖에서 한 번만** 그린다.
+
+- **로고를 누르면 홈으로** 간다. 홈에서는 `#top` 앵커, 다른 페이지에서는 `<Link to="/">`.
+- 🔴 **내비는 4개까지만**(DESIGN.md §10). 늘리려면 뭘 뺄지 먼저 정할 것.
+- 🔴 **`.page` 의 위 여백을 120px → 48px 로 줄였다.** 그 위에 아무것도 없던 시절의 값이라,
+  상단 바가 깔린 뒤로는 바와 본문 사이가 텅 빈다. 되돌리면 그 구멍이 돌아온다.
+- ⚠️ 서브페이지 맨 위의 `← 작업실로` 는 **그대로 뒀다** — 로고와 목적지가 겹치지만
+  뒤로 가는 동작을 기대하는 사람이 있고, `/courses` 의 것은 `/contact` 로 가서 목적지가 다르다.
+
+##### 해시 이동(`/#work` · `/courses#faq`)은 우리가 직접 한다
+
+SPA 라 **브라우저가 대신 해 주지 않는다** — 주소가 바뀌는 시점에 대상 요소가 아직
+안 그려져 있기 때문이다. `App.jsx` 의 `ScrollToTop` 이 `requestAnimationFrame` 으로
+**최대 3초(`HASH_TRIES = 180`)** 동안 요소를 찾고, 찾으면 스크롤한 뒤 **300ms 후 한 번 더** 맞춘다.
+
+- ⚠️ 0.5초로는 모자랐다 — **lazy 라우트 조각을 받아오는 시간** 때문에 `/courses#faq` 가
+  조용히 맨 위에 떨어졌다(2026-09-08 실측).
+- 🔴 **이미지에 `aspect-ratio` 를 반드시 주라.** 비율이 없으면 이미지가 도착할 때 페이지가
+  밀려서 해시가 엉뚱한 자리에 떨어진다(`.course__demoimg` 가 실제로 630px 밀렸다).
+- ⚠️ **헤드리스 스크린샷으로는 검증이 안 된다** — 스크롤 뒤 화면이 비어 나온다.
+  실제 브라우저에서 볼 것.
 
 #### 🔴 히어로에 프로젝트 화면을 진열하지 않는다
 
