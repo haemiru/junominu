@@ -2475,3 +2475,369 @@ a.pgroup__name:hover {
     display: none;
   }
 }
+
+/* ── /courses 판매 섹션 (2026-09-08 확장) ───────────────────────────
+   "허전하다"는 지적에 따라 문제공감·결과물 화면·강사 근거·진행방식·FAQ 를 더했다.
+   🚫 그림자 없음 — 깊이는 1px 테두리 + surface 대비로만. */
+
+.dhero__actions {
+  margin-top: 24px;
+}
+
+/* ① 이런 적 있으신가요 */
+.probs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.prob {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 22px 24px 24px;
+}
+
+.prob__emoji {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.prob__title {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.prob__body {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+.probs__after {
+  margin-top: 18px;
+  font-size: 15.5px;
+  color: var(--text-soft);
+  line-height: 1.7;
+}
+
+.probs__after b {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* ③ 과정 본문 안 이미지 */
+.course__demo {
+  margin-top: 24px;
+}
+
+.course__demoimg {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.course__cap {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+
+.course__cap b {
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.course__cap--after {
+  margin-top: 14px;
+}
+
+/* 트랙·예시 화면 — 세로 스크린샷 3장 */
+.track {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.track__shot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 2;
+  object-fit: cover;
+  object-position: top;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-sunken);
+}
+
+.track__cap {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px 16px;
+}
+
+/* 과정 패널 맨 아래 버튼 — 다 읽고 나서 바로 누를 수 있게 */
+.course__foot {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.course__sec--flush {
+  margin-top: 0;
+}
+
+/* ④ 가르치는 사람 */
+.proof__lead {
+  font-size: 15.5px;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.proof__lead b {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.proof {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.pcard {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.pcard:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+/* 🔴 비율은 <img> 에 건다. 감싼 span 에만 aspect-ratio 를 주면 flex 안에서
+   세로 스크린샷(킁킁메이트 등)이 그대로 늘어나 카드 높이가 제각각이 된다. */
+.pcard__media {
+  display: block;
+  flex: 0 0 auto;
+  overflow: hidden;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border);
+}
+
+.pcard__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
+}
+
+.pcard__body {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+
+.pcard__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pcard__name {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.pcard__desc {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.55;
+  /* 설명 길이가 제각각이라 3줄에서 끊는다 — 카드 높이를 맞추려는 것 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.proof__note {
+  margin-top: 18px;
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  font-size: 15px;
+  color: var(--accent-ink);
+  line-height: 1.65;
+}
+
+/* ⑤ 진행 방식 */
+.steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.step {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 22px 22px;
+}
+
+.step__n {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step__body {
+  display: grid;
+  gap: 5px;
+}
+
+.step__title {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.step__desc {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* ⑥ 준비물 · 안 맞는 분 */
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 44px);
+}
+
+/* 안 맞는 분 — 파란 점 대신 회색 × 로. 같은 색이면 장점처럼 읽힌다. */
+.now--x .now__item::before {
+  content: "×";
+  background: none;
+  width: auto;
+  height: auto;
+  top: -1px;
+  color: var(--text-faint);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+/* ⑦ FAQ — <details> 기본 동작을 그대로 쓴다(JS 없음) */
+.faq {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.faq__item {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.faq__item:first-child {
+  border-top: 0;
+}
+
+.faq__q {
+  list-style: none;
+  cursor: pointer;
+  padding: 17px 22px;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-faint);
+  line-height: 1;
+}
+
+.faq__item[open] .faq__q::after {
+  content: "−";
+}
+
+.faq__q:hover {
+  background: var(--surface-hover);
+}
+
+.faq__a {
+  padding: 0 22px 20px;
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.75;
+}
+
+@media (max-width: 860px) {
+  .steps {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .proof {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .probs,
+  .proof,
+  .steps,
+  .twocol {
+    grid-template-columns: 1fr;
+  }
+
+  /* 트랙 화면은 1열로 떨어지면 너무 길어진다 — 2열을 유지한다 */
+  .tracks {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .twocol {
+    gap: 30px;
+  }
+}

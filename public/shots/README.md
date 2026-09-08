@@ -32,3 +32,17 @@ detail: {
 
 - 가로 1200~1600px, 16:10 안팎. WebP면 더 가볍습니다.
 - 개인정보·실고객 데이터가 보이지 않게 가린 화면을 사용하세요.
+
+## `course-*` 는 강의 페이지(/courses) 전용
+
+프로젝트 캡처가 아니라 **강의에서 만들 것의 예시 화면**이다. `ME.courses` 가 참조한다.
+
+| 파일 | 무엇 | 어디서 왔나 |
+|---|---|---|
+| `course-basic-demo.png` (1200×630) | 영수증 사진 → 정리표 | 직접 제작(HTML + 사이트 토큰 → Chrome 헤드리스) |
+| `course-oneday-{sns,mall,board}.png` (780×1560) | 원데이 트랙 셋 화면 | 직접 제작. 범위는 `lecture/oneday/완성본-프롬프트/*.txt` 기준 |
+| `course-regular-{shop,booking,tool}.jpg` (780×1560) | 가게 소개 · 예약 칸 · 정리 도구 | `lecture/latpeed/images/examples/01~03.jpg` 복사 |
+
+🔴 **원데이 화면의 완성도를 올리지 말 것.** 수강생이 하루에 만드는 수준과 같아야 한다
+(그 이유는 `lecture/oneday/완성본-프롬프트/쇼핑몰-vibeMALL.txt` 「만들 것의 범위」에 있다).
+🔴 **`lecture` 레포는 읽기만 한다** — 저기서 파일을 고치거나 커밋하지 말 것.
