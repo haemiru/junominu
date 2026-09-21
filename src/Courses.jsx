@@ -15,7 +15,7 @@ import BizInfo from './BizInfo'
 //     순서를 바꾸기 전에 왜 이 순서인지 생각할 것. 제품 이야기보다 독자의 문제가 앞이다.
 //
 //  데이터는 전부 `projects.js` 의 `ME.courses` · `ME.courseCommon` 이고,
-//  커리큘럼의 원천은 `D:/Claude-prj/class/lecture` 레포의 chapters/*.html 이다.
+//  커리큘럼의 원천은 `D:/Claude-prj/04.Class/lecture` 레포의 chapters/*.html 이다.
 //  🔴 커리큘럼을 여기서 손으로 고치지 말 것 — 저 레포와 어긋나면 파는 것과 다른 말을 하게 된다.
 //
 //  탭은 주소에 남긴다(`?c=basic|oneday|regular`) — 카톡으로 "원데이는 이거예요" 하고

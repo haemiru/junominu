@@ -267,7 +267,7 @@ CDP `Emulation.setDeviceMetricsOverride` 를 쓰거나 **실제 폰으로** 볼 
 
 ### 어디서 재료를 가져왔나
 
-🔴 **`D:/Claude-prj/class/lecture` 를 훑었다**(읽기만, 커밋 안 함). 거기 이미 다 있었다.
+🔴 **`D:/Claude-prj/04.Class/lecture` 를 훑었다**(읽기만, 커밋 안 함). 거기 이미 다 있었다.
 
 | 재료 | 어디 |
 |---|---|
@@ -344,7 +344,7 @@ CDP `Emulation.setDeviceMetricsOverride` 를 쓰거나 **실제 폰으로** 볼 
 
 ### 결정과 함정
 
-- 🔴 **커리큘럼의 원천은 `D:/Claude-prj/class/lecture` 레포다.** 부·단원·분을
+- 🔴 **커리큘럼의 원천은 `D:/Claude-prj/04.Class/lecture` 레포다.** 부·단원·분을
   `basic|oneday/chapters/*.html` 의 `data-part`·`data-title`·`data-min`,
   정규는 `guide/chapters/*.html` 에서 그대로 옮겼다. **지어내지 말 것.**
   - 합계가 화면에 찍힌다(기초 **180분** · 원데이 **250분**) → 틀리면 바로 드러난다.
@@ -686,7 +686,7 @@ junominu 는 **자기 블로그(`/blog`)만** 쓰고, 그건 `/blog-post` 가 �
 `SKILL.md` 단계 5에도 넣었다. 다음 세션이 또 밟지 않게.
 
 1. **`--screenshot` 에 상대경로를 주면 `exit 0` 인데 파일이 안 생긴다.** 조용히 실패한다.
-   → **Windows 절대경로**로 준다: `--screenshot="D:\\Claude-prj\\dev\\junominu\\public\\shots\\x.png"`
+   → **Windows 절대경로**로 준다: `--screenshot="D:\\Claude-prj\\02.Dev\\junominu\\public\\shots\\x.png"`
 2. **`--virtual-time-budget` 없이 돌리면 2분 타임아웃에 걸린다**(SPA가 로드 완료 신호를 안 준다).
    → `--headless=new --virtual-time-budget=10000` 을 같이 준다.
 
@@ -999,7 +999,7 @@ junominu.com에 **중개프로 글이 이미 3편** 있고 네이버도 중개�
 
 - `/contact` 코칭 오퍼를 **래피드 상품에 맞춤** — 옛 문구는 `온라인 1:1(화상)`인데 상품은 `대면만·줌 안 함`. 정반대였다.
   `offers[].href` 신설 — 폼을 안 거치고 외부 판매 페이지로 직행(Tally 팝업이 가로채지 않게). 귀속은 utm으로.
-  🔴 **상품 정보 원천은 `D:\Claude-prj\class\lecture\latpeed\상품설명-텍스트.md`** — 가격·회차·환불은 **두 곳을 같이** 고친다.
+  🔴 **상품 정보 원천은 `D:\Claude-prj\04.Class\lecture\latpeed\상품설명-텍스트.md`** — 가격·회차·환불은 **두 곳을 같이** 고친다.
 - `projects.js`: 아이복지모아 **보조기기센터 41곳**·커뮤니티·치료실 계정 추가 / 중개프로 url → `jungaepro.com`
 - `heroLines` 9개 + **`slug` 로 완성 줄 자동 생성**(`DONE_PHRASE`) — 하드코딩이면 출시해도 히어로만 "작업 중"으로 남는다.
 
@@ -1300,7 +1300,7 @@ CDP `Emulation.setDeviceMetricsOverride`로 뷰포트를 강제해 다시 재니
 
 ### 무엇을 했나
 
-`D:\Claude-prj\dev\PetPhotoAI` 완료 → `src/projects.js` `PROJECTS`에 **9번째 카드** 추가. 데이터는 그 레포의 `WORK-LOG.md`·`README.md`·git 이력(37커밋)에서 추출한 실데이터.
+`D:\Claude-prj\02.Dev\PetPhotoAI` 완료 → `src/projects.js` `PROJECTS`에 **9번째 카드** 추가. 데이터는 그 레포의 `WORK-LOG.md`·`README.md`·git 이력(37커밋)에서 추출한 실데이터.
 
 - **카드**: 펫포토 AI(`slug: petphoto`) · 🐾 · `status: live` · `url: https://pet-photo-ai.vercel.app` · tags `[반려동물, AI 이미지, Vite]` · tint `#fb7185`(브랜드 코랄)
 - **detail**: started `2026-06-30`(1단계 최초 산출물, 독립 repo 분리는 7-02) / launched `2026-07-22`(실결제 E2E 완주) → 상세에 **"0 → 배포 22일"** 표시. summary·features 7 · stack 10 · timeline 8 · challenges 4 · retro 1.

@@ -318,7 +318,7 @@ ls "$P/blog-content/context" "$P/naver-blog" 2>/dev/null   # 블로그 자산(�
      --window-size=1280,800 --hide-scrollbars `
      --screenshot="public/shots/<slug>-<이름>.png" "<프로젝트 URL>"
    ```
-   - 🚨 **`--screenshot` 경로는 반드시 Windows 절대경로**(`D:\\Claude-prj\\dev\\junominu\\public\\shots\\x.png`).
+   - 🚨 **`--screenshot` 경로는 반드시 Windows 절대경로**(`D:\\Claude-prj\\02.Dev\\junominu\\public\\shots\\x.png`).
      상대경로를 주면 **`exit 0` 을 내면서 파일을 안 만든다** — 조용히 실패한다(2026-08-19 실제로 밟았다).
    - 🚨 **`--headless=new --virtual-time-budget=10000` 을 같이 준다.** 없으면 SPA가 로드 완료 신호를 안 줘서
      **2분 타임아웃**에 걸린다(같은 날 밟았다).
@@ -579,7 +579,7 @@ FAQ가 2개 미만이면 `FAQPage` 는 생성되지 않는다(잘못된 스키�
 | `src/App.css` | `.prose` 계열 — `byline`·`answer`·`post-cta`·표·이미지 스타일 |
 | `public/shots/` + `README.md` | 캡처 자산과 파일명 규칙 |
 | `public/sitemap.xml` | 글 추가 시 함께 갱신 |
-| `D:/Claude-prj/dev/jungaepro/.claude/skills/naver-blog/` | **중개프로 글을 쓸 때만** — 같은 제품이 네이버 블로그(개공 독자)로도 나간다. **레포가 다르다.** 소재가 겹치지 않게 저쪽 산출물(`jungaepro/naver-blog/*.txt`)을 먼저 훑을 것. 여기는 *내가 왜 그렇게 만들었나*, 저기는 *독자가 무엇을 해야 하나* |
+| `D:/Claude-prj/02.Dev/jungaepro/.claude/skills/naver-blog/` | **중개프로 글을 쓸 때만** — 같은 제품이 네이버 블로그(개공 독자)로도 나간다. **레포가 다르다.** 소재가 겹치지 않게 저쪽 산출물(`jungaepro/naver-blog/*.txt`)을 먼저 훑을 것. 여기는 *내가 왜 그렇게 만들었나*, 저기는 *독자가 무엇을 해야 하나* |
 | `CLAUDE.md` | 사이트 구조·디자인 토큰·배포 |
 
 ---
