@@ -3,7 +3,7 @@ name: blog-post
 description: >-
   junominu.com 블로그(/blog)에 올릴 글을 만든다. **기본 1편, 요청하면 2편**(재료를 반으로 갈라
   각도가 겹치지 않는 두 편을 쓰고 서로 링크). src/projects.js 의 slug 하나를 받아 **재료 세 곳**을 읽는다 —
-  ① projects.js 의 detail(목차) ② 🔴 그 프로젝트 레포(D:/Claude-prj/<폴더>의 CLAUDE.md·git log·docs
+  ① projects.js 의 detail(목차) ② 🔴 그 프로젝트 레포(D:/AI-Studio/<폴더>의 CLAUDE.md·git log·docs
   — 제작 이야기의 진짜 출처) ③ 라이브 화면. 어긋나면 지금 보이는 값은 라이브가, 제작 이야기는 레포가 이긴다.
   분량 2,000~3,000자 SEO 글.
   이미지는 public/shots/ 실제 앱 캡처를 재사용(모자라면 라이브 URL을 헤드리스로 캡처).
@@ -157,7 +157,7 @@ description: >-
 토지거래허가구역(서울 25개 자치구), 확인설명서 3종이 계약서 양식에 따라 자동 결정되는 함정.
 **`detail` 만 봤으면 하나도 못 썼다.**
 
-**폴더 매핑** (`D:\Claude-prj\<폴더>`) — 목록에 없으면 사용자에게 묻는다:
+**폴더 매핑** (`D:\AI-Studio\<폴더>`) — 목록에 없으면 사용자에게 묻는다:
 
 | slug / 이름 | 폴더 | slug / 이름 | 폴더 |
 |---|---|---|---|
@@ -174,7 +174,7 @@ description: >-
 **볼 것 — 위에서부터 값이 크다:**
 
 ```bash
-P=D:/Claude-prj/<폴더>
+P=D:/AI-Studio/<폴더>
 cat "$P/CLAUDE.md"                                         # ← 최고의 글감
 git -C "$P" log --oneline | wc -l                          # 진짜 커밋 수
 git -C "$P" log --date=short --format="%ad %s" | tail -40  # 초기 → 지금 흐름
@@ -318,7 +318,7 @@ ls "$P/blog-content/context" "$P/naver-blog" 2>/dev/null   # 블로그 자산(�
      --window-size=1280,800 --hide-scrollbars `
      --screenshot="public/shots/<slug>-<이름>.png" "<프로젝트 URL>"
    ```
-   - 🚨 **`--screenshot` 경로는 반드시 Windows 절대경로**(`D:\\Claude-prj\\02.Dev\\junominu\\public\\shots\\x.png`).
+   - 🚨 **`--screenshot` 경로는 반드시 Windows 절대경로**(`D:\\AI-Studio\\02.Dev\\junominu\\public\\shots\\x.png`).
      상대경로를 주면 **`exit 0` 을 내면서 파일을 안 만든다** — 조용히 실패한다(2026-08-19 실제로 밟았다).
    - 🚨 **`--headless=new --virtual-time-budget=10000` 을 같이 준다.** 없으면 SPA가 로드 완료 신호를 안 줘서
      **2분 타임아웃**에 걸린다(같은 날 밟았다).
@@ -568,7 +568,7 @@ FAQ가 2개 미만이면 `FAQPage` 는 생성되지 않는다(잘못된 스키�
 | 파일 | 왜 |
 |---|---|
 | `src/projects.js` | 글 재료 ① — `detail`. **적어 둔 시점의 요약이라 목차로만 쓴다**(단계 1) |
-| 🔴 `D:/Claude-prj/<폴더>/CLAUDE.md` + git log + `docs/` | 글 재료 ② — **제작 이야기의 진짜 출처.** 매핑표와 볼 것은 **단계 1-A**. 읽기 전용 |
+| 🔴 `D:/AI-Studio/<폴더>/CLAUDE.md` + git log + `docs/` | 글 재료 ② — **제작 이야기의 진짜 출처.** 매핑표와 볼 것은 **단계 1-A**. 읽기 전용 |
 | `<레포>/blog-content/context/product-facts.md` | (있으면) 기능·요금의 단일 근거 + 🔴 **「없는 기능」 목록** |
 | `<레포>/naver-blog/*.txt` | (있으면) 그 제품의 네이버 글 — **소재 겹침 확인용** |
 | 프로젝트 `url` (라이브 사이트) | 글 재료 ③ — **지금 보이는 값. 요금·개수·화면은 이쪽이 이긴다** |
@@ -579,7 +579,7 @@ FAQ가 2개 미만이면 `FAQPage` 는 생성되지 않는다(잘못된 스키�
 | `src/App.css` | `.prose` 계열 — `byline`·`answer`·`post-cta`·표·이미지 스타일 |
 | `public/shots/` + `README.md` | 캡처 자산과 파일명 규칙 |
 | `public/sitemap.xml` | 글 추가 시 함께 갱신 |
-| `D:/Claude-prj/02.Dev/jungaepro/.claude/skills/naver-blog/` | **중개프로 글을 쓸 때만** — 같은 제품이 네이버 블로그(개공 독자)로도 나간다. **레포가 다르다.** 소재가 겹치지 않게 저쪽 산출물(`jungaepro/naver-blog/*.txt`)을 먼저 훑을 것. 여기는 *내가 왜 그렇게 만들었나*, 저기는 *독자가 무엇을 해야 하나* |
+| `D:/AI-Studio/02.Dev/jungaepro/.claude/skills/naver-blog/` | **중개프로 글을 쓸 때만** — 같은 제품이 네이버 블로그(개공 독자)로도 나간다. **레포가 다르다.** 소재가 겹치지 않게 저쪽 산출물(`jungaepro/naver-blog/*.txt`)을 먼저 훑을 것. 여기는 *내가 왜 그렇게 만들었나*, 저기는 *독자가 무엇을 해야 하나* |
 | `CLAUDE.md` | 사이트 구조·디자인 토큰·배포 |
 
 ---

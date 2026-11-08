@@ -8,7 +8,7 @@
 - **상태값**: `live`(운영 중) / `building`(작업 중·베타) / `idea`(구상, url 없어도 됨)
 - **백엔드 없음** — 순수 정적 사이트.
 - **레포**: `https://github.com/haemiru/junominu`
-- **로컬 폴더**: `C:\Users\bsuha\Claude-prj\02.Dev\junominu\`
+- **로컬 폴더**: `C:\Users\bsuha\AI-Studio\02.Dev\junominu\`
 - **호스팅**: Vercel 프로젝트 `junominu` → `junominu.com`(apex는 `www.junominu.com`으로 307 리다이렉트, NS=Vercel via 호스팅케이알)
 
 > **이력**: 2026-06-01 이전엔 "키즈피지오짱샘 도구 모음 허브"였음(킁킁메이트·i-talk 카드). 도구들이 jjangsaem.com 서브도메인으로 이전하면서 junominu.com을 개인 작업실로 전환. 옛 허브 코드는 git 태그 **`archive-tools-hub`**에 보존됨 (`git checkout archive-tools-hub`로 확인 가능).
@@ -167,7 +167,7 @@ detail: {
 
 - **들어오는 문은 하나** — `/contact` 강의 카드의 **"어떤걸 배우나요? →"**(`offers[0].more`). 상단 내비에는 넣지 않았다(내비 4개 원칙, DESIGN.md 개편표).
 - **데이터는 `ME.courses` · `ME.courseCommon`** (`projects.js`). `Courses.jsx` 는 그걸 그대로 렌더하기만 한다.
-- 🔴 **커리큘럼의 원천은 이 레포가 아니라 `D:/Claude-prj/04.Class/lecture` 다.** 부·단원·분(min)은 그 레포 `basic|oneday/chapters/*.html` 의 `data-part`·`data-title`·`data-min`, 정규는 `guide/chapters/*.html` 에서 그대로 옮겼다. 저쪽 원고가 바뀌면 여기도 바뀐다 — **값을 지어내지 말고 그 파일을 다시 읽을 것.**
+- 🔴 **커리큘럼의 원천은 이 레포가 아니라 `D:/AI-Studio/04.Class/lecture` 다.** 부·단원·분(min)은 그 레포 `basic|oneday/chapters/*.html` 의 `data-part`·`data-title`·`data-min`, 정규는 `guide/chapters/*.html` 에서 그대로 옮겼다. 저쪽 원고가 바뀌면 여기도 바뀐다 — **값을 지어내지 말고 그 파일을 다시 읽을 것.**
   - 합계 검증: 기초 **180분** · 원데이 **250분**(쉬는 시간 20분 별도). 페이지가 `min` 을 더해 "합계 N분"으로 보여주므로 **틀리면 화면에 바로 드러난다.**
 - 🔴 **가격은 두 곳에 적혀 있다** — `ME.courses[].price` 와 `ME.contact.offers[0].note`. **같이 고칠 것.**
 - **탭은 주소에 남는다** — `?c=basic|oneday|regular`(`useSearchParams`). 카톡으로 "원데이는 이거예요" 하고 링크를 보낼 수 있어야 해서다. 값이 이상하면 첫 과정으로 떨어진다.
@@ -496,7 +496,7 @@ npm run preview  # 빌드 결과 로컬 확인
     - 🔴 **다른 레포는 읽기만.** 파일 수정·`git commit` 금지. 산출물은 junominu 안에만(루트 `CLAUDE.md`).
     - 어긋난 항목은 「낡은 값」 표로 보고하므로, 받으면 `projects.js`를 고칠 것.
 - **네이버 블로그는 여기서 하지 않는다** — 중개프로 네이버 블로그는 **`jungaepro` 레포**에 있다(2026-08-19 정리).
-  - 스킬 **`/naver-blog`** (`D:/Claude-prj/02.Dev/jungaepro/.claude/skills/naver-blog/`) + 컨텍스트 `blog-content/context/`(팩트시트·키워드·어근대장·페르소나·보이스) + 산출물 `naver-blog/*.txt`. 계정은 **`bsuha01`**(중개 전용, `bsuha`는 육아 계정이라 별개).
+  - 스킬 **`/naver-blog`** (`D:/AI-Studio/02.Dev/jungaepro/.claude/skills/naver-blog/`) + 컨텍스트 `blog-content/context/`(팩트시트·키워드·어근대장·페르소나·보이스) + 산출물 `naver-blog/*.txt`. 계정은 **`bsuha01`**(중개 전용, `bsuha`는 육아 계정이라 별개).
   - 🔴 **junominu 에 네이버용 스킬을 다시 만들지 말 것.** 2026-08-18에 `/naver-post`를 만들었다가 **이미 있는 걸 더 못하게 중복 구현한 것**이어서 하루 만에 지웠다. 재료(`product-facts.md`)가 저쪽에 있어 저 레포에서 도는 게 맞다.
   - ⚠️ **다만 소재는 겹친다** — 같은 제품을 두 블로그가 쓴다. 네이버는 *독자가 무엇을 해야 하나*, 여기는 *내가 왜 그렇게 만들었나*. 대조표는 저쪽 `SKILL.md` §junominu 대조.
 - 사업자 정보(강남상회) 풋터는 옛 허브에 있었으나 개인 작업실로 전환하며 제거함. 직접 판매(통신판매) 페이지가 아니면 표시 의무 없음. 필요 시 풋터에 다시 추가 가능.
